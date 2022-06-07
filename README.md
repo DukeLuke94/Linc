@@ -1,2 +1,2 @@
 # Linc
-Lic project by Team SoftCare
+Linc project by Team SoftCare
