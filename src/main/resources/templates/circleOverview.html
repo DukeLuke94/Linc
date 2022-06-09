@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Overview of all Circles</title>
+</head>
+<body>
+<div class="container">
+
+    <table>
+        <tr>
+            <th>Name</th>
+        </tr>
+        <tr th:each="circle : ${allCircles}">
+            <td><a th:href="@{/circles/id/{circleId}(circleId=${circle.circleId})}" th:text="${circle.circleName}"></a></td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>
