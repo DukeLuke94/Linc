@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="container">
+    <h1>Details van <span th:text="${circle.circleName}"></span></h1>
+    <ul>
+        <li th:each="task : ${circle.tasks}">
+            <a th:text="${task.taskName}"></a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

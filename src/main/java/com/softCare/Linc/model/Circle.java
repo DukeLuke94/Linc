@@ -3,10 +3,8 @@ package com.softCare.Linc.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 
 @Entity @Getter @Setter
@@ -19,6 +17,10 @@ public class Circle {
     private Long circleId;
 
     private String circleName;
+
+    @OneToMany (mappedBy = "circle")
+    private List<Task> tasks;
+
 
 
 }

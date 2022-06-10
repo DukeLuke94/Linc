@@ -12,7 +12,7 @@
             <th>Name</th>
         </tr>
         <tr th:each="circle : ${allCircles}">
-            <td><a th:href="@{/circles/id/{circleId}(circleId=${circle.circleId})}" th:text="${circle.circleName}"></a></td>
+            <td><a th:href="@{/circle/{circleId}(circleId=${circle.circleId})}" th:text="${circle.circleName}"></a></td>
         </tr>
     </table>
 </div>
