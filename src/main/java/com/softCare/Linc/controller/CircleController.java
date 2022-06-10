@@ -1,8 +1,7 @@
 package com.softCare.Linc.controller;
 
-import com.softCare.Linc.Repository.CircleRepository;
-import com.softCare.Linc.Repository.TaskRepository;
 import com.softCare.Linc.model.Circle;
+import com.softCare.Linc.service.CircleServiceInterface;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,24 +13,23 @@ import java.util.Optional;
 @Controller
 public class CircleController {
 
-    private final CircleRepository circleRepository;
-    private final TaskRepository taskRepository;
 
-    public CircleController(CircleRepository circleRepository, TaskRepository taskRepository) {
-        this.circleRepository = circleRepository;
-        this.taskRepository = taskRepository;
+    private final CircleServiceInterface circleServiceInterface;
+
+    public CircleController(CircleServiceInterface circleServiceInterface) {
+        this.circleServiceInterface = circleServiceInterface;
     }
 
 
     @GetMapping({"/home", "/"})
     protected String showHome(Model model) {
-        model.addAttribute("allCircles", circleRepository.findAll());
+        model.addAttribute("allCircles", circleServiceInterface.findAll());
         return "circleOverview";
     }
 
     @GetMapping("/circle/{circleId}")
-    protected String showBookDetails(@PathVariable("circleId") Long circleId, Model model) {
-        Optional<Circle> circle = circleRepository.findById(circleId);
+    protected String showCircleDetails(@PathVariable("circleId") Long circleId, Model model) {
+        Optional<Circle> circle = circleServiceInterface.findById(circleId);
         if (circle.isPresent()) {
             model.addAttribute("circle", circle.get());
             return "circleDetail";

@@ -1,14 +1,15 @@
 package com.softCare.Linc.controller;
 
-import com.softCare.Linc.Repository.TaskRepository;
+import com.softCare.Linc.service.CircleServiceInterface;
 import org.springframework.stereotype.Controller;
 
 @Controller
 public class TaskController {
 
-    private final TaskRepository taskRepository;
+    private final CircleServiceInterface circleServiceInterface;
 
-    public TaskController(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
+
+    public TaskController(CircleServiceInterface circleServiceInterface) {
+        this.circleServiceInterface = circleServiceInterface;
     }
 }
