@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
+
+<head th:fragment="baseHeader(title)">
+    <meta charset="UTF-8">
+    <title th:replace="${title}">Dit is de algemene titel</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" href="/css/linc.css">
+</head>
+
+<body>
+
+
+<div th:fragment="footer">
+    <footer><p class="text-center text-muted">Copyright SoftCare &copy;2022</p></footer>
+</div>
+<div th:fragment="bottomScripts">
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</div>
+</body>
+</html>
