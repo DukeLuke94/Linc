@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 
@@ -48,9 +49,11 @@ public class CircleController {
     }
 
     @PostMapping("/new/circle")
-    protected String saveCircle(@ModelAttribute("circle") Circle circle, BindingResult result) {
+    protected String saveCircle(@ModelAttribute("circle") @Valid Circle circle, BindingResult result) {
         if (!result.hasErrors()) {
             circleServiceInterface.save(circle);
+        } else if (result.hasErrors()) {
+            return "redirect:/new/circle";
         }
         return "redirect:/home";
     }
