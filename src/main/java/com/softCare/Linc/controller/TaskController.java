@@ -1,6 +1,6 @@
 package com.softCare.Linc.controller;
 
-import com.softCare.Linc.model.Circle;
+
 import com.softCare.Linc.model.Task;
 import com.softCare.Linc.service.CircleServiceInterface;
 import com.softCare.Linc.service.TaskServiceInterface;
@@ -10,6 +10,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 import java.util.Optional;
 
@@ -37,10 +39,22 @@ public class TaskController {
     @PostMapping({"/task/new"})
     protected String saveNewTask(@ModelAttribute("task") Task task, BindingResult result) {
         if (!result.hasErrors()) {
-           task.setCircle(circleController.currentCircle);
-           taskServiceInterface.save(task);
+            task.setCircle(circleController.currentCircle);
+            taskServiceInterface.save(task);
         }
         String referer = circleController.currentCircle.getCircleId().toString();
         return "redirect:/circle/" + referer;
+    }
+
+    @GetMapping("/task/{taskId}")
+    protected String showTaskDetails(@PathVariable("taskId") Long taskId, Model model) {
+        Optional<Task> task = taskServiceInterface.findById(taskId);
+        if (task.isPresent()) {
+            model.addAttribute("task", task.get());
+            return "taskDetails";
+        } else {
+            return "redirect:/";
+        }
+
     }
 }

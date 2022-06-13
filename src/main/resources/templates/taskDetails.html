@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: baseHeader(~{:: title})">
+    <title th:text="'Details van ' + ${task.taskName}"></title>
+</head>
+<body>
+
+<div class="container">
+    <h1><span th:text="'Details van ' + ${task.taskName}"></span></h1>
+    <p th:text="${task.taskDescription}"></p>
+</div>
+
+<div th:replace="fragments/general :: footer"></div>
+<div th:replace="fragments/general :: bottomScripts"></div>
+</body>
+</html>
