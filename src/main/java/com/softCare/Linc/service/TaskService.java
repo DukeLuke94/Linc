@@ -4,15 +4,7 @@ import com.softCare.Linc.Repository.TaskRepository;
 import com.softCare.Linc.model.Task;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-
-/**
- * Project: TaskService
- * @author Jan Willem vd Wal on 13-6-2022.
- * Beschrijving:
- */
 
 @Service
 public class TaskService implements TaskServiceInterface {
@@ -23,6 +15,11 @@ public class TaskService implements TaskServiceInterface {
     public TaskService(TaskRepository taskRepository, TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
+    }
+
+    @Override
+    public Task save(Task task) {
+        return taskRepository.save(task);
     }
 
     @Override

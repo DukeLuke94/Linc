@@ -12,6 +12,9 @@
             <a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a>
         </li>
     </ul>
+    <form action="/task/new">
+        <input type="submit" value="Create new task">
+    </form>
 </div>
 <div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>
