@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: baseHeader(~{:: title})">
+  <title>New circle</title>
+</head>
+<div th:replace="fragments/general :: navbar"></div>
+<body>
+<div class="container">
+  <h1>Create a new circle</h1>
+    <form action="#" th:action="@{/new/circle}" th:object="${circle}" method="post">
+        <p><input type="text" th:field="*{circleName}" placeholder="Circle Name"/></p>
+        <p><input type="submit" value="Submit" />
+</div>
+<div th:replace="fragments/general :: footer"></div>
+<div th:replace="fragments/general :: bottomScripts"></div>
+</body>
+</html>
