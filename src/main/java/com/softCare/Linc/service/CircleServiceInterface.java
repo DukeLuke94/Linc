@@ -9,4 +9,6 @@ public interface CircleServiceInterface  {
     Object findAll();
 
     Optional<Circle> findById(Long id);
+
+    void save(Circle circle);
 }
