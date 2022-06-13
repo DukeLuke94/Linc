@@ -9,7 +9,7 @@
     <h1>Circle of <span th:text="${circle.circleName}"></span></h1>
     <ul>
         <li th:each="task : ${circle.tasks}">
-            <a th:text="${task.taskName}"></a>
+            <a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a>
         </li>
     </ul>
 </div>

@@ -1,6 +1,5 @@
 package com.softCare.Linc.service;
 
-
 import com.softCare.Linc.Repository.CircleRepository;
 import com.softCare.Linc.model.Circle;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,6 @@ public class CircleService implements  CircleServiceInterface{
     @Override
     public Optional<Circle> findById(Long circleId) {
         Optional<Circle> circle = circleRepository.findById(circleId);
-
         return circle.map(circleMapper::circleToModelView);
 
 
