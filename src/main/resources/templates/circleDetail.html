@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})">
     <title th:text="${circle.circleName} + ' details'"></title>
 </head>
 <body>
 
 <div class="container">
-    <h1>Details van <span th:text="${circle.circleName}"></span></h1>
+    <h1>Circle of <span th:text="${circle.circleName}"></span></h1>
     <ul>
         <li th:each="task : ${circle.tasks}">
             <a th:text="${task.taskName}"></a>
