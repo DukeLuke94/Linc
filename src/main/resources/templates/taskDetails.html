@@ -6,10 +6,13 @@
 <div th:replace="fragments/general :: navbar"></div>
 <body>
 <div class="container">
-    <h1><span th:text="'Details van ' + ${task.taskName}"></span></h1>
+    <h1 th:text="'Details van ' + ${task.taskName}"></h1>
     <p th:text="${task.taskDescription}"></p>
     <form action="/task/delete">
         <input type="submit" class="btn btn-danger"  value="Delete task">
+    </form>
+    <form th:action="@{/task/edit/{taskId}(taskId=${task.taskId})}">
+        <input type="submit" class="btn btn-primary" value="Edit task">
     </form>
 </div>
 
