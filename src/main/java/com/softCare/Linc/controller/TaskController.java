@@ -7,10 +7,7 @@ import com.softCare.Linc.service.TaskServiceInterface;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.Optional;
@@ -19,6 +16,7 @@ import java.util.Optional;
 public class TaskController {
 
     private final CircleController circleController;
+    public Task currentTask;
 
     private final CircleServiceInterface circleServiceInterface;
     private final TaskServiceInterface taskServiceInterface;
@@ -50,11 +48,19 @@ public class TaskController {
     protected String showTaskDetails(@PathVariable("taskId") Long taskId, Model model) {
         Optional<Task> task = taskServiceInterface.findById(taskId);
         if (task.isPresent()) {
+            currentTask = task.get();
             model.addAttribute("task", task.get());
             return "taskDetails";
         } else {
             return "redirect:/";
         }
-
     }
+
+    @GetMapping("/task/delete")
+    protected String deleteTask() {
+        taskServiceInterface.delete(currentTask);
+        String referer = circleController.currentCircle.getCircleId().toString();
+        return "redirect:/circle/" + referer;
+    }
+
 }

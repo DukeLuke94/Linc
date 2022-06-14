@@ -28,8 +28,6 @@ public class CircleService implements  CircleServiceInterface{
     public Optional<Circle> findById(Long circleId) {
         Optional<Circle> circle = circleRepository.findById(circleId);
         return circle.map(circleMapper::circleToModelView);
-
-
     }
 
     @Override

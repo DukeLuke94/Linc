@@ -6,8 +6,10 @@ import java.util.Optional;
 
 public interface TaskServiceInterface {
 
-    Object save(Task task);
-
     Optional<Task> findById(Long id);
+
+    void save(Task task);
+
+    void delete(Task task);
 
 }
