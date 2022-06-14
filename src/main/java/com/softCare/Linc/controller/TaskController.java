@@ -44,6 +44,27 @@ public class TaskController {
         return "redirect:/circle/" + referer;
     }
 
+    @GetMapping({"/task/edit/{taskId}"})
+    protected String editTask(@PathVariable("taskId") Long taskId, Model model) {
+        Optional<Task> task = taskServiceInterface.findById(taskId);
+        if (task.isPresent()) {
+            model.addAttribute("circleId", circleController.currentCircle);
+            model.addAttribute("task", task.get());
+            return "editTasks";
+        } else {
+            return "redirect:/task/" + taskId;
+        }
+    }
+
+    @PostMapping({"/task/edit"})
+    protected String saveEditedTask(@ModelAttribute("task") Task task, BindingResult result) {
+        if (!result.hasErrors()) {
+            task.setCircle(circleController.currentCircle);
+            taskServiceInterface.save(task);
+        }
+        return "redirect:/task/" + task.getTaskId();
+    }
+
     @GetMapping("/task/{taskId}")
     protected String showTaskDetails(@PathVariable("taskId") Long taskId, Model model) {
         Optional<Task> task = taskServiceInterface.findById(taskId);
