@@ -44,21 +44,28 @@ public class CircleController {
         }
     }
 
-    @GetMapping({"/new/circle"})
+    @GetMapping({"/circle/new"})
     protected String newCircle(Model model) {
         model.addAttribute("circle", new Circle());
-        return "newCircle";
+        return "circleForm";
     }
 
-    @PostMapping("/new/circle")
+    @PostMapping("/circle/new")
     protected String saveCircle(@ModelAttribute("circle") @Valid Circle circle, BindingResult result) {
         if (!result.hasErrors()) {
             circleServiceInterface.save(circle);
         } else if (result.hasErrors()) {
-            return "redirect:/new/circle";
+            return "redirect:/circle/new";
         }
         return "redirect:/home";
     }
+
+    @GetMapping("/circle/delete")
+    protected String deleteCircle() {
+        circleServiceInterface.delete(currentCircle);
+        return "redirect:/home";
+    }
+
 
 
 

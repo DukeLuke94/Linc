@@ -11,4 +11,6 @@ public interface CircleServiceInterface  {
     Optional<Circle> findById(Long id);
 
     void save(Circle circle);
+
+    void delete(Circle circle);
 }

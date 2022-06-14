@@ -36,4 +36,10 @@ public class CircleService implements  CircleServiceInterface{
     public void save(Circle circle) {
         circleRepository.save(circle);
     }
+
+    @Override
+    public void delete(Circle circle) {
+        circleRepository.delete(circle);
+
+    }
 }

@@ -7,9 +7,10 @@
 <body>
 <div class="container">
   <h1>Create a new circle</h1>
-    <form action="#" th:action="@{/new/circle}" th:object="${circle}" method="post">
+    <form action="#" th:action="@{/circle/new}" th:object="${circle}" method="post">
         <p><input type="text" th:field="*{circleName}" placeholder="Circle Name"/></p>
-        <p><input type="submit" value="Submit" />
+        <p><input type="submit" value="Submit" class="btn btn-primary" />
+    </form>
 </div>
 <div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>
