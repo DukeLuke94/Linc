@@ -1,3 +1,13 @@
+.footer{
+    /*position: fixed;*/
+    /*bottom: 0;*/
+    /*margin-top: auto;*/
+    position: relative;
+    bottom: 0;
+}
+
 body{
-    background-color: aliceblue;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }

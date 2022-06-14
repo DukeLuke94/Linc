@@ -3,14 +3,16 @@
 <head th:replace="fragments/general :: baseHeader(~{:: title})">
   <title>New circle</title>
 </head>
-<div th:replace="fragments/general :: navbar"></div>
+<div th:replace="fragments/general :: header"></div>
 <body>
-<div class="container">
-  <h1>Create a new circle</h1>
-    <form action="#" th:action="@{/circle/new}" th:object="${circle}" method="post">
+<div class="col-md-3"> </div>
+<div class="container col-md-6" >
+  <h1>Create a new circle </h1>
+    <form action="#" th:action="@{/circle/new}" th:object="${circle}" method="post" >
         <p><input type="text" th:field="*{circleName}" placeholder="Circle Name"/></p>
         <p><input type="submit" value="Submit" class="btn btn-primary" />
     </form>
+    </div>
 </div>
 <div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>
