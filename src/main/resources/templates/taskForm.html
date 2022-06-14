@@ -10,11 +10,13 @@
     <form th:action="@{/task/new}" method="post" th:object="${task}">
         <table>
             <tr>
-                <td>Name</td>
-                <td><input type ="text" th:field="*{taskName}"></td>
+                <td><input type ="text" th:field="*{taskName}" placeholder="Task Name"></td>
+            </tr>
+            <tr>
+                <td><input type ="text" th:field="*{taskDescription}" placeholder="Task Description"></td>
             </tr>
         </table>
-        <input type="submit" value="Save this task">
+        <input type="submit" class="btn btn-primary" value="Save this task">
     </form>
 </div>
 <div th:replace="fragments/general :: footer"></div>
