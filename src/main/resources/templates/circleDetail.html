@@ -7,17 +7,33 @@
 <div th:replace="fragments/general :: header"></div>
 <div class="container">
     <h1>Circle of <span th:text="${circle.circleName}"></span></h1>
-    <ul>
-        <li th:each="task : ${circle.tasks}">
-            <a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a>
-        </li>
-    </ul>
+    <table>
+        <tr th:each="task : ${circle.tasks}">
+<!--            <a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a>-->
+<td>
+            <div class="list-group w-auto">
+                <label class="list-group-item d-flex gap-3">
+                    <input class="form-check-input flex-shrink-0" type="checkbox" value="" checked="" style="font-size: 1.375em;">
+                    <span class="pt-1 form-checked-content">
+                        <strong><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a></strong>
+                    <small class="d-block text-muted">
+                    <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#calendar-event"></use></svg>
+                           1:00–2:00pm
+                           </small>
+                      </span>
+                </label>
+            </div>
+</td>
+        </tr>
+    </table>
+
     <form action="/task/new">
         <input type="submit" class="btn btn-primary" value="Create new task">
     </form>
     <form action="/circle/delete">
         <input type="submit" value="Delete Circle" class="btn btn-danger">
     </form>
+
 </div>
 <div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>
