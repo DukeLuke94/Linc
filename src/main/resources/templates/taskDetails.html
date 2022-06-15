@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})">
-    <title th:text="'Details van ' + ${task.taskName}"></title>
+    <title th:text="'Details of ' + ${task.taskName}"></title>
 </head>
 <div th:replace="fragments/general :: header"></div>
 <body>
 <div class="container">
-    <h1 th:text="'Details van ' + ${task.taskName}"></h1>
+    <h1 th:text="'Details of ' + ${task.taskName}"></h1>
     <p th:text="${task.taskDescription}"></p>
-    <form action="/task/delete">
-        <input type="submit" class="btn btn-danger"  value="Delete task">
-    </form>
-    <form th:action="@{/task/edit/{taskId}(taskId=${task.taskId})}">
-        <input type="submit" class="btn btn-primary" value="Edit task">
-    </form>
+    <div class="form-inline">
+        <form action="/task/delete">
+            <input type="submit" class="btn btn-danger"  value="Delete task">
+        </form>
+        <form th:action="@{/task/edit/{taskId}(taskId=${task.taskId})}">
+            <input type="submit" class="btn btn-primary" value="Edit task">
+        </form>
+    </div>
 </div>
 
 

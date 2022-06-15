@@ -48,7 +48,7 @@ public class TaskController {
     protected String editTask(@PathVariable("taskId") Long taskId, Model model) {
         Optional<Task> task = taskServiceInterface.findById(taskId);
         if (task.isPresent()) {
-            model.addAttribute("circleId", circleController.currentCircle);
+            currentTask = task.get();
             model.addAttribute("task", task.get());
             return "editTasks";
         } else {
@@ -60,6 +60,7 @@ public class TaskController {
     protected String saveEditedTask(@ModelAttribute("task") Task task, BindingResult result) {
         if (!result.hasErrors()) {
             task.setCircle(circleController.currentCircle);
+            task.setTaskId(currentTask.getTaskId());
             taskServiceInterface.save(task);
         }
         return "redirect:/task/" + task.getTaskId();
