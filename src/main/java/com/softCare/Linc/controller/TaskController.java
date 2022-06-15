@@ -85,4 +85,31 @@ public class TaskController {
         return "redirect:/circle/" + referer;
     }
 
+    @RequestMapping ({"/task/done"})
+    protected String markTaskDone(@RequestParam(name = "taskList", value = "taskId", required = true) Long taskId) {
+        Optional<Task> task = taskServiceInterface.findById(taskId);
+        task.ifPresent(value -> value.setTaskDone(true));
+        System.out.println(taskId);
+        return "redirect:/circle/" + circleController.currentCircle.getCircleId();
+    }
+
+    @RequestMapping("/showdata")
+    public String userForm(@RequestParam("user_name") String name, Model model) {
+        System.out.println(name);
+        model.addAttribute("name", name);
+        return "redirect:/";
+    }
+
+
+
+
+
+//    @GetMapping ({"/task/done"})
+//    protected String markTaskAsDone(@ModelAttribute("task") Task task, BindingResult result) {
+//        if (!result.hasErrors()) {
+//            task.setTaskDone(true);
+//        }
+//        return "redirect:/";
+//    }
+
 }

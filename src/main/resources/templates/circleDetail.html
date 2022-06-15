@@ -7,33 +7,47 @@
 <div th:replace="fragments/general :: header"></div>
 <div class="container">
     <h1>Circle of <span th:text="${circle.circleName}"></span></h1>
+
+    <form action="/showdata" method="Get">
+        <label>Enter User Name: </label><input type="text" name="user_name"><br/><br/>
+        <input type="submit" />
+    </form>
+
     <table>
-        <tr th:each="task : ${circle.tasks}">
-<!--            <a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a>-->
+        <tr th:each="task : ${circle.tasks}" th:name="taskList" th:value="${task}">
 <td>
-            <div class="list-group w-auto">
-                <label class="list-group-item d-flex gap-3">
-                    <input class="form-check-input flex-shrink-0" type="checkbox" value="" checked="" style="font-size: 1.375em;">
-                    <span class="pt-1 form-checked-content">
-                        <strong><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a></strong>
-                    <small class="d-block text-muted">
-                    <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#calendar-event"></use></svg>
-                           1:00–2:00pm
-                           </small>
-                      </span>
-                </label>
-            </div>
+
+<!--    <select class="form-control" id="taskList" name="taskList">-->
+<!--        <option value="0">Select album to delete</option>-->
+<!--        <option th:each="task : ${circle.tasks}"-->
+<!--                th:value="${task.taskId}"-->
+<!--                th:text="${task.taskName}"></option>-->
+<!--    </select>-->
+
+    <div class="list-group list-group-checkable d-grid gap-2 border-0 w-auto">
+        <label class="list-group-item rounded-3 py-3" for="taskList1">
+            <input class="list-group-item-check pe-none" type="radio"
+                   name="taskList" id="taskList1" checked="" th:value="${task.taskId}">
+            <strong><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a></strong>
+            <span class="d-block small opacity-50" th:text="${task.taskDescription}"></span>
+        </label>
+    </div>
+
+
 </td>
         </tr>
     </table>
-
+    <div class="form-inline">
     <form action="/task/new">
         <input type="submit" class="btn btn-primary" value="Create new task">
     </form>
     <form action="/circle/delete">
         <input type="submit" value="Delete Circle" class="btn btn-danger">
     </form>
-
+    <form action="/task/done" method="Get">
+        <input type="submit" value="Mark Done" class="btn btn-success" >
+    </form>
+    </div>
 </div>
 <div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>

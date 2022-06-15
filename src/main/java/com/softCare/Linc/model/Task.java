@@ -15,6 +15,7 @@ public class Task {
     private Long taskId;
     private String taskName;
     private String taskDescription;
+    private boolean taskDone;
 
     @ManyToOne
     @JoinColumn(name="circle_id", nullable=false)
