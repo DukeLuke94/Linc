@@ -1,5 +1,6 @@
 package com.softCare.Linc.service;
 
+import com.softCare.Linc.model.Circle;
 import com.softCare.Linc.model.Task;
 
 import java.util.Optional;
@@ -11,5 +12,7 @@ public interface TaskServiceInterface {
     void save(Task task);
 
     void delete(Task task);
+
+    Object findAllTasksToDoInCircle(Circle circle);
 
 }

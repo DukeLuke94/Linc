@@ -2,6 +2,7 @@ package com.softCare.Linc.controller;
 
 import com.softCare.Linc.model.Circle;
 import com.softCare.Linc.service.CircleServiceInterface;
+import com.softCare.Linc.service.TaskServiceInterface;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,10 +20,12 @@ public class CircleController {
 
 
     private final CircleServiceInterface circleServiceInterface;
+    private final TaskServiceInterface taskServiceInterface;
     public Circle currentCircle;
 
-    public CircleController(CircleServiceInterface circleServiceInterface) {
+    public CircleController(CircleServiceInterface circleServiceInterface, TaskServiceInterface taskServiceInterface) {
         this.circleServiceInterface = circleServiceInterface;
+        this.taskServiceInterface = taskServiceInterface;
     }
 
 
@@ -38,6 +41,7 @@ public class CircleController {
         if (circle.isPresent()) {
             currentCircle = circle.get();
             model.addAttribute("circle", circle.get());
+            model.addAttribute("tasksToDo",taskServiceInterface.findAllTasksToDoInCircle(currentCircle));
             return "circleDetail";
         } else {
             return "redirect:/";

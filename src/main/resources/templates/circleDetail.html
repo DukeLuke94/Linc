@@ -8,21 +8,10 @@
 <div class="container">
     <h1>Circle of <span th:text="${circle.circleName}"></span></h1>
 
-    <form action="/showdata" method="Get">
-        <label>Enter User Name: </label><input type="text" name="user_name"><br/><br/>
-        <input type="submit" />
-    </form>
 
     <table>
-        <tr th:each="task : ${circle.tasks}" th:name="taskList" th:value="${task}">
+        <tr th:each="task : ${tasksToDo}" th:name="taskList" th:value="${task}">
 <td>
-
-<!--    <select class="form-control" id="taskList" name="taskList">-->
-<!--        <option value="0">Select album to delete</option>-->
-<!--        <option th:each="task : ${circle.tasks}"-->
-<!--                th:value="${task.taskId}"-->
-<!--                th:text="${task.taskName}"></option>-->
-<!--    </select>-->
 
     <div class="list-group list-group-checkable d-grid gap-2 border-0 w-auto">
         <label class="list-group-item rounded-3 py-3" for="taskList1">
@@ -44,9 +33,9 @@
     <form action="/circle/delete">
         <input type="submit" value="Delete Circle" class="btn btn-danger">
     </form>
-    <form action="/task/done" method="Get">
-        <input type="submit" value="Mark Done" class="btn btn-success" >
-    </form>
+<!--    <form action="/task/done" method="Get">-->
+<!--        <input type="submit" value="Mark Done" class="btn btn-success" >-->
+<!--    </form>-->
     </div>
 </div>
 <div th:replace="fragments/general :: footer"></div>

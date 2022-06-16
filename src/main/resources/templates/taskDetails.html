@@ -15,6 +15,9 @@
         <form th:action="@{/task/edit/{taskId}(taskId=${task.taskId})}">
             <input type="submit" class="btn btn-primary" value="Edit task">
         </form>
+        <form action="/task/done">
+            <input type="submit" value="Mark Done" class="btn btn-success" >
+        </form>
     </div>
 </div>
 
