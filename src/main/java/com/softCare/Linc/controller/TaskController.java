@@ -85,11 +85,15 @@ public class TaskController {
         return "redirect:/circle/" + referer;
     }
 
-    @GetMapping ({"/task/done"})
-    protected String markTaskDone() {
-        currentTask.setCircle(circleController.currentCircle);
-        currentTask.setTaskDone(true);
-        taskServiceInterface.save(currentTask);
+    @RequestMapping("/taskbutton")
+    public String userForm(@RequestParam(name = "taskId") Long taskId, Model model) {
+        Optional<Task> task = taskServiceInterface.findById(taskId);
+        if (task.isPresent()){
+            task.get().setCircle(circleController.currentCircle);
+            task.get().setTaskDone(true);
+            taskServiceInterface.save(task.get());
+        }
+        model.addAttribute("name", taskId);
         return "redirect:/circle/" + circleController.currentCircle.getCircleId();
     }
 
