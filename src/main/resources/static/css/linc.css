@@ -17,3 +17,48 @@ body{
 .list-group {
     max-width: 460px;
 }
+
+.container.tasks {
+    border-style: solid;
+    border-color: #03045E;
+}
+
+.btn-danger {
+    background-color: #E63946;
+    border-color: #E63946;
+
+}
+
+.btn-primary {
+    background-color: #457B9D;
+    border-color: #457B9D;
+
+}
+
+.btn-success {
+    background-color: #1D3557;
+    border-color: #1D3557;
+
+}
+
+.btn-danger:hover {
+    background-color: #E63946;
+    border-color: #E63946;
+    opacity: 0.7;
+    transition: 0.3s;
+
+}
+
+.btn-primary:hover {
+    background-color: #457B9D;
+    border-color: #457B9D;
+    opacity: 0.7;
+    transition: 0.3s;
+}
+
+.btn-success:hover {
+    background-color: #1D3557;
+    border-color: #1D3557;
+    opacity: 0.7;
+    transition: 0.3s;
+}
