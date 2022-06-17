@@ -8,11 +8,13 @@
 <div class="container">
     <h1>Circle of <span th:text="${circle.circleName}"></span></h1>
 
+    <div class="row">
+    <div class="col-4">
     <form action="/taskbutton" method="Post">
         <table>
         <tr th:each="task : ${tasksToDo}" th:name="taskList" th:value="${task}">
             <td>
-                <div class="list-group list-group-checkable d-grid gap-2 border-0 w-auto">
+                <div class="list-group list-group-checkable d-grid gap-2 border-0">
                 <label class="list-group-item rounded-3 py-3" for="tasklistradio">
                     <input class="list-group-item-check pe-none" id="tasklistradio" type="radio" name="taskId" th:value="${task.taskId}">
                     <strong><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a></strong>
@@ -25,9 +27,11 @@
         </table>
         <div class="form-inline">
         <input type="submit" class="btn btn-success" name = "Done" value="Mark Done"/>
-            <input type="submit" class="btn btn-primary" name = "Edit" value="Edit Task"/>
+            <input type="submit" class="btn btn-warning" name = "Edit" value="Edit Task"/>
         </div>
     </form>
+    </div>
+    </div>
     <br>
     <div class="form-inline">
         <form action="/task/new">
