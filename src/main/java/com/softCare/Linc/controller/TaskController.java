@@ -85,8 +85,7 @@ public class TaskController {
         return "redirect:/circle/" + referer;
     }
 
-
-    @RequestMapping(value="/taskbutton",params="Done",method=RequestMethod.POST)
+    @PostMapping(path="/taskbutton",params="Done")
     public String action1(@RequestParam(name = "taskId") Long taskId) {
         Optional<Task> task = taskServiceInterface.findById(taskId);
         if (task.isPresent()){
@@ -96,7 +95,8 @@ public class TaskController {
         }
         return "redirect:/circle/" + circleController.currentCircle.getCircleId();
     }
-    @RequestMapping(value="/taskbutton",params="Edit",method=RequestMethod.POST)
+
+    @PostMapping(path="/taskbutton",params="Edit")
     public String action2(@RequestParam(name = "taskId") Long taskId) {
         Optional<Task> task = taskServiceInterface.findById(taskId);
         if (task.isPresent()) {
