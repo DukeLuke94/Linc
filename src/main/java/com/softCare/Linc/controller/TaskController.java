@@ -113,5 +113,11 @@ public class TaskController {
         return "taskForm";
     }
 
-
+    @GetMapping ({"/task/done"})
+    protected String markTaskDone() {
+        currentTask.setCircle(circleController.currentCircle);
+        currentTask.setTaskDone(true);
+        taskServiceInterface.save(currentTask);
+        return "redirect:/circle/" + circleController.currentCircle.getCircleId();
+    }
 }

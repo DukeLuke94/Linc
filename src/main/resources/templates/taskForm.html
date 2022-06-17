@@ -7,6 +7,7 @@
 <div th:replace="fragments/general :: header"></div>
 <div class="container">
     <h1 class="display-4">Create new Task</h1>
+    <div class="col-3 form">
     <form th:action="@{/task/new}" method="post" th:object="${task}">
         <table>
             <tr>
@@ -16,8 +17,10 @@
                 <td><input type ="text" th:field="*{taskDescription}" placeholder="Task Description"></td>
             </tr>
         </table>
+        <br>
         <input type="submit" class="btn btn-primary" value="Save this task">
     </form>
+    </div>
 </div>
 <div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>

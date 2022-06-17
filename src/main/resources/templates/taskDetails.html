@@ -6,9 +6,10 @@
 <div th:replace="fragments/general :: header"></div>
 <body>
 <div class="container">
-    <h1 th:text="'Details of ' + ${task.taskName}"></h1>
+    <h1 class="display-4" th:text="'Details of ' + ${task.taskName}"></h1>
     <p th:text="${task.taskDescription}"></p>
-    <div class="form-inline">
+
+        <div class="btn-group" role="group" aria-label="Basic example">
         <form action="/task/delete">
             <input type="submit" class="btn btn-danger"  value="Delete task">
         </form>
