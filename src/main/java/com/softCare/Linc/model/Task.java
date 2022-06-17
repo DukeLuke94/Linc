@@ -2,9 +2,10 @@ package com.softCare.Linc.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity @Getter @Setter
 public class Task {
@@ -19,6 +20,7 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name="circle_id", nullable=false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Circle circle;
 
 }

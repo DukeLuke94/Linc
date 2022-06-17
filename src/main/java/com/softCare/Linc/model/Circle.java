@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,7 +18,7 @@ public class Circle {
 
     private String circleName;
 
-    @OneToMany (mappedBy = "circle")
+    @OneToMany (mappedBy = "circle", cascade = CascadeType.REMOVE)
     private List<Task> tasks;
 
 
