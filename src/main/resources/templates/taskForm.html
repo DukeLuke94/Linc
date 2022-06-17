@@ -11,10 +11,10 @@
     <form th:action="@{/task/new}" method="post" th:object="${task}">
         <table>
             <tr>
-                <td><input type ="text" th:field="*{taskName}" placeholder="Task Name"></td>
+                <td><input class="text" type="text" th:field="*{taskName}" placeholder="Task Name"></td>
             </tr>
             <tr>
-                <td><input type ="text" th:field="*{taskDescription}" placeholder="Task Description"></td>
+                <td><textarea class="text" type="text" th:field="*{taskDescription}" placeholder="Task Description"></textarea></td>
             </tr>
         </table>
         <br>

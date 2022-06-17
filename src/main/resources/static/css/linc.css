@@ -30,6 +30,10 @@ a {
     padding-bottom: 10px;
 }
 
+.text {
+    width: 250px;
+}
+
 .col-3.form {
     border-style: solid;
     border-radius: 10px;
@@ -93,11 +97,6 @@ a {
     transition: 0.3s;
     color: white;
 }
-
-
-
-
-
 
 .display-4{
     font-size: xxx-large;
