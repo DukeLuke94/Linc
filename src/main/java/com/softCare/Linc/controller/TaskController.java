@@ -85,16 +85,26 @@ public class TaskController {
         return "redirect:/circle/" + referer;
     }
 
-    @RequestMapping("/taskbutton")
-    public String userForm(@RequestParam(name = "taskId") Long taskId, Model model) {
+
+    @RequestMapping(value="/taskbutton",params="Done",method=RequestMethod.POST)
+    public String action1(@RequestParam(name = "taskId") Long taskId) {
         Optional<Task> task = taskServiceInterface.findById(taskId);
         if (task.isPresent()){
             task.get().setCircle(circleController.currentCircle);
             task.get().setTaskDone(true);
             taskServiceInterface.save(task.get());
         }
-        model.addAttribute("name", taskId);
         return "redirect:/circle/" + circleController.currentCircle.getCircleId();
+    }
+    @RequestMapping(value="/taskbutton",params="Edit",method=RequestMethod.POST)
+    public String action2(@RequestParam(name = "taskId") Long taskId) {
+        Optional<Task> task = taskServiceInterface.findById(taskId);
+        if (task.isPresent()) {
+            currentTask = task.get();
+            return "redirect:/task/edit/"+taskId;
+        } else {
+            return "redirect:/";
+        }
     }
 
 
