@@ -106,6 +106,12 @@ public class TaskController {
             return "redirect:/";
         }
     }
+    @RequestMapping(value="/taskbutton",params="New",method=RequestMethod.POST)
+    public String action3( Model model) {
+        model.addAttribute("circleId", circleController.currentCircle);
+        model.addAttribute("task", new Task());
+        return "taskForm";
+    }
 
 
 }

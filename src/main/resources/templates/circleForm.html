@@ -5,15 +5,15 @@
 </head>
 <div th:replace="fragments/general :: header"></div>
 <body>
-<div class="col-md-3"> </div>
-<div class="container col-md-6" >
-  <h1>Create a new circle </h1>
+
+<div class="container" >
+    <h1 class="display-4">Create new Circle</h1>
     <form action="#" th:action="@{/circle/new}" th:object="${circle}" method="post" >
         <p><input type="text" th:field="*{circleName}" placeholder="Circle Name"/></p>
         <p><input type="submit" value="Submit" class="btn btn-primary" />
     </form>
     </div>
-</div>
+
 <div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>
 </body>

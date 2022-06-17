@@ -5,8 +5,8 @@
 </head>
 <body>
 <div th:replace="fragments/general :: header"></div>
-<div class="container">
-    <h1>Circle of <span th:text="${circle.circleName}"></span></h1>
+<div class="container" >
+    <h1><span class="display-4" th:text="${circle.circleName}"></span></h1>
 
     <form action="/taskbutton" method="Post">
         <table>
@@ -23,22 +23,20 @@
         </tr>
 
         </table>
-        <div class="form-inline">
-        <input type="submit" class="btn btn-success" name = "Done" value="Mark Done"/>
-            <input type="submit" class="btn btn-primary" name = "Edit" value="Edit Task"/>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <input type="submit" class="btn btn-success" name = "Done" value="Done"/>
+            <input type="submit" class="btn btn-secondary" name="New" value="New">
+            <input type="submit" class="btn btn-primary" name = "Edit" value="Edit "/>
         </div>
     </form>
     <br>
-    <div class="form-inline">
-        <form action="/task/new">
-            <input type="submit" class="btn btn-primary" value="Create new task">
-        </form>
+
+
         <form  action="/circle/delete">
             <input type="submit"  value="Delete Circle" class="btn btn-danger">
         </form>
     </div>
 
-</div>
 
 <div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>

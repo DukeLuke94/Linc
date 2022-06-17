@@ -7,12 +7,8 @@
 <!--<div th:replace="fragments/general :: navbar"></div>-->
 <div th:replace="fragments/general :: header"></div>
 <div class="container">
-
-
+    <h1 class="display-4">All Circles</h1>
     <table>
-        <tr>
-            <th>Circles</th>
-        </tr>
         <tr th:each="circle : ${allCircles}">
             <td><a th:href="@{/circle/{circleId}(circleId=${circle.circleId})}" th:text="${circle.circleName}"></a></td>
         </tr>
