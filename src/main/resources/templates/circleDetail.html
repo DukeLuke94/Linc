@@ -9,7 +9,7 @@
     <h1>Circle of <span th:text="${circle.circleName}"></span></h1>
 
     <div class="row">
-    <div class="col-4">
+    <div class="col-3 tasks">
     <form action="/taskbutton" method="Post">
         <table>
         <tr th:each="task : ${tasksToDo}" th:name="taskList" th:value="${task}">
