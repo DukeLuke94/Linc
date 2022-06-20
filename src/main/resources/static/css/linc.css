@@ -8,6 +8,10 @@ body{
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    color: #1D3557;
+}
+a {
+    color: #1D3557;
 }
 
 .form-inline{
