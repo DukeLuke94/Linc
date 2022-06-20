@@ -10,6 +10,16 @@ import javax.persistence.*;
 @Entity @Getter @Setter
 public class Task {
 
+    public Task(String taskName, String taskDescription, boolean taskDone, Circle circle) {
+        this.taskName = taskName;
+        this.taskDescription = taskDescription;
+        this.taskDone = taskDone;
+        this.circle = circle;
+    }
+
+    public Task() {
+    }
+
     @Id
     @Column(name = "task_id", nullable = false)
     @GeneratedValue

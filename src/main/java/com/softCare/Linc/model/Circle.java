@@ -10,6 +10,12 @@ import java.util.List;
 @Entity @Getter @Setter
 public class Circle {
 
+    public Circle(String circleName) {
+        this.circleName = circleName;
+    }
+
+    public Circle() {
+    }
 
     @Id
     @Column(name = "circle_id", nullable = false)
