@@ -29,7 +29,7 @@ public class CircleController {
     }
 
 
-    @GetMapping({"/home", "/"})
+    @GetMapping({"/home"})
     protected String showHome(Model model) {
         model.addAttribute("allCircles", circleServiceInterface.findAll());
         return "circleOverview";
