@@ -2,7 +2,9 @@ package com.softCare.Linc.seeder;
 
 import com.softCare.Linc.model.Circle;
 import com.softCare.Linc.model.Task;
+import com.softCare.Linc.model.User;
 import com.softCare.Linc.service.CircleServiceInterface;
+import com.softCare.Linc.service.LincUserDetailServiceInterface;
 import com.softCare.Linc.service.TaskServiceInterface;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -17,31 +19,42 @@ public class Seeder {
 
     private final CircleServiceInterface circleServiceInterface;
     private final TaskServiceInterface taskServiceInterface;
+    private final LincUserDetailServiceInterface userDetailServiceInterface;
     private List<Object> circles;
+    private List<User> users;
 
 
-    public Seeder(CircleServiceInterface circleServiceInterface, TaskServiceInterface taskServiceInterface) {
+    public Seeder(CircleServiceInterface circleServiceInterface, TaskServiceInterface taskServiceInterface, LincUserDetailServiceInterface userDetailServiceInterface) {
         this.circleServiceInterface = circleServiceInterface;
         this.taskServiceInterface = taskServiceInterface;
+        this.userDetailServiceInterface = userDetailServiceInterface;
     }
-
 
     @EventListener
     public void seed(ContextRefreshedEvent contextRefreshedEvent) {
-        seedCircles();
-        seedTasks();
-    }
-
-    public void seedCircles() {
         circles = new ArrayList<>();
         circles.addAll((Collection<?>) circleServiceInterface.findAll());
         if (circles.size() == 0) {
+            seedCircles();
+            seedTasks();
+        }
+        users = new ArrayList<>();
+        users.addAll((Collection<? extends User>) userDetailServiceInterface.findAll());
+        if (users.size() == 0) {
+            seedUsers();
+        }
+    }
+
+    private void seedUsers() {
+        userDetailServiceInterface.save(new User("admin", "admin"));
+    }
+
+    public void seedCircles() {
             circleServiceInterface.save(new Circle("Oom Diederik"));
             circleServiceInterface.save(new Circle("Tante Geertruida"));
             circleServiceInterface.save(new Circle("Zorgboerderij 't Haantje"));
             circleServiceInterface.save(new Circle("Oma Riekie"));
             circleServiceInterface.save(new Circle("Woongroep Middenmeer"));
-        }
     }
 
     public void seedTasks() {
