@@ -15,7 +15,7 @@ public class UserMapper {
     public User userToViewModel(User user){
         User viewmodel = new User();
         viewmodel.setUserId(user.getUserId());
-        viewmodel.setUserName(user.getUserName());
+        viewmodel.setUserName(user.getUsername());
         return viewmodel;
     }
 }

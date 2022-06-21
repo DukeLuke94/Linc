@@ -40,5 +40,10 @@ public class CircleService implements  CircleServiceInterface{
         circleRepository.delete(circle);
     }
 
+    @Override
+    public Circle findByCircleName(String name) {
+        return circleRepository.findByCircleName(name);
+    }
+
 
 }

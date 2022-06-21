@@ -13,4 +13,6 @@ public interface CircleServiceInterface  {
     void save(Circle circle);
 
     void delete(Circle circle);
+
+    Circle findByCircleName(String name);
 }
