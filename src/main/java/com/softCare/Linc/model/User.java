@@ -26,7 +26,7 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String emailAddress;
     @Column(unique = true)
-    private int mobilePhoneNumber;
+    private int phoneNumber;
     @Column(unique = true, nullable = false)
     private String password;
 
