@@ -67,7 +67,7 @@ public class CircleController {
     @GetMapping("/circle/delete")
     protected String deleteCircle() {
         circleServiceInterface.delete(currentCircle);
-        return "redirect:/home";
+        return "redirect:/dashboard";
     }
 
 

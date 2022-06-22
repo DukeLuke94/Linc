@@ -34,7 +34,7 @@ public class UserController {
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userInterface.save(user);
-        return "redirect:/home";
+        return "redirect:/user/profile";
     }
 
     @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
