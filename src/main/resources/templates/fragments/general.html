@@ -17,15 +17,17 @@
             </div>
         </a>
 
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a th:href="@{/dashboard}" class="nav-link px-2 link-secondary">Dashboard</a></li>
-            <li><a th:href="@{/circle/new}" class="nav-link px-2 link-dark">New Circle</a></li>
-        </ul>
+        <div class="form-inline">
+            <a th:href="@{/dashboard}" sec:authorize="isAuthenticated()" class="nav-link px-2 link-secondary">Dashboard</a>
+            <a th:href="@{/circle/new}"  sec:authorize="isAuthenticated()" class="nav-link px-2 link-dark">New Circle</a>
+
+        </div>
+
 
         <div class="col-md-3 text-end">
             <a class="btn btn-primary" sec:authorize="isAnonymous()" href="/login">Login</a>
             <a class="btn btn-primary" sec:authorize="isAuthenticated()" href="/logout">Logout</a>
-            <a class="btn btn-primary" sec:authorize="isAnonymous()" href="/user/new">Register</a>
+            <a class="btn done" sec:authorize="isAnonymous()" href="/user/new">Register</a>
             <a class="" sec:authorize="isAuthenticated()" href="/user/profile">
                 <img  src="/static/images/user.png" width="50" height="50" aria-label="Bootstrap" alt="profile">
             </a>
