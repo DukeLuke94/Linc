@@ -41,7 +41,7 @@ public class CircleController {
         if (circle.isPresent()) {
             currentCircle = circle.get();
             model.addAttribute("circle", circle.get());
-            model.addAttribute("tasksToDo",taskServiceInterface.findAllTasksToDoInCircle(currentCircle));
+            model.addAttribute("tasksToDoAndClaim",taskServiceInterface.findAllTasksToDoAndToClaimInCircle(currentCircle));
             return "circleDetail";
         } else {
             return "redirect:/";

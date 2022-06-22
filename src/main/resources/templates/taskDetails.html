@@ -10,6 +10,9 @@
     <p th:text="${task.taskDescription}"></p>
 
         <div class="btn-group" role="group" aria-label="Basic example">
+            <form action="/task/assign">
+                <input type="submit" class="btn claim" name="Claim" value="Claim">
+            </form>
             <form action="/task/done">
                 <input type="submit" value="Done" class="btn done" >
             </form>

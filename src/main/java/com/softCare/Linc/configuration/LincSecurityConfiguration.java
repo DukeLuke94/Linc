@@ -27,7 +27,7 @@ public class LincSecurityConfiguration {
         http
             .authorizeHttpRequests((authorize) -> authorize
                     .antMatchers("/css/**", "/webjars/**").permitAll()
-                    .antMatchers("/","user/new").permitAll()
+                    .antMatchers("/", "user/new").permitAll()
                     .anyRequest().authenticated()
             )
                 .formLogin().and()

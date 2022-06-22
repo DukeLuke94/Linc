@@ -53,6 +53,20 @@ public class TaskService implements TaskServiceInterface {
         }
 
         return tasksToDo;
+    }
+
+    public Object findAllTasksToDoAndToClaimInCircle(Circle circle) {
+        Optional<List<Task>> allTasks = taskRepository.findByCircle(circle);
+        List<Task> tasksToDo = new ArrayList<>();
+        if (allTasks.isPresent()) {
+            for (Task allTask : allTasks.get()) {
+                if (!allTask.isTaskDone() & allTask.getUser() == null){
+                    tasksToDo.add(allTask);
+                }
+            }
+        }
+        return tasksToDo;
+
 
     }
 

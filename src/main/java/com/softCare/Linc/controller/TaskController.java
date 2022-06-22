@@ -2,8 +2,14 @@ package com.softCare.Linc.controller;
 
 
 import com.softCare.Linc.model.Task;
+import com.softCare.Linc.model.User;
 import com.softCare.Linc.service.CircleServiceInterface;
 import com.softCare.Linc.service.TaskServiceInterface;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,13 +22,15 @@ import java.util.Optional;
 public class TaskController {
 
     private final CircleController circleController;
+    private final UserController userController;
     public Task currentTask;
 
     private final CircleServiceInterface circleServiceInterface;
     private final TaskServiceInterface taskServiceInterface;
 
-    public TaskController(CircleController circleController, CircleServiceInterface circleServiceInterface, TaskServiceInterface taskServiceInterface) {
+    public TaskController(CircleController circleController, UserController userController, CircleServiceInterface circleServiceInterface, TaskServiceInterface taskServiceInterface) {
         this.circleController = circleController;
+        this.userController = userController;
         this.circleServiceInterface = circleServiceInterface;
         this.taskServiceInterface = taskServiceInterface;
     }
@@ -106,7 +114,8 @@ public class TaskController {
             return "redirect:/";
         }
     }
-    @RequestMapping(value="/taskbutton",params="New",method=RequestMethod.POST)
+
+    @PostMapping(value="/taskbutton",params="New")
     public String action3( Model model) {
         model.addAttribute("circleId", circleController.currentCircle);
         model.addAttribute("task", new Task());
@@ -117,6 +126,14 @@ public class TaskController {
     protected String markTaskDone() {
         currentTask.setCircle(circleController.currentCircle);
         currentTask.setTaskDone(true);
+        taskServiceInterface.save(currentTask);
+        return "redirect:/circle/" + circleController.currentCircle.getCircleId();
+    }
+
+    @GetMapping ({"/task/assign"})
+    protected String assignTaskToMe(@AuthenticationPrincipal User user) {
+        currentTask.setCircle(circleController.currentCircle);
+        currentTask.setUser(user);
         taskServiceInterface.save(currentTask);
         return "redirect:/circle/" + circleController.currentCircle.getCircleId();
     }

@@ -10,16 +10,6 @@ import javax.persistence.*;
 @Entity @Getter @Setter
 public class Task {
 
-    public Task(String taskName, String taskDescription, boolean taskDone, Circle circle) {
-        this.taskName = taskName;
-        this.taskDescription = taskDescription;
-        this.taskDone = taskDone;
-        this.circle = circle;
-    }
-
-    public Task() {
-    }
-
     @Id
     @Column(name = "task_id", nullable = false)
     @GeneratedValue
@@ -32,5 +22,19 @@ public class Task {
     @JoinColumn(name="circle_id", nullable=false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Circle circle;
+
+    @ManyToOne
+    @JoinColumn(name = "user_user_id")
+    private User user;
+
+    public Task(String taskName, String taskDescription, boolean taskDone, Circle circle) {
+        this.taskName = taskName;
+        this.taskDescription = taskDescription;
+        this.taskDone = taskDone;
+        this.circle = circle;
+    }
+
+    public Task() {
+    }
 
 }
