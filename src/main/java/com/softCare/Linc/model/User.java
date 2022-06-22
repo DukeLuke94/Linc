@@ -23,13 +23,11 @@ public class User implements UserDetails {
     private Long userId;
     @Column(unique = true, nullable = false)
     private String username;
-    @Column(unique = true)
-    private String emailAddress;
-    @Column(unique = true)
-    private int mobilePhoneNumber;
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String password;
 
+    private String emailAddress;
+    private int phoneNumber;
 
     public User(String username, String password) {
         this.username = username;

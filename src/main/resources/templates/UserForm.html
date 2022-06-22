@@ -7,24 +7,28 @@
 <div th:replace="fragments/general :: header"></div>
 <div class="container">
     <form th:action="@{/user/new}" method="post" th:object="${user}">
-        <div>
+        <div class="register-user">
             <label for="username">Username: </label>
-            <input type="text" id="username" th:field="*{username}">
+            <input type="text" id="username"
+                   th:required="required" placeholder="Select this field to type" th:field="*{username}">
         </div>
-        <div>
+        <div class="register-user">
             <label for="password">Password: </label>
-            <input type="password" id="password" th:required="" th:field="*{password}">
+            <input type="password" id="password"
+                   th:required="required" placeholder="Select this field to type" th:field="*{password}">
+        </div>
+        <div class="register-user">
+            <label for="emailAddress">E-mail:   </label>
+            <input type="email" id="emailAddress"
+                   th:required="required" placeholder="Select this field to type" th:field="*{emailAddress}">
+        </div>
+        <div class="register-user">
+            <label for="phoneNumber">Phone number:</label>
+            <input type="tel" id="phoneNumber" minlength="10"
+                   th:required="required" placeholder="Select this field to type" th:field="*{phoneNumber}">
         </div>
         <div>
-            <label for="emailAdress">E-mail:   </label>
-            <input type="email" id="emailAdress" th:field="*{emailAdress}">
-        </div>
-        <div>
-            <label for="mobilePhoneNumber">Mobile phone number:</label>
-            <input type="tel" id="mobilePhoneNumber" th:field="*{mobilePhoneNumber}">
-        </div>
-        <div>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary">Register</button>
         </div>
     </form>
 </div>
