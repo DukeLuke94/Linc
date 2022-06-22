@@ -7,16 +7,16 @@
 <div th:replace="fragments/general :: header"></div>
 <div class="container">
     <h1 class="display-4">Create new Task</h1>
-    <div class="col-3 form">
+    <div class="col-5 form">
     <form th:action="@{/task/new}" method="post" th:object="${task}">
-        <table>
-            <tr>
-                <td><input class="text" type="text" th:field="*{taskName}" placeholder="Task Name"></td>
-            </tr>
-            <tr>
-                <td><textarea class="text" type="text" th:field="*{taskDescription}" placeholder="Task Description"></textarea></td>
-            </tr>
-        </table>
+        <div class="form-div">
+            <label for="taskName">Task name: </label>
+            <input class="text" id="taskName" type="text" th:field="*{taskName}" placeholder="Select this field to type">
+        </div>
+        <div class="form-div">
+            <label for="taskDescription">Task Description: </label>
+            <input class="text" id="taskDescription" type="text" th:field="*{taskDescription}" placeholder="Select this field to type">
+        </div>
         <br>
         <input type="submit" class="btn done" value="Submit">
     </form>
