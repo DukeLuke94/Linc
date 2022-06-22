@@ -8,19 +8,26 @@
 <div class="container">
     <form th:action="@{/user/new}" method="post" th:object="${user}">
         <div>
-            <label for="userName">Username:</label>
-            <input type="text" id="userName" th:field="*{userName}">
+            <label for="username">Username: </label>
+            <input type="text" id="username" th:field="*{username}">
         </div>
         <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" th:field="*{password}">
+            <label for="password">Password: </label>
+            <input type="password" id="password" th:required="" th:field="*{password}">
+        </div>
+        <div>
+            <label for="emailAdress">E-mail:   </label>
+            <input type="email" id="emailAdress" th:field="*{emailAdress}">
+        </div>
+        <div>
+            <label for="mobilePhoneNumber">Mobile phone number:</label>
+            <input type="tel" id="mobilePhoneNumber" th:field="*{mobilePhoneNumber}">
         </div>
         <div>
             <button type="submit" class="btn btn-primary">Save</button>
         </div>
     </form>
 </div>
-
 
 <div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>

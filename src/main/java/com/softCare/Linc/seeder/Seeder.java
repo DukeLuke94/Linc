@@ -23,7 +23,6 @@ public class Seeder {
     private final LincUserDetailServiceInterface lincUserDetailServiceInterface;
     final PasswordEncoder passwordEncoder;
     private List<Object> circles;
-    private List<User> users;
 
     public Seeder(CircleServiceInterface circleServiceInterface, TaskServiceInterface taskServiceInterface, LincUserDetailServiceInterface lincUserDetailServiceInterface, PasswordEncoder passwordEncoder) {
         this.circleServiceInterface = circleServiceInterface;
@@ -44,8 +43,6 @@ public class Seeder {
         if (lincUserDetailServiceInterface.findAll().size() == 0){
             seedUsers();
         }
-
-
     }
 
     private void seedUsers() {
