@@ -18,10 +18,10 @@ public class LincSecurityConfiguration {
         this.lincUserDetailsService = lincUserDetailsService;
     }
 
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+            .csrf().disable()
             .authorizeHttpRequests((authorize) -> authorize
                     .antMatchers("/css/**", "/webjars/**").permitAll()
                     .antMatchers("/", "/user/new").permitAll()
