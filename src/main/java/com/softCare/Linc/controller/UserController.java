@@ -1,14 +1,18 @@
 package com.softCare.Linc.controller;
 
+import com.softCare.Linc.model.Task;
 import com.softCare.Linc.model.User;
 import com.softCare.Linc.service.LincUserDetailServiceInterface;
 import org.springframework.security.core.Authentication;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -28,14 +32,33 @@ public class UserController {
         return "userForm";
     }
     @PostMapping("/user/new")
-    protected String saveOrUpdateUser(@ModelAttribute("user") User user, BindingResult result) {
-        if (result.hasErrors()) {
-            return "userForm";
+    protected String saveOrUpdateUser(@ModelAttribute("user") User user, @AuthenticationPrincipal User loggedInUser, BindingResult result) {
+        if (!(loggedInUser == null)) {
+            user.setUserId(loggedInUser.getUserId());
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userInterface.save(user);
+        if (!result.hasErrors()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userInterface.save(user);
+        }
         return "redirect:/user/profile";
     }
+
+
+    @GetMapping({"/user/edit"})
+    protected String editUser(Authentication authentication, Model model) {
+        model.addAttribute("user", userInterface.loadUserByUsername(authentication.getName()));
+        return "userForm";
+    }
+
+//    @PostMapping({"/user/edit"})
+//    protected String saveEditedUser(@AuthenticationPrincipal User loggedInUser, User user, BindingResult result) {
+//        System.out.println(loggedInUser.getUserId());
+//        if (!result.hasErrors()) {
+//            user.setUserId(loggedInUser.getUserId());
+//            userInterface.save(user);
+//        }
+//        return "user/profile";
+//    }
 
     @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
     public String currentUserName(Authentication authentication, Model model) {

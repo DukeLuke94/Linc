@@ -27,7 +27,7 @@ public class User implements UserDetails {
     private List<Task> assignedTasks;
 
     private String emailAddress;
-    private int phoneNumber;
+    private String phoneNumber;
 
     public User(String username, String password) {
         this.username = username;

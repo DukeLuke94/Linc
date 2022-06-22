@@ -10,9 +10,10 @@
     <h1 class="display-4">Create new Circle</h1>
         <div class="col-5 form">
             <form th:action="@{/circle/new}" th:object="${circle}" method="post" >
-                <div class="form-div">
+                <div>
                     <label for="circleName">Circle name: </label>
-                    <input class="text" id="circleName" type="text" th:field="*{circleName}" placeholder="Select this field to type">
+                    <input class="text" id="circleName"
+                           type="text" th:field="*{circleName}" placeholder="Select this field to type">
                 </div>
                 <br>
                 <input type="submit" value="Submit" class="btn done" />

@@ -12,16 +12,21 @@ body{
 }
 
 /*userForm styling:   */
-.register-user {
+.form-div {
     display: flex;
     justify-content: space-between;
-    width: 30%;
+    width: 40%;
     margin: .5rem;
 }
 
 a {
     color: #1D3557;
 }
+
+/*Circleform styling:   */
+/*.col-5 {*/
+/*    padding-left: 0;*/
+/*}*/
 
 .form-inline{
     display: flex;
