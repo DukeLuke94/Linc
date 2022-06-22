@@ -20,11 +20,11 @@ public class LincSecurityConfiguration {
 
 
     @Bean
-    public SecurityFilterChain filterChain (HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests((authorize) -> authorize
                     .antMatchers("/css/**", "/webjars/**").permitAll()
-                    .antMatchers("/", "user/new").permitAll()
+                    .antMatchers("/", "/user/new").permitAll()
                     .anyRequest().authenticated()
             )
                 .formLogin().and()
