@@ -130,11 +130,23 @@ public class TaskController {
         return "redirect:/circle/" + circleController.currentCircle.getCircleId();
     }
 
-    @GetMapping ({"/task/assign"})
+    @GetMapping ({"/task/claim"})
     protected String assignTaskToMe(@AuthenticationPrincipal User user) {
         currentTask.setCircle(circleController.currentCircle);
         currentTask.setUser(user);
         taskServiceInterface.save(currentTask);
+        return "redirect:/circle/" + circleController.currentCircle.getCircleId();
+    }
+
+    @PostMapping(path="/taskbutton",params="Claim")
+    public String action4(@RequestParam(name = "taskId") Long taskId, @AuthenticationPrincipal User user) {
+        Optional<Task> task = taskServiceInterface.findById(taskId);
+        if (task.isPresent()) {
+            currentTask = task.get();
+            currentTask.setCircle(circleController.currentCircle);
+            currentTask.setUser(user);
+            taskServiceInterface.save(currentTask);
+        }
         return "redirect:/circle/" + circleController.currentCircle.getCircleId();
     }
 }
