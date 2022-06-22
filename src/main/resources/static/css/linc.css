@@ -10,6 +10,15 @@ body{
     flex-direction: column;
     color: #1D3557;
 }
+
+/*userForm styling:   */
+.register-user {
+    display: flex;
+    justify-content: space-between;
+    width: 30%;
+    margin: .5rem;
+}
+
 a {
     color: #1D3557;
 }

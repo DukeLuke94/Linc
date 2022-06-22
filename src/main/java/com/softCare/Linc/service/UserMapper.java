@@ -1,6 +1,5 @@
 package com.softCare.Linc.service;
 
-import com.softCare.Linc.model.Task;
 import com.softCare.Linc.model.User;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,7 @@ public class UserMapper {
     public User userToViewModel(User user){
         User viewmodel = new User();
         viewmodel.setUserId(user.getUserId());
-        viewmodel.setUserName(user.getUsername());
+        viewmodel.setUsername(user.getUsername());
         return viewmodel;
     }
 }
