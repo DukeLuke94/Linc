@@ -1,8 +1,9 @@
 package com.softCare.Linc.controller;
 
-import com.softCare.Linc.model.Circle;
 import com.softCare.Linc.model.User;
 import com.softCare.Linc.service.LincUserDetailServiceInterface;
+import org.springframework.security.core.Authentication;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class UserController {
@@ -37,6 +39,13 @@ public class UserController {
         lincUserDetailServiceInterface.save(user);
         return "redirect:/home";
     }
+
+    @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
+    public String currentUserName(Authentication authentication, Model model) {
+        model.addAttribute("user",userInterface.loadUserByUsername(authentication.getName()));
+        return "userProfile";
+    }
+
 
 
 
