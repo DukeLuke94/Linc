@@ -27,7 +27,10 @@ public class LincSecurityConfiguration {
                     .antMatchers("/", "/user/new").permitAll()
                     .anyRequest().authenticated()
             )
-                .formLogin().and()
+                .formLogin()
+                .usernameParameter("emailAddress")
+//                .successForwardUrl("/dashboard")
+                .and()
                 .logout().logoutSuccessUrl("/");
         return http.build();
     }

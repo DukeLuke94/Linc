@@ -46,7 +46,7 @@ public class Seeder {
     }
 
     private void seedUsers() {
-        lincUserDetailServiceInterface.save(new User("admin", passwordEncoder.encode("admin")));
+        lincUserDetailServiceInterface.save(new User("admin","admin@admin.nl", passwordEncoder.encode("admin")));
     }
 
     public void seedCircles() {
