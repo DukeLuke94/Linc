@@ -20,8 +20,13 @@ public class User implements UserDetails {
     private Long userId;
     @Column(unique = true, nullable = false)
     private String username;
+
     @Column(nullable = false)
     private String password;
+    @Transient
+    private String currentPassword;
+    @Transient
+    private String passwordRepeat;
 
     @OneToMany (mappedBy = "user")
     private List<Task> assignedTasks;

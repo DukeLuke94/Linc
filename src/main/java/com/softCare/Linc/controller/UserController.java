@@ -31,16 +31,18 @@ public class UserController {
         model.addAttribute("user", new User());
         return "userForm";
     }
+
     @PostMapping("/user/new")
     protected String saveOrUpdateUser(@ModelAttribute("user") User user, @AuthenticationPrincipal User loggedInUser, BindingResult result) {
         if (!(loggedInUser == null)) {
             user.setUserId(loggedInUser.getUserId());
         }
-        if (!result.hasErrors()) {
+        if (!result.hasErrors() && user.getPassword().equals(user.getPasswordRepeat())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userInterface.save(user);
+            return "redirect:/user/profile";
         }
-        return "redirect:/user/profile";
+        return "redirect:/user/new";
     }
 
 
@@ -49,6 +51,38 @@ public class UserController {
         model.addAttribute("user", userInterface.loadUserByUsername(authentication.getName()));
         return "userForm";
     }
+
+    @GetMapping({"/user/edit/password"})
+    protected String editUserPassword(Model model, @AuthenticationPrincipal User loggedInUser) {
+        model.addAttribute("user", loggedInUser);
+        return "editPasswordForm";
+    }
+
+
+    @PostMapping({"/user/edit/password"})
+    protected String editUserPassword(@ModelAttribute("user") User user, @AuthenticationPrincipal User loggedInUser, BindingResult result) {
+        if (passwordEncoder.matches(user.getCurrentPassword(), loggedInUser.getPassword())) {
+            if (user.getPassword().equals(user.getPasswordRepeat())) {
+                if (!result.hasErrors()) {
+                    setUpdatedUser(user, loggedInUser);
+                    user.setPassword(passwordEncoder.encode(user.getPassword()));
+                    userInterface.save(user);
+                    return "redirect:/user/profile";
+                }
+                return "redirect:/user/edit/password";
+            }
+        }
+        return "redirect:/user/edit/password";
+    }
+
+    private void setUpdatedUser(User user, User loggedInUser) {
+        user.setUserId(loggedInUser.getUserId());
+        user.setUsername(loggedInUser.getUsername());
+        user.setEmailAddress(loggedInUser.getEmailAddress());
+        user.setPhoneNumber(loggedInUser.getPhoneNumber());
+        user.setAssignedTasks(loggedInUser.getAssignedTasks());
+    }
+
 
     @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
     public String currentUserName(Authentication authentication, Model model) {

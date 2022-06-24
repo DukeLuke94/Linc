@@ -17,8 +17,15 @@
         </div>
         <div class="form-div">
             <label for="password">Password: </label>
-            <input type="password" id="password"
-                   th:required="required" placeholder="Select this field to type" th:field="*{password}">
+            <input type="password" id="password" name="password"
+                   th:required="required" placeholder="Select this field to type"
+                   th:field="*{password}" onkeyup='checkPassword()'>
+        </div>
+        <div class="form-div">
+            <label for="passwordRepeat">Repeat password: </label>
+            <input type="password" id="passwordRepeat" name="passwordRepeat"
+                   th:required="required" placeholder="Select this field to type"
+                   th:field="*{passwordRepeat}" onkeyup='checkPassword()'>
         </div>
         <div class="form-div">
             <label for="emailAddress">E-mail:   </label>
