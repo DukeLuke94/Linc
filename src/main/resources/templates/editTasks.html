@@ -6,20 +6,19 @@
 <body>
 <div th:replace="fragments/general :: header"></div>
 <div class="container">
-    <h1 class="display-4" th:text="'Edit task ' + ${task.taskName}"></h1>
-    <div class="col-3 form">
-    <form th:action="@{/task/edit}" method="post" th:object="${task}">
-        <table>
-            <tr>
-                <td><input class="text" type ="text" th:field="*{taskName}"></td>
-            </tr>
-            <tr>
-                <td><textarea class="text" type ="text" th:field="*{taskDescription}"></textarea></td>
-            </tr>
-        </table>
+    <h1 class="display-4" th:text="'Edit task'"></h1>
+    <div class="col-auto form">
+        <form th:action="@{/task/edit}" method="post" th:object="${task}">
+            <label for="taskName">Task name:</label>
+            <input type="text" id="taskName"
+                   th:required="required" placeholder="Select this field to type" th:field="*{taskName}">
         <br>
-        <input type="submit" class="btn done" value="Save">
-    </form>
+            <label for="taskDescription">Task description:</label>
+            <textarea type ="text" id="taskDescription" th:required="required"
+                      placeholder="Select this field to type" th:field="*{taskDescription}"></textarea>
+        <br>
+            <input type="submit" class="btn done" value="Save">
+        </form>
     </div>
 </div>
 <div th:replace="fragments/general :: footer"></div>

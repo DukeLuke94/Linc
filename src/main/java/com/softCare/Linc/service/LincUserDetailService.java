@@ -28,9 +28,9 @@ public class LincUserDetailService implements UserDetailsService, LincUserDetail
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username).orElseThrow(
-                () -> new UsernameNotFoundException("User with name " + username + " was not found."));
+    public UserDetails loadUserByUsername(String emailAddress) throws UsernameNotFoundException {
+        return userRepository.findByEmailAddress(emailAddress).orElseThrow(
+                () -> new UsernameNotFoundException("User with email " + emailAddress + " was not found."));
     }
 
     @Override

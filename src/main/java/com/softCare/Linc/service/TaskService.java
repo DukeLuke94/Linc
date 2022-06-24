@@ -3,7 +3,6 @@ package com.softCare.Linc.service;
 import com.softCare.Linc.Repository.TaskRepository;
 import com.softCare.Linc.model.Circle;
 import com.softCare.Linc.model.Task;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
