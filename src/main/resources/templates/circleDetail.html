@@ -54,9 +54,10 @@
             <ul th:each="task : ${doneTasks}">
                 <li th:text="${task.taskName}"></li>
             </ul>
-
+            <p th:unless="${doneTasks.size != 0}" class="text-center">No tasks have been marked done yet..</p>
         </div>
     </div>
+    <br>
 
 
     <form  action="/circle/delete" class="delete-button-bottom">
