@@ -21,7 +21,7 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
 
 
-    public UserController(LincUserDetailServiceInterface lincUserDetailServiceInterface, LincUserDetailServiceInterface userInterface, PasswordEncoder passwordEncoder) {
+    public UserController(LincUserDetailServiceInterface userInterface, PasswordEncoder passwordEncoder) {
         this.userInterface = userInterface;
         this.passwordEncoder = passwordEncoder;
     }
@@ -49,16 +49,6 @@ public class UserController {
         model.addAttribute("user", userInterface.loadUserByUsername(authentication.getName()));
         return "userForm";
     }
-
-//    @PostMapping({"/user/edit"})
-//    protected String saveEditedUser(@AuthenticationPrincipal User loggedInUser, User user, BindingResult result) {
-//        System.out.println(loggedInUser.getUserId());
-//        if (!result.hasErrors()) {
-//            user.setUserId(loggedInUser.getUserId());
-//            userInterface.save(user);
-//        }
-//        return "user/profile";
-//    }
 
     @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
     public String currentUserName(Authentication authentication, Model model) {

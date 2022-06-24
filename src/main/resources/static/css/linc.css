@@ -215,12 +215,13 @@ button:hover::after, button:focus::after {
 /*}*/
 
 .frontpage-image{
-
+    width: 70%;
+    height: auto;
     opacity: 95%;
+    border-radius: 5%;
 }
 
 .page-header{
     text-align: center;
     margin-bottom: 15px;
-
 }
