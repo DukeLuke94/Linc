@@ -9,11 +9,11 @@
 </head>
 
 <body>
-<div class="container-fluid" th:fragment="header">
+<div class="container" th:fragment="header">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
             <div class="wrap">
-                <button class="button">linc</button>
+                <button class="logo">linc</button>
             </div>
         </a>
 
@@ -24,7 +24,7 @@
         </div>
 
 
-        <div class="col-md-3 text-end">
+        <div class="">
             <a class="btn btn-primary" sec:authorize="isAnonymous()" href="/login">Login</a>
             <a class="btn btn-primary" sec:authorize="isAuthenticated()" href="/logout">Logout</a>
             <a class="btn done" sec:authorize="isAnonymous()" href="/user/new">Register</a>

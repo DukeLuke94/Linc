@@ -137,7 +137,8 @@ a {
     justify-content: center;
 }
 
-.button {
+.logo {
+    /*left: 250%;*/
     min-width: 60px;
     min-height: 60px;
     font-family: 'Century Gothic', sans-serif;
@@ -222,6 +223,7 @@ button:hover::after, button:focus::after {
 }
 
 .page-header{
-    text-align: center;
-    margin-bottom: 15px;
+    text-align: left;
+    margin-bottom: 30px;
+
 }

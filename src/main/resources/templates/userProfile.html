@@ -7,7 +7,9 @@
 <div th:replace="fragments/general :: header"></div>
 
 <div class="container">
+    <div class="page-header">
     <h1><span class="display-4" th:text="${user.username}"></span></h1>
+    </div>
 
     <form th:action="@{/user/edit}" method="get">
         <input type="submit" class="btn done" name = "Edit user" value="edit"/>

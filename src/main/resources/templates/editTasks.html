@@ -6,7 +6,9 @@
 <body>
 <div th:replace="fragments/general :: header"></div>
 <div class="container">
+    <div class="page-header">
     <h1 class="display-4" th:text="'Edit task'"></h1>
+    </div>
     <div class="col-auto form">
         <form th:action="@{/task/edit}" method="post" th:object="${task}">
             <label for="taskName">Task name:</label>
