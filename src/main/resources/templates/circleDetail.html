@@ -6,9 +6,14 @@
 <body>
 <div th:replace="fragments/general :: header"></div>
 <div class="container" >
-    <h1><span class="display-4" th:text="${circle.circleName}"></span></h1>
 
-    <div class="col-5 tasks">
+<div class="page-header">
+    <h1><span class="display-4" th:text="${circle.circleName}"> </span></h1>
+</div>
+    <div class="row">
+
+    <div class="col-md-6">
+    <div class="card card-body">
     <form action="/taskbutton" method="Post">
         <table>
         <tr th:each="task : ${tasksToDoAndClaim}">
@@ -35,10 +40,32 @@
     <br>
 
 
-        <form  action="/circle/delete">
-            <input type="submit"  value="Delete Circle" class="btn delete">
-        </form>
+</div>
+
+
+<div class="col-md-6">
+    <p>
+        <a class="btn btn-primary" data-toggle="collapse" href="#collapseDoneTasks" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Task history
+        </a>
+    </p>
+    <div class="collapse" id="collapseDoneTasks">
+        <div class="card card-body">
+            <ul th:each="task : ${doneTasks}">
+                <li th:text="${task.taskName}"></li>
+            </ul>
+
+        </div>
     </div>
+
+
+    <form  action="/circle/delete" class="delete-button-bottom">
+        <input type="submit"  value="Delete Circle" class="btn delete">
+    </form>
+</div>
+    </div>
+</div>
+
 
 
 <div th:replace="fragments/general :: footer"></div>

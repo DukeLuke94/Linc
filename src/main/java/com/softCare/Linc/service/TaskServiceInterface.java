@@ -17,4 +17,6 @@ public interface TaskServiceInterface {
 
     Object findAllTasksToDoAndToClaimInCircle(Circle circle);
 
+    Object findAllDoneTasksInCircle(Circle circle);
+
 }

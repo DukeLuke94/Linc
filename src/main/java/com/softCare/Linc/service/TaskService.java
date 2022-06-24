@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,6 +69,18 @@ public class TaskService implements TaskServiceInterface {
         return tasksToDo;
 
 
+    }
+
+    @Override
+    public Object findAllDoneTasksInCircle(Circle circle) {
+        List<Task> allTasks = taskRepository.findByCircle(circle).get();
+        List<Task> doneTasks = new ArrayList<>();
+        for (Task allTask : allTasks) {
+            if (allTask.isTaskDone()){
+                doneTasks.add(allTask);
+            }
+        }
+        return doneTasks;
     }
 
 

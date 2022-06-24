@@ -23,7 +23,7 @@ public class LincSecurityConfiguration {
         http
             .csrf().disable()
             .authorizeHttpRequests((authorize) -> authorize
-                    .antMatchers("/css/**", "/webjars/**").permitAll()
+                    .antMatchers("/css/**", "/webjars/**","/static/**").permitAll()
                     .antMatchers("/", "/user/new").permitAll()
                     .anyRequest().authenticated()
             )
