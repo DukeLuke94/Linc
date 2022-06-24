@@ -62,7 +62,7 @@ public class CircleController {
         } else if (result.hasErrors()) {
             return "redirect:/circle/new";
         }
-        return "redirect:/home";
+        return "redirect:/dashboard";
     }
 
     @GetMapping("/circle/delete")

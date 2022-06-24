@@ -6,7 +6,9 @@
 <div th:replace="fragments/general :: header"></div>
 <body>
 <div class="container">
+    <div class="page-header">
     <h1 class="display-4" th:text="'Details of ' + ${task.taskName}"></h1>
+    </div>
     <p th:text="${task.taskDescription}"></p>
 
         <div class="btn-group" role="group" aria-label="Basic example">
