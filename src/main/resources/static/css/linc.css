@@ -225,5 +225,8 @@ button:hover::after, button:focus::after {
 .page-header{
     text-align: left;
     margin-bottom: 30px;
+}
 
+.user-buttons {
+    text-align: right;
 }
