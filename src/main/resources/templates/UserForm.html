@@ -6,10 +6,11 @@
 <body>
 <div th:replace="fragments/general :: header"></div>
 <div class="container">
-    <form th:action="@{/user/new}" method="post" th:object="${user}">
+    <form th:action="@{/user/new}" method="post" th:object="${user}" class="form">
         <div class="page-header">
             <h1 class="display-4">Register as a user</h1>
         </div>
+
         <div class="form-div">
             <label for="username">Username: </label>
             <input type="text" id="username"
