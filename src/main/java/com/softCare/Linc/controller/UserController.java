@@ -26,6 +26,17 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @GetMapping({"/login"})
+    protected String login(Model model, String error, String logout) {
+            if (error != null)
+                model.addAttribute("errorMsg", "Your username and password are invalid.");
+
+            if (logout != null)
+                model.addAttribute("msg", "You have been logged out successfully.");
+
+            return "login";
+    }
+
     @GetMapping({"/user/new"})
     protected String newUser(Model model) {
         model.addAttribute("user", new User());
@@ -89,6 +100,8 @@ public class UserController {
         model.addAttribute("user",userInterface.loadUserByUsername(authentication.getName()));
         return "userProfile";
     }
+
+
 
 
 

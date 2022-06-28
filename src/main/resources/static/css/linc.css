@@ -11,27 +11,24 @@ body{
     color: #1D3557;
 }
 
-/*userForm styling:   */
-.form-div {
-    display: flex;
-    justify-content: space-between;
-    width: 40%;
-    margin: .5rem;
+.display-4 {
+    font-size: xx-large;
+    font-weight: normal;
+}
+
+#taskDescription {
+    height: 200px;
+}
+
+.modal, .modal-body, .modal-footer, .modal-header {
+    text-align: left;
 }
 
 a {
     color: #1D3557;
 }
 
-/*Circleform styling:   */
-/*.col-5 {*/
-/*    padding-left: 0;*/
-/*}*/
 
-.form-inline{
-    display: flex;
-    gap: 10px;
-}
 .list-group {
     max-width: 460px;
 }
@@ -46,14 +43,6 @@ a {
 
 .text {
     width: 250px;
-}
-
-.col-3.form {
-    border-style: solid;
-    border-radius: 10px;
-    border-color: #F0ECEC;
-    padding-top: 10px;
-    padding-bottom: 10px;
 }
 
 .btn.done{
@@ -124,10 +113,6 @@ a {
     opacity: 0.7;
     transition: 0.3s;
     color: white;
-}
-
-.display-4{
-    font-size: xx-large;
 }
 
 .wrap {
