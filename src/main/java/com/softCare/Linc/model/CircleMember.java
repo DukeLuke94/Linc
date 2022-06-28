@@ -1,0 +1,50 @@
+package com.softCare.Linc.model;
+
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
+
+/**
+ * @author Lucas Blumers
+ *
+ * Describes the relations between a user and a CircleMember
+ */
+@Entity @Getter @Setter
+public class CircleMember {
+
+    @Id
+    @GeneratedValue
+    private Long circleMemberId;
+
+    @ManyToOne
+    private User user;
+
+    @ManyToOne
+    private Circle circle;
+
+    private boolean isClient;
+    private boolean isAdmin;
+
+
+    public CircleMember(User user, Circle circle, boolean isClient, boolean isAdmin) {
+        this.user = user;
+        this.circle = circle;
+        this.isClient = isClient;
+        this.isAdmin = isAdmin;
+    }
+
+    public CircleMember(User user, Circle circle) {
+        this.user = user;
+        this.circle = circle;
+        this.isClient = false;
+        this.isAdmin = false;
+    }
+
+    public CircleMember() {
+        this.user = new User();
+        this.circle = new Circle();
+        this.isAdmin = false;
+        this.isClient = false;
+    }
+}

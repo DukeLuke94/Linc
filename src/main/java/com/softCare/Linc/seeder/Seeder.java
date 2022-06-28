@@ -1,8 +1,10 @@
 package com.softCare.Linc.seeder;
 
 import com.softCare.Linc.model.Circle;
+import com.softCare.Linc.model.CircleMember;
 import com.softCare.Linc.model.Task;
 import com.softCare.Linc.model.User;
+import com.softCare.Linc.service.CircleMemberServiceInterface;
 import com.softCare.Linc.service.CircleServiceInterface;
 import com.softCare.Linc.service.LincUserDetailServiceInterface;
 import com.softCare.Linc.service.TaskServiceInterface;
@@ -21,13 +23,15 @@ public class Seeder {
     private final CircleServiceInterface circleServiceInterface;
     private final TaskServiceInterface taskServiceInterface;
     private final LincUserDetailServiceInterface lincUserDetailServiceInterface;
+    private final CircleMemberServiceInterface circleMemberServiceInterface;
     final PasswordEncoder passwordEncoder;
     private List<Object> circles;
 
-    public Seeder(CircleServiceInterface circleServiceInterface, TaskServiceInterface taskServiceInterface, LincUserDetailServiceInterface lincUserDetailServiceInterface, PasswordEncoder passwordEncoder) {
+    public Seeder(CircleServiceInterface circleServiceInterface, TaskServiceInterface taskServiceInterface, LincUserDetailServiceInterface lincUserDetailServiceInterface, CircleMemberServiceInterface circleMemberServiceInterface, PasswordEncoder passwordEncoder) {
         this.circleServiceInterface = circleServiceInterface;
         this.taskServiceInterface = taskServiceInterface;
         this.lincUserDetailServiceInterface = lincUserDetailServiceInterface;
+        this.circleMemberServiceInterface = circleMemberServiceInterface;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -46,7 +50,19 @@ public class Seeder {
     }
 
     private void seedUsers() {
-        lincUserDetailServiceInterface.save(new User("admin","admin@admin.nl", passwordEncoder.encode("admin")));
+        // seed user "admin"
+        User admin = new User("admin","admin@admin.nl", passwordEncoder.encode("admin"));
+        lincUserDetailServiceInterface.save(admin);
+
+        //seed permissions for the admin
+
+        List<Circle> allCircles = new ArrayList<>();
+        allCircles.addAll((Collection<? extends Circle>) circleServiceInterface.findAll());
+        for (Circle allCircle : allCircles) {
+            circleMemberServiceInterface.save(new CircleMember(admin,allCircle,true,true));
+        }
+
+
     }
 
     public void seedCircles() {
