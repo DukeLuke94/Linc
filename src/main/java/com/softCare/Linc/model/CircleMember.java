@@ -2,6 +2,8 @@ package com.softCare.Linc.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -21,6 +23,7 @@ public class CircleMember {
     private User user;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Circle circle;
 
     private boolean isClient;
