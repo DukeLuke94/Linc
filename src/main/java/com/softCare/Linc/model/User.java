@@ -3,6 +3,7 @@ package com.softCare.Linc.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Proxy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,7 +13,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Entity @Getter @Setter
+import static javax.persistence.CascadeType.ALL;
+
+@Entity @Getter @Setter @Proxy(lazy = false)
 public class User implements UserDetails {
 
     @Id @GeneratedValue
@@ -33,6 +36,11 @@ public class User implements UserDetails {
 
     private String emailAddress;
     private String phoneNumber;
+
+    @OneToMany(mappedBy = "user",  cascade = ALL,fetch = FetchType.EAGER)
+    private List<CircleMember> circleMembers;
+
+
 
     public User(String username, String emailAddress, String password) {
         this.username = username;

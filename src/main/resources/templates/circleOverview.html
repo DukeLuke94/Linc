@@ -9,6 +9,7 @@
     <div class="page-header">
     <h1 class="display-4">All Circles</h1>
     </div>
+    <p th:unless="${allCircles.size != 0}" class="">You are not invited to any circles yet..</p>
     <table>
         <tr th:each="circle : ${allCircles}">
             <td><a th:href="@{/circle/{circleId}(circleId=${circle.circleId})}" th:text="${circle.circleName}"></a></td>
