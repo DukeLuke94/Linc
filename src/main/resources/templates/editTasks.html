@@ -4,23 +4,32 @@
     <title th:text="${task.taskName}"></title>
 </head>
 <body>
+
 <div th:replace="fragments/general :: header"></div>
 <div class="container">
+
     <div class="page-header">
-    <h1 class="display-4" th:text="'Edit task'"></h1>
+        <h1 class="display-4">Edit task</h1>
     </div>
-    <div class="col-auto form">
-        <form th:action="@{/task/edit}" method="post" th:object="${task}">
-            <label for="taskName">Task name:</label>
-            <input type="text" id="taskName"
-                   th:required="required" placeholder="Select this field to type" th:field="*{taskName}">
-        <br>
-            <label for="taskDescription">Task description:</label>
-            <textarea type ="text" id="taskDescription" th:required="required"
-                      placeholder="Select this field to type" th:field="*{taskDescription}"></textarea>
-        <br>
-            <input type="submit" class="btn done" value="Save">
-        </form>
+
+    <div class="row">
+        <div class="col-5">
+            <form method="post" th:action="@{/task/edit}" th:object="${task}">
+                <div class="form-group">
+                    <label for="taskName">Task name</label>
+                    <input name="taskName" id="taskName" type="text" class="form-control"
+                           th:field="*{taskName}" th:required="required" placeholder="Task name">
+                </div>
+
+                <div class="form-group">
+                    <label for="taskDescription">Task description</label>
+                    <textarea name="taskDescription" id="taskDescription" type ="text" class="form-control"  th:required="required"
+                              th:field="*{taskDescription}" placeholder="Task description"></textarea>
+                </div>
+
+                <input type="submit" class="btn btn-primary" value="Save">
+            </form>
+        </div>
     </div>
 </div>
 <div th:replace="fragments/general :: footer"></div>

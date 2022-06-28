@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})">
-  <title>New circle</title>
+    <title>Create new circle</title>
 </head>
-<div th:replace="fragments/general :: header"></div>
 <body>
 
+<div th:replace="fragments/general :: header"></div>
 <div class="container" >
+
     <div class="page-header">
-    <h1 class="display-4">Create new Circle</h1>
+        <h1 class="display-4">Create new Circle</h1>
     </div>
-        <div class="col-5 form">
-            <form th:action="@{/circle/new}" th:object="${circle}" method="post" >
-                <div>
-                    <label for="circleName">Circle name: </label>
-                    <input class="text" id="circleName"
-                           type="text" th:field="*{circleName}" placeholder="Select this field to type">
+
+    <div class="row">
+        <div class="col-5">
+            <form method="post" th:action="@{/circle/new}" th:object="${circle}">
+                <div class="form-group">
+                    <label for="circleName">Circle name</label>
+                    <input name="circleName" id="circleName" type="text" class="form-control"
+                           th:field="*{circleName}" placeholder="Circle name">
                 </div>
-                <br>
-                <input type="submit" value="Submit" class="btn done" />
+
+                <input type="submit" class="btn btn-primary" value="Create">
             </form>
         </div>
     </div>
-
+</div>
 <div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>
 </body>

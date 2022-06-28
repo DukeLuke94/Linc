@@ -1,49 +1,55 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})">
-    <title>Title</title>
+    <title>Register as a user</title>
 </head>
 <body>
+
 <div th:replace="fragments/general :: header"></div>
 <div class="container">
-    <form th:action="@{/user/new}" method="post" th:object="${user}" class="form">
-        <div class="page-header">
-            <h1 class="display-4">Register as a user</h1>
-        </div>
 
-        <div class="form-div">
-            <label for="username">Username: </label>
-            <input type="text" id="username"
-                   th:required="required" placeholder="Select this field to type" th:field="*{username}">
+    <div class="page-header">
+        <h1 class="display-4">Register as a user</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-5">
+            <form method="post" th:action="@{/user/new}"  th:object="${user}">
+                <div class="form-group">
+                    <label for="username">Name</label>
+                    <input name="username" id="username" type="text" class="form-control"
+                           th:field="*{username}" th:required="required" placeholder="Name">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input name="password" id="password" type="password" class="form-control"
+                           th:field="*{password}" th:required="required" placeholder="Password">
+                </div>
+
+                <div class="form-group">
+                    <label for="passwordRepeat">Repeat password</label>
+                    <input name="passwordRepeat" id="passwordRepeat" type="password" class="form-control"
+                           th:field="*{passwordRepeat}" th:required="required" placeholder="Repeat password">
+                </div>
+
+                <div class="form-group">
+                    <label for="emailAddress">Email address</label>
+                    <input name ="emailAddress" id="emailAddress" type="email" class="form-control"
+                           th:field="*{emailAddress}" th:required="required" placeholder="Email address">
+                </div>
+
+                <div class="form-group">
+                    <label for="phoneNumber">Phone number</label>
+                    <input name="phoneNumber" id="phoneNumber" type="text" class="form-control"
+                           th:field="*{phoneNumber}" th:required="required" minlength="10" maxlength="12" placeholder="Phone number">
+                </div>
+
+                <input type="submit" class="btn btn-primary" value="Register">
+            </form>
         </div>
-        <div class="form-div">
-            <label for="password">Password: </label>
-            <input type="password" id="password" name="password"
-                   th:required="required" placeholder="Select this field to type"
-                   th:field="*{password}" onkeyup='checkPassword()'>
-        </div>
-        <div class="form-div">
-            <label for="passwordRepeat">Repeat password: </label>
-            <input type="password" id="passwordRepeat" name="passwordRepeat"
-                   th:required="required" placeholder="Select this field to type"
-                   th:field="*{passwordRepeat}" onkeyup='checkPassword()'>
-        </div>
-        <div class="form-div">
-            <label for="emailAddress">E-mail:   </label>
-            <input type="email" id="emailAddress"
-                   th:required="required" placeholder="Select this field to type" th:field="*{emailAddress}">
-        </div>
-        <div class="form-div">
-            <label for="phoneNumber">Phone number:</label>
-            <input type="text" id="phoneNumber" minlength="10" maxlength="12"
-                   th:required="required" placeholder="Select this field to type" th:field="*{phoneNumber}">
-        </div>
-        <div>
-            <button type="submit" class="btn btn-primary">Register</button>
-        </div>
-    </form>
+    </div>
 </div>
-
 <div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>
 </body>
