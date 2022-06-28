@@ -20,6 +20,10 @@ body{
     height: 200px;
 }
 
+.modal, .modal-body, .modal-footer, .modal-header {
+    text-align: left;
+}
+
 a {
     color: #1D3557;
 }
