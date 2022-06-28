@@ -66,7 +66,7 @@
                 </div>
                 <div class="modal-body">
                     <p>
-                        You are about to delete Circle <span th:block th:tex="${circleName}"></span>
+                        You are about to delete Circle <span th:block th:text="${circle.circleName}"></span>
                         that has <span th:block th:text="${tasksToDoAndClaim.size}"></span> task(s) in it.
                         <br><br>
                         Deleting a Circle can not be undone!
