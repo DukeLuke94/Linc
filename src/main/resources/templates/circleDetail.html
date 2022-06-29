@@ -51,6 +51,19 @@
                     </ul><p th:unless="${doneTasks.size != 0}" class="text-center">No tasks have been marked done yet..</p>
                 </div>
             </div>
+
+            <p>
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapseCircleMembers" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Circle members
+                </a>
+            </p>
+            <div class="collapse" id="collapseCircleMembers">
+                <div class="card card-body">
+                    <ul th:each="user: ${circleMembers}">
+                        <li th:text="${user.username}"></li>
+                </div>
+            </div>
+
             <br>
 
             <button type="button" class="btn delete" data-toggle="modal" data-target="#myModal">Delete circle</button>
