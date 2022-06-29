@@ -1,3 +1,5 @@
+document.getElementById("myForm").addEventListener("submit", checkPassword);
+
 function checkPassword() {
     let password = document.querySelector('#password').value,
         confirmPassword = document.querySelector('#passwordRepeat').value;

@@ -215,3 +215,7 @@ button:hover::after, button:focus::after {
 .user-buttons {
     text-align: right;
 }
+
+.error {
+    color: crimson;
+}
