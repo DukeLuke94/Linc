@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -21,7 +22,7 @@ public class Task {
     private String taskDescription;
     private boolean taskDone;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat
     private LocalDate dueDate;
 
     @ManyToOne
@@ -42,11 +43,6 @@ public class Task {
     }
 
     public Task() {
-    }
-
-    public String getDueDate() {
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyy");
-        return dueDate.format(format);
     }
 
 
