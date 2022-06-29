@@ -67,20 +67,21 @@ public class Seeder {
     }
 
     public void seedCircles() {
-            circleServiceInterface.save(new Circle("Oom Diederik"));
-            circleServiceInterface.save(new Circle("Tante Geertruida"));
-            circleServiceInterface.save(new Circle("Zorgboerderij 't Haantje"));
-            circleServiceInterface.save(new Circle("Oma Jantina"));
-            circleServiceInterface.save(new Circle("Woongroep Middenmeer"));
+        circleServiceInterface.save(new Circle("Oom Diederik"));
+        circleServiceInterface.save(new Circle("Tante Geertruida"));
+        circleServiceInterface.save(new Circle("Zorgboerderij 't Haantje"));
+        circleServiceInterface.save(new Circle("Oma Jantina"));
+        circleServiceInterface.save(new Circle("Woongroep Middenmeer"));
     }
 
     public void seedTasks() {
-
+        LocalDate exampleDate = LocalDate.of(2022, 07, 30);
         taskServiceInterface.save(new Task(
                 "Boodschappen doen",
                 "Havermout, melk, boter",
                 false,
-                circleServiceInterface.findByCircleName("Oom Diederik")));
+                circleServiceInterface.findByCircleName("Oom Diederik"),
+                exampleDate));
         taskServiceInterface.save(new Task(
                 "Gras maaien",
                 "Niet te kort AUB",
