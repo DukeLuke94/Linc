@@ -1,8 +1,9 @@
 package com.softCare.Linc.controller;
 
-import com.softCare.Linc.model.Task;
 import com.softCare.Linc.model.User;
+import com.softCare.Linc.model.UserVM;
 import com.softCare.Linc.service.LincUserDetailServiceInterface;
+import com.softCare.Linc.service.UserMapper;
 import org.springframework.security.core.Authentication;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -12,18 +13,24 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import javax.validation.Valid;
 
 @Controller
 public class UserController {
 
+    private final String PASSWORD_REPEAT_NO_MATCH = "The entered passwords are not an exact match";
+
     private final LincUserDetailServiceInterface userInterface;
     private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
 
 
-    public UserController(LincUserDetailServiceInterface userInterface, PasswordEncoder passwordEncoder) {
+    public UserController(LincUserDetailServiceInterface userInterface,
+                          PasswordEncoder passwordEncoder,
+                          UserMapper userMapper) {
         this.userInterface = userInterface;
         this.passwordEncoder = passwordEncoder;
+        this.userMapper = userMapper;
     }
 
     @GetMapping({"/login"})
@@ -33,21 +40,28 @@ public class UserController {
 
     @GetMapping({"/user/new"})
     protected String newUser(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("userVM", new UserVM());
         return "userForm";
     }
 
     @PostMapping("/user/new")
-    protected String saveOrUpdateUser(@ModelAttribute("user") User user, @AuthenticationPrincipal User loggedInUser, BindingResult result) {
+    protected String saveOrUpdateUser(@AuthenticationPrincipal User loggedInUser,
+                                      @Valid @ModelAttribute("userVM") UserVM userVM, BindingResult result,
+                                      Model model) {
         if (!(loggedInUser == null)) {
+            User user = userMapper.userVMToUserModel(userVM);
             user.setUserId(loggedInUser.getUserId());
         }
-        if (!result.hasErrors() && user.getPassword().equals(user.getPasswordRepeat())) {
+        if (!userVM.getPassword().equals(userVM.getPasswordRepeat())) {
+            model.addAttribute("errorMessage", PASSWORD_REPEAT_NO_MATCH);
+            return "userForm";
+        } else if (!result.hasErrors() && userVM.getPassword().equals(userVM.getPasswordRepeat())) {
+            User user = userMapper.userVMToUserModel(userVM);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userInterface.save(user);
             return "redirect:/user/profile";
         }
-        return "redirect:/user/new";
+        return "userForm";
     }
 
 
