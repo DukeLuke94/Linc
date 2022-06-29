@@ -22,6 +22,9 @@
                                         <input class="list-group-item-check pe-none" id="tasklistradio" type="radio" th:name="taskId" th:value="${task.taskId}">
                                         <strong><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a></strong>
                                         <span class="d-block small opacity-50" th:text="${task.taskDescription}"></span>
+                                        <br>
+                                        <p class="d-block small opacity-50">Due date: <span  th:text="${task.dueDate}"></span></p>
+
                                     </label>
                                 </div>
                             </td>

@@ -13,6 +13,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -74,82 +75,97 @@ public class Seeder {
     }
 
     public void seedTasks() {
-
+        LocalDate exampleDate = LocalDate.of(2022, 07, 30);
         taskServiceInterface.save(new Task(
                 "Boodschappen doen",
                 "Havermout, melk, boter",
                 false,
-                circleServiceInterface.findByCircleName("Oom Diederik")));
+                circleServiceInterface.findByCircleName("Oom Diederik"),
+                exampleDate));
         taskServiceInterface.save(new Task(
                 "Gras maaien",
                 "Niet te kort AUB",
                 false,
-                circleServiceInterface.findByCircleName("Oom Diederik")));
+                circleServiceInterface.findByCircleName("Oom Diederik"),
+                exampleDate));
         taskServiceInterface.save(new Task(
                 "Naar de kapper",
                 "Komende woensdagmiddag",
                 false,
-                circleServiceInterface.findByCircleName("Oom Diederik")));
+                circleServiceInterface.findByCircleName("Oom Diederik"),
+                exampleDate));
         taskServiceInterface.save(new Task(
                 "Ramen wassen",
                 "-",
                 false,
-                circleServiceInterface.findByCircleName("Tante Geertruida")));
+                circleServiceInterface.findByCircleName("Tante Geertruida"),
+                exampleDate));
         taskServiceInterface.save(new Task(
                 "Auto APK",
                 "Komende donderdagochtend 8 uur",
                 false,
-                circleServiceInterface.findByCircleName("Tante Geertruida")));
+                circleServiceInterface.findByCircleName("Tante Geertruida"),
+                exampleDate));
         taskServiceInterface.save(new Task(
                 "Schuur opruimen",
                 "-",
                 false,
-                circleServiceInterface.findByCircleName("Tante Geertruida")));
+                circleServiceInterface.findByCircleName("Tante Geertruida"),
+                exampleDate));
         taskServiceInterface.save(new Task(
                 "Grijze container bij de weg zetten",
                 "Komende maandagochtend voor 8 uur",
                 false,
-                circleServiceInterface.findByCircleName("Zorgboerderij 't Haantje")));
+                circleServiceInterface.findByCircleName("Zorgboerderij 't Haantje"),
+                exampleDate));
         taskServiceInterface.save(new Task(
                 "Schutting repareren",
                 "-",
                 false,
-                circleServiceInterface.findByCircleName("Zorgboerderij 't Haantje")));
+                circleServiceInterface.findByCircleName("Zorgboerderij 't Haantje"),
+                exampleDate));
         taskServiceInterface.save(new Task(
                 "Rummikub spelen",
                 "Idealiter in het weekend",
                 false,
-                circleServiceInterface.findByCircleName("Zorgboerderij 't Haantje")));
+                circleServiceInterface.findByCircleName("Zorgboerderij 't Haantje"),
+                exampleDate));
         taskServiceInterface.save(new Task(
                 "Medicijnen ophalen bij de apotheek",
                 "Dinsdagmiddag",
                 false,
-                circleServiceInterface.findByCircleName("Oma Jantina")));
+                circleServiceInterface.findByCircleName("Oma Jantina"),
+                exampleDate));
         taskServiceInterface.save(new Task(
                 "Gras maaien",
                 "Achter en voor huis",
                 false,
-                circleServiceInterface.findByCircleName("Oma Jantina")));
+                circleServiceInterface.findByCircleName("Oma Jantina"),
+                exampleDate));
         taskServiceInterface.save(new Task(
                 "TV repareren",
                 "Zenders zitten niet meer op de goede plek",
                 false,
-                circleServiceInterface.findByCircleName("Oma Jantina")));
+                circleServiceInterface.findByCircleName("Oma Jantina"),
+                exampleDate));
         taskServiceInterface.save(new Task(
                 "Boodschappen doen",
                 "Havermout, melk, boter",
                 false,
-                circleServiceInterface.findByCircleName("Woongroep Middenmeer")));
+                circleServiceInterface.findByCircleName("Woongroep Middenmeer"),
+                exampleDate));
         taskServiceInterface.save(new Task(
                 "Vissen voeren",
                 "2 theelepels",
                 false,
-                circleServiceInterface.findByCircleName("Woongroep Middenmeer")));
+                circleServiceInterface.findByCircleName("Woongroep Middenmeer"),
+                exampleDate));
         taskServiceInterface.save(new Task(
                 "Visvoer bestellen",
                 "Voor komend weekend in huis graag",
                 false,
-                circleServiceInterface.findByCircleName("Woongroep Middenmeer")));
+                circleServiceInterface.findByCircleName("Woongroep Middenmeer"),
+                exampleDate));
     }
 
 }
