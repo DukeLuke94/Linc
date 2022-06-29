@@ -9,20 +9,20 @@
 </head>
 
 <body>
-<div class="container" th:fragment="header">
+<div class="container-fluid" th:fragment="header">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+
+        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none" sec:authorize="isAnonymous()">
             <div class="wrap">
                 <button class="logo">linc</button>
             </div>
         </a>
 
-        <div class="form-inline">
-            <a th:href="@{/dashboard}" sec:authorize="isAuthenticated()" class="nav-link px-2 link-secondary">Dashboard</a>
-            <a th:href="@{/circle/new}"  sec:authorize="isAuthenticated()" class="nav-link px-2 link-dark">New Circle</a>
-
-        </div>
-
+        <a href="/dashboard" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none" sec:authorize="isAuthenticated()">
+            <div class="wrap">
+                <button class="logo">linc</button>
+            </div>
+        </a>
 
         <div class="col-md-3 user-buttons">
             <a class="btn btn-primary" sec:authorize="isAnonymous()" href="/login">Login</a>

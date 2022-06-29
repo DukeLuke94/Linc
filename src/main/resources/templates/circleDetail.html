@@ -5,100 +5,108 @@
 </head>
 <body>
 <div th:replace="fragments/general :: header"></div>
-<div class="container">
+
+
+
+<div class="container-fluid">
 
     <div class="page-header">
-        <h1><span class="display-4" th:text="${circle.circleName}"> </span></h1>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card card-body">
-                <form action="/taskbutton" method="Post">
-                    <table>
-                        <tr th:each="task : ${tasksToDoAndClaim}">
-                            <td>
-                                <div class="list-group list-group-checkable d-grid gap-2 border-0 w-auto">
-                                    <label class="list-group-item rounded-3 py-3" for="tasklistradio">
-                                        <input class="list-group-item-check pe-none" id="tasklistradio" type="radio" th:name="taskId" th:value="${task.taskId}">
-                                        <strong><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a></strong>
-                                        <span class="d-block small opacity-50" th:text="${task.taskDescription}"></span>
-                                    </label>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <input type="submit" class="btn claim" name="Claim" value="Claim">
-                        <input type="submit" class="btn done" name = "Done" value="Done"/>
-                        <input type="submit" class="btn new" name="New" value="New">
-                        <input type="submit" class="btn edit" name = "Edit" value="Edit"/>
-                    </div>
-                </form>
-            </div>
-            <br>
+        <div class="row">
+        <div class="col-2"></div>
+        <div class="col-9">
+            <h1><span class="display-4" th:text="${circle.circleName}"> </span></h1>
         </div>
-        <div class="col-md-6">
-            <p>
-                <a class="btn btn-primary" data-toggle="collapse" href="#collapseDoneTasks" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    Task history
-                </a>
-            </p>
-            <div class="collapse" id="collapseDoneTasks">
-                <div class="card card-body">
-                    <ul th:each="task : ${doneTasks}">
-                        <li th:text="${task.taskName}"></li>
-                    </ul><p th:unless="${doneTasks.size != 0}" class="text-center">No tasks have been marked done yet..</p>
+        </div>
+    </div>
+<!--    VERTICAL NAV BAR -->
+<div class="row">
+    <div class="col-2">
+
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a class="nav-link active" id="v-pills-tasks-tab" data-toggle="pill" href="#v-pills-tasks" role="tab" aria-controls="v-pills-tasks" aria-selected="true">Tasks</a>
+            <a class="nav-link" id="v-pills-users-tab" data-toggle="pill" href="#v-pills-users" role="tab" aria-controls="v-pills-users" aria-selected="false">Users</a>
+            <a class="nav-link" id="v-pills-history-tab" data-toggle="pill" href="#v-pills-history" role="tab" aria-controls="v-pills-history" aria-selected="false">History</a>
+            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+        </div>
+    </div>
+    <div class="col-9">
+        <div class="tab-content" id="v-pills-tabContent">
+        <div class="tab-pane fade show active" id="v-pills-tasks" role="tabpanel" aria-labelledby="v-pills-tasks-tab">
+<!--            TASK CONTENT START-->
+                <div class="">
+                        <form action="/taskbutton" method="Post">
+                            <table>
+                                <tr th:each="task : ${tasksToDoAndClaim}">
+                                    <td>
+                                        <div class="list-group list-group-checkable d-grid gap-2 border-0 w-auto">
+                                            <label class="list-group-item rounded-3 py-3" for="tasklistradio">
+                                                <input class="list-group-item-check pe-none" id="tasklistradio" type="radio" th:name="taskId" th:value="${task.taskId}">
+                                                <strong><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a></strong>
+                                                <span class="d-block small opacity-50" th:text="${task.taskDescription}"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <input type="submit" class="btn claim" name="Claim" value="Claim">
+                                <input type="submit" class="btn done" name = "Done" value="Done"/>
+                                <input type="submit" class="btn new" name="New" value="New">
+                                <input type="submit" class="btn edit" name = "Edit" value="Edit"/>
+                            </div>
+                        </form>
+                    <br>
                 </div>
             </div>
-
-            <p>
-                <a class="btn btn-primary" data-toggle="collapse" href="#collapseCircleMembers" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    Circle members
-                </a>
-            </p>
-            <div class="collapse" id="collapseCircleMembers">
-                <div class="card card-body">
+<!--            TASK CONTENT END-->
+        <div class="tab-pane fade" id="v-pills-users" role="tabpanel" aria-labelledby="v-pills-users-tab">
+            <!--        USER CONTENT START-->
+            <div class="">
                     <ul th:each="user: ${circleMembers}">
                         <li th:text="${user.username}"></li>
-                </div>
+                    </ul>
             </div>
-
-            <br>
-
+            <!--        USER CONTENT END-->
+        </div>
+        <div class="tab-pane fade" id="v-pills-history" role="tabpanel" aria-labelledby="v-pills-history-tab">
+<!--            HISTORY CONTENT START-->
+            <div class="">
+                    <ul th:each="task : ${doneTasks}">
+                        <li th:text="${task.taskName}"></li>
+                    </ul><p th:unless="${doneTasks.size != 0}" class="text-left">No tasks have been marked done yet..</p>
+            </div>
+<!--            HISTORY CONTENT END-->
+        </div>
+        <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+<!--            SETTINGS CONTENT START-->
             <button type="button" class="btn delete" data-toggle="modal" data-target="#myModal">Delete circle</button>
-
-        </div>
-    </div>
-
-    <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmationTitle">Are you sure?</h5>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        You are about to delete Circle <span th:block th:text="${circle.circleName}"></span>
-                        that has <span th:block th:text="${tasksToDoAndClaim.size}"></span> task(s) in it.
-                        <br><br>
-                        Deleting a Circle can not be undone!
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                    <form  action="/circle/delete" class="delete-button-bottom">
-                        <input type="submit"  value="Delete Circle" class="btn delete">
-                    </form>
+            <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmationTitle">Are you sure?</h5>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                You are about to delete Circle <span th:block th:text="${circle.circleName}"></span>
+                                that has <span th:block th:text="${tasksToDoAndClaim.size}"></span> task(s) in it.
+                                <br><br>
+                                Deleting a Circle can not be undone!
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            <form  action="/circle/delete" class="delete-button-bottom">
+                                <input type="submit"  value="Delete Circle" class="btn delete">
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
+<!--            SETTINGS CONTENT END-->
         </div>
     </div>
-
-
-
 </div>
-
 
 
 <div th:replace="fragments/general :: footer"></div>
