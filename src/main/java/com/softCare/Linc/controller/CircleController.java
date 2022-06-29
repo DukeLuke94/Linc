@@ -51,6 +51,7 @@ public class CircleController {
                 model.addAttribute("circle", circle.get());
                 model.addAttribute("tasksToDoAndClaim", taskServiceInterface.findAllTasksToDoAndToClaimInCircle(currentCircle));
                 model.addAttribute("doneTasks", taskServiceInterface.findAllDoneTasksInCircle(currentCircle));
+                model.addAttribute("circleMembers",circleMemberInterface.findAllMembers(circle.get()));
                 return "circleDetail";
             }
             //TODO: add 'no access' error page

@@ -5,6 +5,7 @@ import com.softCare.Linc.model.CircleMember;
 import com.softCare.Linc.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CircleMemberServiceInterface {
 
@@ -14,4 +15,6 @@ public interface CircleMemberServiceInterface {
     boolean isMember(User user, Circle circle);
 
     List<Circle> findAllCirclesWhereMemberOf(User user);
+
+    Object findAllMembers(Circle circle);
 }

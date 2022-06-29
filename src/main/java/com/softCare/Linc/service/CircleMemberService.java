@@ -6,6 +6,7 @@ import com.softCare.Linc.Repository.UserRepository;
 import com.softCare.Linc.model.Circle;
 import com.softCare.Linc.model.CircleMember;
 import com.softCare.Linc.model.User;
+import net.bytebuddy.dynamic.DynamicType;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -48,5 +49,17 @@ public class CircleMemberService implements CircleMemberServiceInterface {
             }
     }
         return circleList;
+    }
+
+    @Override
+    public List<User> findAllMembers(Circle circle) {
+        Optional<List<CircleMember>> circleMemberList = circleMemberRepository.findByCircleCircleId(circle.getCircleId());
+        List<User> userList = new ArrayList<>();
+        if (circleMemberList.isPresent()){
+            for (CircleMember circleMember : circleMemberList.get()) {
+                userList.add(userRepository.findById(circleMember.getUser().getUserId()).get());
+            }
+        }
+        return userList;
     }
 }
