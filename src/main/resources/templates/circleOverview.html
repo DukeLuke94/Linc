@@ -6,21 +6,28 @@
 <body>
 <div th:replace="fragments/general :: header"></div>
 <div class="container-fluid">
-    <div class="row">
-    <div class="col-2">
-<!--        potential nav bar-->
-    </div>
-    <div class="col-9">
-        <div class="page-header">
-            <h1 class="display-4">All your Circles</h1>
+    <div class="page-header">
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-9">
+                <h1 class="display-4">All your Circles</h1>
+            </div>
         </div>
-        <p th:unless="${allCircles.size != 0}" class="">You are not invited to any circles yet..</p>
-        <table>
-            <tr th:each="circle : ${allCircles}">
-                <td><a th:href="@{/circle/{circleId}(circleId=${circle.circleId})}" th:text="${circle.circleName}"></a></td>
-            </tr>
-        </table>
     </div>
+    <!--    POTENTIAL VERTICAL NAV BAR -->
+    <div class="row">
+        <div class="col-2"></div>
+
+            <!--           CIRCLE OVERVIEW CONTENT START-->
+            <div class="col-9">
+                <p th:unless="${allCircles.size != 0}" class="">You are not invited to any circles yet..</p>
+                <table>
+                    <tr th:each="circle : ${allCircles}">
+                        <td><a th:href="@{/circle/{circleId}(circleId=${circle.circleId})}" th:text="${circle.circleName}"></a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 <div th:replace="fragments/general :: footer"></div>
