@@ -67,11 +67,43 @@ public class Seeder {
     }
 
     public void seedCircles() {
-        circleServiceInterface.save(new Circle("Oom Diederik"));
-        circleServiceInterface.save(new Circle("Tante Geertruida"));
-        circleServiceInterface.save(new Circle("Zorgboerderij 't Haantje"));
-        circleServiceInterface.save(new Circle("Oma Jantina"));
-        circleServiceInterface.save(new Circle("Woongroep Middenmeer"));
+
+        Circle oomDiederik = new Circle("Oom Diederik");
+        Circle tanteGeertruida = new Circle("Tante Geertruida");
+        Circle zorgHaantje = new Circle("Zorgboerderij 't Haantje");
+        Circle omaJantina = new Circle("Oma Jantina");
+        Circle woongroep = new Circle("Woongroep Middenmeer");
+
+        circleServiceInterface.save(oomDiederik);
+        circleServiceInterface.save(tanteGeertruida);
+        circleServiceInterface.save(zorgHaantje);
+        circleServiceInterface.save(omaJantina);
+        circleServiceInterface.save(woongroep);
+
+        User diederik = new User("Diederik","diederik@diederik.nl",passwordEncoder.encode("diederik"));
+        User hendrik = new User("Hendrik","hendrik@hendrik.nl",passwordEncoder.encode("hendrik"));
+        User geertruida = new User("Geertruida","geertruida@geertruida.nl",passwordEncoder.encode("geertruida"));
+        User jantina = new User("Jantina","jantina@jantina.nl",passwordEncoder.encode("jantina"));
+        User baas = new User("M.Veen","mveen@mveen.nl",passwordEncoder.encode("mveen"));
+
+        lincUserDetailServiceInterface.save(diederik);
+        lincUserDetailServiceInterface.save(hendrik);
+        lincUserDetailServiceInterface.save(geertruida);
+        lincUserDetailServiceInterface.save(jantina);
+        lincUserDetailServiceInterface.save(baas);
+
+        CircleMember circleMemberDiederik = new CircleMember(diederik,oomDiederik,true,true);
+        CircleMember circleMemberHendrik = new CircleMember(hendrik,oomDiederik,false,false);
+        CircleMember circleMemberGeertruida = new CircleMember(geertruida,tanteGeertruida,true,true);
+        CircleMember circleMemberJantina = new CircleMember(jantina,omaJantina,true,true);
+        CircleMember circleMemberBaas = new CircleMember(baas,woongroep,true,true);
+
+        circleMemberServiceInterface.save(circleMemberDiederik);
+        circleMemberServiceInterface.save(circleMemberHendrik);
+        circleMemberServiceInterface.save(circleMemberGeertruida);
+        circleMemberServiceInterface.save(circleMemberJantina);
+        circleMemberServiceInterface.save(circleMemberBaas);
+
     }
 
     public void seedTasks() {

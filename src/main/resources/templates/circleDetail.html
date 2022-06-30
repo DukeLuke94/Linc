@@ -29,34 +29,50 @@
             <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
         </div>
     </div>
-    <div class="col-9">
+    <div class="col-8">
         <div class="tab-content" id="v-pills-tabContent">
         <div class="tab-pane fade show active" id="v-pills-tasks" role="tabpanel" aria-labelledby="v-pills-tasks-tab">
 <!--            TASK CONTENT START-->
-                <div class="">
-                        <form action="/taskbutton" method="Post">
-                            <table>
-                                <tr th:each="task : ${tasksToDoAndClaim}">
-                                    <td>
-                                        <div class="list-group list-group-checkable d-grid gap-2 border-0 w-auto">
-                                            <label class="list-group-item rounded-3 py-3" for="tasklistradio">
-                                                <input class="list-group-item-check pe-none" id="tasklistradio" type="radio" th:name="taskId" th:value="${task.taskId}">
-                                                <strong><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a></strong>
-                                                <span class="d-block small opacity-50" th:text="${task.taskDescription}"></span>
-                                            </label>
+
+
+                                        <div class="card w-100" th:each="task : ${tasksToDo}">
+
+
+
+                                            <div class="card-body">
+                                                <h5 class="card-title"><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a></h5>
+                                                <p class="card-text" th:text="${task.taskDescription}"></p>
+
+                                                    <div th:if="${task.user == null}" class="text-left">
+                                                        <form th:action="@{/task/claim}" method="post" th:object="${task}">
+                                                            <label>
+                                                                <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
+                                                            </label>
+                                                            <button type="submit" class="btn btn-primary text-right">Claim</button>
+                                                        </form>
+                                                    </div>
+
+<!--                                                Displays claimants name-->
+                                                    <div th:if="${task.claimedUserName != null}" class="text-right">
+                                                    <span th:if="${task.claimedUserName != currentUser}" class="d-block small opacity-50 text-right" th:text="'Claimed by: '+${task.claimedUserName}">
+                                                    </span>
+                                                    </div>
+
+
+                                                    <div th:if="${task.claimedUserName == currentUser}" class="text-left">
+
+                                                        <form th:action="@{/task/done}" method="post" th:object="${task}">
+                                                            <label>
+
+                                                                <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
+                                                            </label>
+                                                            <button type="submit" class="btn btn-primary text-right">Done</button>
+                                                        </form>
+                                                    </div>
+                                            </div>
+
                                         </div>
-                                    </td>
-                                </tr>
-                            </table>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <input type="submit" class="btn claim" name="Claim" value="Claim">
-                                <input type="submit" class="btn done" name = "Done" value="Done"/>
-                                <input type="submit" class="btn new" name="New" value="New">
-                                <input type="submit" class="btn edit" name = "Edit" value="Edit"/>
-                            </div>
-                        </form>
-                    <br>
-                </div>
+
             </div>
 <!--            TASK CONTENT END-->
         <div class="tab-pane fade" id="v-pills-users" role="tabpanel" aria-labelledby="v-pills-users-tab">
@@ -89,7 +105,7 @@
                         <div class="modal-body">
                             <p>
                                 You are about to delete Circle <span th:block th:text="${circle.circleName}"></span>
-                                that has <span th:block th:text="${tasksToDoAndClaim.size}"></span> task(s) in it.
+                                that has <span th:block th:text="${tasksToDo.size}"></span> task(s) in it.
                                 <br><br>
                                 Deleting a Circle can not be undone!
                             </p>

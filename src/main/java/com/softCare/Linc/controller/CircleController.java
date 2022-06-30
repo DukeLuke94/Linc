@@ -45,13 +45,15 @@ public class CircleController {
     @GetMapping("/circle/{circleId}")
     protected String showCircleDetails(@PathVariable("circleId") Long circleId, Model model,@AuthenticationPrincipal User user) {
         Optional<Circle> circle = circleServiceInterface.findById(circleId);
+        Long currentUserId = user.getUserId();
         if (circle.isPresent()) {
             if (circleMemberInterface.isMember(user, circle.get())) {
                 currentCircle = circle.get();
                 model.addAttribute("circle", circle.get());
-                model.addAttribute("tasksToDoAndClaim", taskServiceInterface.findAllTasksToDoAndToClaimInCircle(currentCircle));
+                model.addAttribute("tasksToDo", taskServiceInterface.findAllTasksToDoInCircle(currentCircle));
                 model.addAttribute("doneTasks", taskServiceInterface.findAllDoneTasksInCircle(currentCircle));
                 model.addAttribute("circleMembers",circleMemberInterface.findAllMembers(circle.get()));
+                model.addAttribute("currentUser",user.getUsername());
                 return "circleDetail";
             }
             //TODO: add 'no access' error page

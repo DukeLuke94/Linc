@@ -22,7 +22,7 @@ public class Task {
     private String taskDescription;
     private boolean taskDone;
 
-    @DateTimeFormat
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dueDate;
 
     @ManyToOne
@@ -33,6 +33,8 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "user_user_id")
     private User user;
+
+    private String claimedUserName;
 
     public Task(String taskName, String taskDescription, boolean taskDone, Circle circle, LocalDate dueDate) {
         this.taskName = taskName;
