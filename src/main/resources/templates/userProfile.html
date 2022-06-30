@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})">
-    <title>Title</title>
+    <title th:text="${user.username} + 's profile'"></title>
 </head>
 <body>
 <div th:replace="fragments/general :: header"></div>
