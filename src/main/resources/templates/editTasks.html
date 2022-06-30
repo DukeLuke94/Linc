@@ -6,14 +6,22 @@
 <body>
 
 <div th:replace="fragments/general :: header"></div>
-<div class="container">
-
+<div class="container-fluid">
     <div class="page-header">
-        <h1 class="display-4">Edit task</h1>
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-9">
+                <h1 class="display-4">Edit task</h1>
+            </div>
+        </div>
     </div>
 
+    <!--    POTENTIAL VERTICAL NAV BAR -->
     <div class="row">
-        <div class="col-5">
+        <div class="col-2"></div>
+
+        <!--            EDIT TASK CONTENT START-->
+        <div class="col-3">
             <form method="post" th:action="@{/task/edit}" th:object="${task}">
                 <div class="form-group">
                     <label for="taskName">Task name</label>
@@ -25,6 +33,12 @@
                     <label for="taskDescription">Task description</label>
                     <textarea name="taskDescription" id="taskDescription" type ="text" class="form-control"  th:required="required"
                               th:field="*{taskDescription}" placeholder="Task description"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="dueDate">Due date</label>
+                    <input name="dueDate" id="dueDate" type="date" class="form-control"
+                           th:field="*{dueDate}">
                 </div>
 
                 <input type="submit" class="btn btn-primary" value="Save">
