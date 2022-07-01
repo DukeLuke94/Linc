@@ -33,43 +33,44 @@
 
 
                                         <div class="card w-100" th:each="task : ${tasksToDo}">
-
-
-
+<!--                                            Task title & description-->
                                             <div class="card-body">
                                                 <h5 class="card-title"><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a></h5>
                                                 <p class="card-text" th:text="${task.taskDescription}"></p>
-
-                                                    <div th:if="${task.user == null}" class="text-left">
-                                                        <form th:action="@{/task/claim}" method="post" th:object="${task}">
+                                                    <div th:if="${task.user == null}" class="">
+                                                        <form th:action="@{/task/claim}" method="post" class="">
+<!--                                                           Claim button if unclaimed-->
+                                                            <div class="text-right float-right">
+                                                                <button type="submit" class="btn btn-primary text-right">Claim</button>
+                                                            </div>
                                                             <label>
                                                                 <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
                                                             </label>
-                                                            <button type="submit" class="btn btn-primary text-right">Claim</button>
                                                         </form>
                                                     </div>
-
-<!--                                                Displays claimants name-->
+<!--                                                Displays due date, if there is one-->
+                                                <div th:if="${task.dueDate != null}" class="text-left">
+                                                    <img src="/static/images/calendar-check.svg" th:text="' '+${task.dueDate}" class="" alt="calender">
+                                                </div>
+<!--                                                Displays claimants name if claimed-->
                                                     <div th:if="${task.claimedUserName != null}" class="text-right">
                                                     <span th:if="${task.claimedUserName != currentUser}" class="d-block small opacity-50 text-right" th:text="'Claimed by: '+${task.claimedUserName}">
                                                     </span>
                                                     </div>
-
-
-                                                    <div th:if="${task.claimedUserName == currentUser}" class="text-left">
-
+<!--                                                 Done button if claimed & owned-->
+                                                    <div th:if="${task.claimedUserName == currentUser}" class="">
                                                         <form th:action="@{/task/done}" method="post" th:object="${task}">
                                                             <label>
-
                                                                 <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
                                                             </label>
-                                                            <button type="submit" class="btn btn-primary text-right">Done</button>
+                                                            <div class="text-right">
+                                                                <button type="submit" class="btn btn-primary text-right">Done</button>
+                                                            </div>
                                                         </form>
                                                     </div>
                                             </div>
-
                                         </div>
-
+            <a class="btn btn-primary float-right"  href="/task/new">New task</a>
             </div>
 <!--            TASK CONTENT END-->
         <div class="tab-pane fade" id="v-pills-users" role="tabpanel" aria-labelledby="v-pills-users-tab">

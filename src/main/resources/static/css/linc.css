@@ -10,8 +10,8 @@ body{
     flex-direction: column;
     color: #1D3557;
 }
-.verticalNavBar{
-
+.card.w-100{
+    margin-bottom: 5px;
 }
 
 .display-4 {
