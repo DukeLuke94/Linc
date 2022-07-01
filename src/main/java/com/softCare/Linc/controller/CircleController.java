@@ -48,12 +48,15 @@ public class CircleController {
         Long currentUserId = user.getUserId();
         if (circle.isPresent()) {
             if (circleMemberInterface.isMember(user, circle.get())) {
+                boolean isAdmin = circleMemberInterface.isAdmin(user,circle.get());
                 currentCircle = circle.get();
                 model.addAttribute("circle", circle.get());
                 model.addAttribute("tasksToDo", taskServiceInterface.findAllTasksToDoInCircle(currentCircle));
                 model.addAttribute("doneTasks", taskServiceInterface.findAllDoneTasksInCircle(currentCircle));
                 model.addAttribute("circleMembers",circleMemberInterface.findAllMembers(circle.get()));
                 model.addAttribute("currentUser",user.getUsername());
+                model.addAttribute("isAdmin",isAdmin);
+                model.addAttribute("newMemberUser", new User());
                 return "circleDetail";
             }
             //TODO: add 'no access' error page

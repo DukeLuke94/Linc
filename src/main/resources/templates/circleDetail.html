@@ -80,6 +80,25 @@
                         <li th:text="${user.username}"></li>
                     </ul>
             </div>
+<!--            New member content, if admin-->
+            <p>
+                <a class="btn btn-primary" th:if="${isAdmin}" data-toggle="collapse" href="#collapseNewUser" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Add members
+                </a>
+            </p>
+            <div class="collapse" id="collapseNewUser">
+                    <form method="post" th:action="@{/new/member}" th:object="${newMemberUser}" >
+                        <label for="emailAddress">Email address</label>
+                        <input name ="emailAddress" id="emailAddress" type="email" class="form-control"
+                               th:field="*{emailAddress}" placeholder="Email address">
+                        <br>
+                        <p class="text-danger" th:if="${unknownEmail == true}">No such user
+
+
+                        </p>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </form>
+            </div>
             <!--        USER CONTENT END-->
         </div>
         <div class="tab-pane fade" id="v-pills-history" role="tabpanel" aria-labelledby="v-pills-history-tab">

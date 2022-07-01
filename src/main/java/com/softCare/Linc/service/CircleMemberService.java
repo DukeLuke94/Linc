@@ -38,6 +38,12 @@ public class CircleMemberService implements CircleMemberServiceInterface {
     }
 
     @Override
+    public boolean isAdmin(User user, Circle circle) {
+        Optional<CircleMember> circleMember = circleMemberRepository.findByUserUserIdAndCircle_CircleId(user.getUserId(),circle.getCircleId());
+        return circleMember.map(CircleMember::isAdmin).orElse(false);
+    }
+
+    @Override
     public List<Circle> findAllCirclesWhereMemberOf(User user) {
         Optional<List<CircleMember>> memberList = circleMemberRepository.findByUserUserId(user.getUserId());
         List<Circle> circleList = new ArrayList<>();

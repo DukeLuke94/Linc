@@ -13,6 +13,7 @@ public interface CircleMemberServiceInterface {
     void save(CircleMember circleMember);
 
     boolean isMember(User user, Circle circle);
+    boolean isAdmin(User user, Circle circle);
 
     List<Circle> findAllCirclesWhereMemberOf(User user);
 
