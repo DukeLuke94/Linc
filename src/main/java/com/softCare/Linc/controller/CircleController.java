@@ -39,7 +39,8 @@ public class CircleController {
     @GetMapping({"/dashboard"})
     protected String showHome(Model model,@AuthenticationPrincipal User user) {
         model.addAttribute("allCircles", circleMemberInterface.findAllCirclesWhereMemberOf(user));
-        return "circleOverview";
+        model.addAttribute("claimedTasks", taskServiceInterface.findAllClaimedTasksForUser(user));
+        return "dashboard";
     }
 
     @GetMapping("/circle/{circleId}")
