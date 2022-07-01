@@ -3,6 +3,7 @@ package com.softCare.Linc.service;
 import com.softCare.Linc.Repository.TaskRepository;
 import com.softCare.Linc.model.Circle;
 import com.softCare.Linc.model.Task;
+import com.softCare.Linc.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -80,6 +81,18 @@ public class TaskService implements TaskServiceInterface {
             }
         }
         return doneTasks;
+    }
+
+    public Object findAllClaimedTasksForUser(User user) {
+        List<Task> allTasks = taskRepository.findAll();
+        List<Task> claimedTasks = new ArrayList<>();
+
+        for (Task allTask : allTasks) {
+            if (allTask.getUser() == user){
+                claimedTasks.add(allTask);
+            }
+        }
+        return claimedTasks;
     }
 
 
