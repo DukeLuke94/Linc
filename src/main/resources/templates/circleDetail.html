@@ -25,14 +25,13 @@
                 <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
             </div>
         </div>
+<<<<<<< HEAD
 
         <div class="col-8">
             <div class="tab-content" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="v-pills-tasks" role="tabpanel" aria-labelledby="v-pills-tasks-tab">
 
             <!--            TASK CONTENT START-->
-
-
                                         <div class="card w-100" th:each="task : ${tasksToDo}">
 <!--                                            Task title & description-->
                                             <div class="card-body">
@@ -49,7 +48,14 @@
                                                             </label>
                                                         </form>
                                                     </div>
-<!--                                                Displays due date, if there is one-->
+<!--                                                Displays duration, if available-->
+                                                <div th:if="${task.duration > 0}" class="text-left">
+                                                    <img th:if="${task.duration < 59}" src="/static/images/clock-history.svg" th:text="' '+${task.duration}+'  minutes'" class="" alt="duration">
+                                                    <img th:if="${(task.duration < 120) && (task.duration > 59)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(1 - (task.duration/60))}+'  hour  '+ ${task.duration - 60}+ '  minutes'" class="" alt="duration">
+                                                    <img th:if="${(task.duration > 120) && (task.duration > 59)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(1 - (task.duration/60))}+'  hours  '+ ${task.duration - 60}+ '  minutes'" class="" alt="duration">
+                                                <br>
+                                                </div>
+<!--                                                Displays due date, if available-->
                                                 <div th:if="${task.dueDate != null}" class="text-left">
                                                     <img src="/static/images/calendar-check.svg" th:text="' '+${task.dueDate}" class="" alt="calender">
                                                 </div>
@@ -80,6 +86,27 @@
                     <ul th:each="user: ${circleMembers}">
                         <li th:text="${user.username}"></li>
                     </ul>
+            </div>
+<!--            New member content, if admin-->
+            <div class="col-3">
+            <p>
+                <a class="btn btn-primary" th:if="${isAdmin}" data-toggle="collapse" href="#collapseNewUser" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Add members
+                </a>
+            </p>
+            <div class="collapse" id="collapseNewUser">
+                    <form method="post" th:action="@{/new/member}" th:object="${newMemberUser}" >
+                        <label for="emailAddress">Email address</label>
+                        <input name ="emailAddress" id="emailAddress" type="email" class="form-control"
+                               th:field="*{emailAddress}" placeholder="Email address">
+                        <br>
+                        <p class="text-danger" th:if="${unknownEmail == true}">No such user
+
+
+                        </p>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </form>
+            </div>
             </div>
             <!--        USER CONTENT END-->
         </div>

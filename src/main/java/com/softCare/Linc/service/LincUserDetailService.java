@@ -53,4 +53,9 @@ public class LincUserDetailService implements UserDetailsService, LincUserDetail
         return Optional.empty();
     }
 
+    @Override
+    public Optional<User> findByeEmail(String email) {
+        return userRepository.findByEmailAddress(email);
+    }
+
 }
