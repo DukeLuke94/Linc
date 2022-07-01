@@ -104,6 +104,7 @@ public class UserController {
             model.addAttribute("errorMessage", PASSWORD_REPEAT_NO_MATCH);
             return "editPasswordForm";
         }
+        //TODO: make this message hidden when all fields are blank
         model.addAttribute("errorMessage", CURRENT_PASSWORDS_IS_NOT_CORRECT);
         return "editPasswordForm";
     }

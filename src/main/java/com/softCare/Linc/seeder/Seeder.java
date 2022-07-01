@@ -51,7 +51,7 @@ public class Seeder {
 
     private void seedUsers() {
         // seed user "admin"
-        User admin = new User("admin",passwordEncoder.encode("admin"),"a@a.nl", "0909090909");
+        User admin = new User("Admin",passwordEncoder.encode("admin"),"a@a.nl", "0909090909");
         lincUserDetailServiceInterface.save(admin);
 
         //seed permissions for the admin
