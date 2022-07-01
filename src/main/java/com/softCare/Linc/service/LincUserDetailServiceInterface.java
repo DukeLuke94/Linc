@@ -15,5 +15,5 @@ public interface LincUserDetailServiceInterface {
     void save(User user);
 
     Optional<User> findByUsername(String username);
-    Optional<User> findByeEmail(String email);
+    Optional<User> findByEmail(String email);
 }

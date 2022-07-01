@@ -50,7 +50,7 @@
                                                 <div th:if="${task.duration > 0}" class="text-left">
                                                     <img th:if="${task.duration < 59}" src="/static/images/clock-history.svg" th:text="' '+${task.duration}+'  minutes'" class="" alt="duration">
                                                     <img th:if="${(task.duration < 120) && (task.duration > 59)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(1 - (task.duration/60))}+'  hour  '+ ${task.duration - 60}+ '  minutes'" class="" alt="duration">
-                                                    <img th:if="${(task.duration > 120) && (task.duration > 59)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(1 - (task.duration/60))}+'  hours  '+ ${task.duration - 60}+ '  minutes'" class="" alt="duration">
+                                                    <img th:if="${(task.duration > 120)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(1 - (task.duration/60))}+'  hours  '+ ${task.duration - 60}+ '  minutes'" class="" alt="duration">
                                                 <br>
                                                 </div>
 <!--                                                Displays due date, if available-->

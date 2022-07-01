@@ -15,10 +15,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 public class UserController {
 
+    public final String USERNAME_YOU_CHOSE_IS_ALREADY_IN_USE = "The username you chose is already in use";
+    public final String EMAIL_ALREADY_IN_USE = "This Email-address is already in use";
     public final String CURRENT_PASSWORDS_IS_NOT_CORRECT = "The current passwords is not correct";
     private final String PASSWORD_REPEAT_NO_MATCH = "The newly entered passwords are not an exact match or aren't given";
 
@@ -50,14 +53,18 @@ public class UserController {
     protected String saveOrUpdateUser(@AuthenticationPrincipal User loggedInUser,
                                       @Valid @ModelAttribute("userVM") UserVmGeneral userVmGeneral, BindingResult result,
                                       Model model) {
-        if (!(loggedInUser == null)) {
+        if (thereIsALoggedInUser(loggedInUser)) {
             User user = userMapper.userVMToUserModel(userVmGeneral);
             user.setUserId(loggedInUser.getUserId());
         }
-        if (!userVmGeneral.getPassword().equals(userVmGeneral.getPasswordRepeat())) {
+        if (emailAddressIsAlreadyTaken(userVmGeneral) && userVmGeneral.getEmailAddress().contains("@")) {
+            model.addAttribute("errorMessage", EMAIL_ALREADY_IN_USE);
+            return "userForm";
+        }
+        if (newPasswordsDoNotMatch(userVmGeneral)) {
             model.addAttribute("errorMessage", PASSWORD_REPEAT_NO_MATCH);
             return "userForm";
-        } else if (!result.hasErrors() && userVmGeneral.getPassword().equals(userVmGeneral.getPasswordRepeat())) {
+        } else if (!result.hasErrors()) {
             User user = userMapper.userVMToUserModel(userVmGeneral);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userInterface.save(user);
@@ -65,7 +72,6 @@ public class UserController {
         }
         return "userForm";
     }
-
 
     @GetMapping({"/user/edit"})
     protected String editUser(Authentication authentication, Model model) {
@@ -118,6 +124,19 @@ public class UserController {
         user.setAssignedTasks(loggedInUser.getAssignedTasks());
         user.setPassword(passwordEncoder.encode(userVmEditPassword.getPassword()));
         return user;
+    }
+
+    private boolean thereIsALoggedInUser(User loggedInUser) {
+        return !(loggedInUser == null);
+    }
+
+    private boolean emailAddressIsAlreadyTaken(UserVmGeneral userVmGeneral) {
+        Optional<User> user = userInterface.findByEmail(userVmGeneral.getEmailAddress());
+        return user.isPresent();
+    }
+
+    private boolean newPasswordsDoNotMatch(UserVmGeneral userVmGeneral) {
+        return !userVmGeneral.getPassword().equals(userVmGeneral.getPasswordRepeat());
     }
 
     private boolean newGivenPasswordsAreEqual(UserVmEditPassword userVmEditPassword) {

@@ -8,10 +8,6 @@
 <div th:replace="fragments/general :: header"></div>
 <div class="container-fluid">
 
-    <div th:if="${errorMessage}" class="alert alert-info" role="alert">
-        <span th:text="${errorMessage}">errorMessage</span>
-    </div>
-
     <div class="page-header">
         <div class="row">
             <div class="col-2"></div>
@@ -27,6 +23,9 @@
 
         <!--            USER FORM CONTENT START-->
         <div class="col-3">
+            <div th:if="${errorMessage}" class="alert alert-info" role="alert">
+                <span th:text="${errorMessage}">errorMessage</span>
+            </div>
             <form method="post" th:action="@{/user/new}"  th:object="${userVM}">
                 <div class="form-group">
                     <label for="username">Name</label>
