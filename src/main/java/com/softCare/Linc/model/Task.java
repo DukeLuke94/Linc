@@ -35,13 +35,15 @@ public class Task {
     private User user;
 
     private String claimedUserName;
+    private int duration;
 
-    public Task(String taskName, String taskDescription, boolean taskDone, Circle circle, LocalDate dueDate) {
+    public Task(String taskName, String taskDescription, boolean taskDone, Circle circle, LocalDate dueDate, int duration) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskDone = taskDone;
         this.circle = circle;
         this.dueDate = dueDate;
+        this.duration = duration;
     }
 
     public Task() {
