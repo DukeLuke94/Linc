@@ -154,7 +154,6 @@ public class TaskController {
 
     @PostMapping({"/task/claim"})
     protected String claimTask(@RequestParam(name = "taskId") Long taskId, @AuthenticationPrincipal User user) {
-        System.out.println("TaskID: "+taskId);
             currentTask = taskServiceInterface.findById(taskId).get();
             currentTask.setCircle(circleController.currentCircle);
             currentTask.setUser(user);
@@ -166,7 +165,6 @@ public class TaskController {
 
     @PostMapping({"/task/done"})
     protected String doneTask(@RequestParam(name = "taskId") Long taskId, @AuthenticationPrincipal User user) {
-        System.out.println("TaskID: "+taskId);
         currentTask = taskServiceInterface.findById(taskId).get();
         currentTask.setCircle(circleController.currentCircle);
         currentTask.setTaskDone(true);
