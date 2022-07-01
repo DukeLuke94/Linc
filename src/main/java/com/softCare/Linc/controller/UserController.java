@@ -1,7 +1,8 @@
 package com.softCare.Linc.controller;
 
 import com.softCare.Linc.model.User;
-import com.softCare.Linc.model.UserVM;
+import com.softCare.Linc.model.UserVmEditPassword;
+import com.softCare.Linc.model.UserVmGeneral;
 import com.softCare.Linc.service.LincUserDetailServiceInterface;
 import com.softCare.Linc.service.UserMapper;
 import org.springframework.security.core.Authentication;
@@ -18,7 +19,8 @@ import javax.validation.Valid;
 @Controller
 public class UserController {
 
-    private final String PASSWORD_REPEAT_NO_MATCH = "The entered passwords are not an exact match";
+    public final String CURRENT_PASSWORDS_IS_NOT_CORRECT = "The current passwords is not correct";
+    private final String PASSWORD_REPEAT_NO_MATCH = "The newly entered passwords are not an exact match or aren't given";
 
     private final LincUserDetailServiceInterface userInterface;
     private final PasswordEncoder passwordEncoder;
@@ -40,23 +42,23 @@ public class UserController {
 
     @GetMapping({"/user/new"})
     protected String newUser(Model model) {
-        model.addAttribute("userVM", new UserVM());
+        model.addAttribute("userVM", new UserVmGeneral());
         return "userForm";
     }
 
     @PostMapping("/user/new")
     protected String saveOrUpdateUser(@AuthenticationPrincipal User loggedInUser,
-                                      @Valid @ModelAttribute("userVM") UserVM userVM, BindingResult result,
+                                      @Valid @ModelAttribute("userVM") UserVmGeneral userVmGeneral, BindingResult result,
                                       Model model) {
         if (!(loggedInUser == null)) {
-            User user = userMapper.userVMToUserModel(userVM);
+            User user = userMapper.userVMToUserModel(userVmGeneral);
             user.setUserId(loggedInUser.getUserId());
         }
-        if (!userVM.getPassword().equals(userVM.getPasswordRepeat())) {
+        if (!userVmGeneral.getPassword().equals(userVmGeneral.getPasswordRepeat())) {
             model.addAttribute("errorMessage", PASSWORD_REPEAT_NO_MATCH);
             return "userForm";
-        } else if (!result.hasErrors() && userVM.getPassword().equals(userVM.getPasswordRepeat())) {
-            User user = userMapper.userVMToUserModel(userVM);
+        } else if (!result.hasErrors() && userVmGeneral.getPassword().equals(userVmGeneral.getPasswordRepeat())) {
+            User user = userMapper.userVMToUserModel(userVmGeneral);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userInterface.save(user);
             return "redirect:/user/profile";
@@ -67,39 +69,37 @@ public class UserController {
 
     @GetMapping({"/user/edit"})
     protected String editUser(Authentication authentication, Model model) {
-        model.addAttribute("user", userInterface.loadUserByUsername(authentication.getName()));
+        User user = (User) userInterface.loadUserByUsername(authentication.getName());
+        UserVmGeneral userVmGeneral = userMapper.userToViewModel(user);
+        model.addAttribute("userVM", userVmGeneral);
         return "userForm";
     }
 
     @GetMapping({"/user/edit/password"})
-    protected String editUserPassword(Model model, @AuthenticationPrincipal User loggedInUser) {
-        model.addAttribute("user", loggedInUser);
+    protected String editUserPassword(Authentication authentication, Model model) {
+        User user = (User) userInterface.loadUserByUsername(authentication.getName());
+        UserVmEditPassword userVmEditPassword = userMapper.userToViewModelEditPassword(user);
+        model.addAttribute("userVM", userVmEditPassword);
         return "editPasswordForm";
     }
 
 
     @PostMapping({"/user/edit/password"})
-    protected String editUserPassword(@ModelAttribute("user") User user, @AuthenticationPrincipal User loggedInUser, BindingResult result) {
-        if (passwordEncoder.matches(user.getCurrentPassword(), loggedInUser.getPassword())) {
-            if (user.getPassword().equals(user.getPasswordRepeat())) {
+    protected String editUserPassword(@Valid @ModelAttribute("userVM") UserVmEditPassword userVmEditPassword, BindingResult result,
+                                      @AuthenticationPrincipal User loggedInUser, Model model) {
+        if (loggedInUserPasswordMatches(userVmEditPassword, loggedInUser)) {
+            if (newGivenPasswordsAreEqual(userVmEditPassword)) {
                 if (!result.hasErrors()) {
-                    setUpdatedUser(user, loggedInUser);
-                    user.setPassword(passwordEncoder.encode(user.getPassword()));
+                    User user = setUpdatedUserWithNewPassword(userVmEditPassword, loggedInUser);
                     userInterface.save(user);
-                    return "redirect:/user/profile";
                 }
-                return "redirect:/user/edit/password";
+                return "redirect:/user/profile";
             }
+            model.addAttribute("errorMessage", PASSWORD_REPEAT_NO_MATCH);
+            return "editPasswordForm";
         }
-        return "redirect:/user/edit/password";
-    }
-
-    private void setUpdatedUser(User user, User loggedInUser) {
-        user.setUserId(loggedInUser.getUserId());
-        user.setUsername(loggedInUser.getUsername());
-        user.setEmailAddress(loggedInUser.getEmailAddress());
-        user.setPhoneNumber(loggedInUser.getPhoneNumber());
-        user.setAssignedTasks(loggedInUser.getAssignedTasks());
+        model.addAttribute("errorMessage", CURRENT_PASSWORDS_IS_NOT_CORRECT);
+        return "editPasswordForm";
     }
 
 
@@ -109,9 +109,22 @@ public class UserController {
         return "userProfile";
     }
 
+    private User setUpdatedUserWithNewPassword(UserVmEditPassword userVmEditPassword, User loggedInUser) {
+        User user = userMapper.userVmEditPasswordToUserModel(userVmEditPassword);
+        user.setUserId(loggedInUser.getUserId());
+        user.setUsername(loggedInUser.getUsername());
+        user.setEmailAddress(loggedInUser.getEmailAddress());
+        user.setPhoneNumber(loggedInUser.getPhoneNumber());
+        user.setAssignedTasks(loggedInUser.getAssignedTasks());
+        user.setPassword(passwordEncoder.encode(userVmEditPassword.getPassword()));
+        return user;
+    }
 
+    private boolean newGivenPasswordsAreEqual(UserVmEditPassword userVmEditPassword) {
+        return userVmEditPassword.getPassword().equals(userVmEditPassword.getPasswordRepeat());
+    }
 
-
-
-
+    private boolean loggedInUserPasswordMatches(UserVmEditPassword userVmEditPassword, User loggedInUser) {
+        return passwordEncoder.matches(userVmEditPassword.getCurrentPassword(), loggedInUser.getPassword());
+    }
 }

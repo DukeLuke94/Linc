@@ -25,9 +25,10 @@ public class User implements UserDetails {
     @Id @GeneratedValue
     @Column(name = "user_id")
     private Long userId;
-    @Column(unique = true)
+    @NotNull @Column(unique = true)
     private String username;
 
+    @NotNull
     private String password;
     @Transient
     private String passwordRepeat;
@@ -36,17 +37,19 @@ public class User implements UserDetails {
 
     @OneToMany (mappedBy = "user")
     private List<Task> assignedTasks;
+    @NotNull
     private String emailAddress;
-
+    @NotNull
     private String phoneNumber;
 
     @OneToMany(mappedBy = "user",  cascade = ALL,fetch = FetchType.EAGER)
     private List<CircleMember> circleMembers;
 
-    public User(String username, String emailAddress, String password) {
+    public User(String username, String password, String emailAddress, String phoneNumber) {
         this.username = username;
-        this.emailAddress = emailAddress;
         this.password = password;
+        this.emailAddress = emailAddress;
+        this.phoneNumber = phoneNumber;
     }
 
     @Override

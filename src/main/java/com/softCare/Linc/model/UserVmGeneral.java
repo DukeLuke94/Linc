@@ -17,9 +17,8 @@ import java.util.List;
  * This describes the attributes of the user view model
  */
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
-public class UserVM {
+public class UserVmGeneral {
 
-    private Long userId;
     @NotEmpty(message = "This field has to be filled")
     @Size(message = "This field can have a maximum of 30 characters", max = 30) @Column(unique = true)
     private String username;
@@ -29,11 +28,10 @@ public class UserVM {
     @Size(message = "The phone number has to be between 10 and 12 digits", min = 10, max = 12)
     private String phoneNumber;
 
-    private String currentPassword;
-    @Size(message = "Password has to be at least 8 characters", min = 8)
+    @NotEmpty(message = "This field has to be filled")
+    @Size(message = "Password has to be at least 6 characters", min = 6)
     private String password;
-    @Size(message = "Password has to be at least 8 characters", min = 8)
+    @NotEmpty(message = "This field has to be filled")
+    @Size(message = "Password has to be at least 6 characters", min = 6)
     private String passwordRepeat;
-
-    private List<Task> assignedTasks;
 }

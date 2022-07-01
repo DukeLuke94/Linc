@@ -36,7 +36,6 @@ public class Seeder {
         this.passwordEncoder = passwordEncoder;
     }
 
-
     @EventListener
     public void seed(ContextRefreshedEvent contextRefreshedEvent) {
         circles = new ArrayList<>();
@@ -45,14 +44,14 @@ public class Seeder {
             seedCircles();
             seedTasks();
         }
-        if (lincUserDetailServiceInterface.findAll().size() == 0){
+        if (lincUserDetailServiceInterface.findByUsername("admin").isEmpty()) {
             seedUsers();
         }
     }
 
     private void seedUsers() {
         // seed user "admin"
-        User admin = new User("admin","admin@admin.nl", passwordEncoder.encode("admin"));
+        User admin = new User("admin",passwordEncoder.encode("admin"),"a@a.nl", "0909090909");
         lincUserDetailServiceInterface.save(admin);
 
         //seed permissions for the admin
@@ -62,8 +61,6 @@ public class Seeder {
         for (Circle allCircle : allCircles) {
             circleMemberServiceInterface.save(new CircleMember(admin,allCircle,true,true));
         }
-
-
     }
 
     public void seedCircles() {
@@ -80,11 +77,11 @@ public class Seeder {
         circleServiceInterface.save(omaJantina);
         circleServiceInterface.save(woongroep);
 
-        User diederik = new User("Diederik","diederik@diederik.nl",passwordEncoder.encode("diederik"));
-        User hendrik = new User("Hendrik","hendrik@hendrik.nl",passwordEncoder.encode("hendrik"));
-        User geertruida = new User("Geertruida","geertruida@geertruida.nl",passwordEncoder.encode("geertruida"));
-        User jantina = new User("Jantina","jantina@jantina.nl",passwordEncoder.encode("jantina"));
-        User baas = new User("M.Veen","mveen@mveen.nl",passwordEncoder.encode("mveen"));
+        User diederik = new User("Diederik", passwordEncoder.encode("diederik"),"diederik@diederik.nl", "0099009900");
+        User hendrik = new User("Hendrik", passwordEncoder.encode("hendrik"),"hendrik@hendrik.nl", "0099009900");
+        User geertruida = new User("Geertruida", passwordEncoder.encode("geertruida"),"geertruida@geertruida.nl", "0099009900");
+        User jantina = new User("Jantina", passwordEncoder.encode("jantina"),"jantina@jantina.nl", "0099009900");
+        User baas = new User("M.Veen", passwordEncoder.encode("mveen"),"mveen@mveen.nl", "0099009900");
 
         lincUserDetailServiceInterface.save(diederik);
         lincUserDetailServiceInterface.save(hendrik);

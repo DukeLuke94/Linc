@@ -1,7 +1,8 @@
 package com.softCare.Linc.service;
 
 import com.softCare.Linc.model.User;
-import com.softCare.Linc.model.UserVM;
+import com.softCare.Linc.model.UserVmEditPassword;
+import com.softCare.Linc.model.UserVmGeneral;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,26 +13,36 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserMapper {
-    public UserVM userToViewModel(User user){
-        UserVM userVM = new UserVM();
-        userVM.setUserId(user.getUserId());
-        userVM.setUsername(user.getUsername());
-        userVM.setEmailAddress(user.getEmailAddress());
-        userVM.setPhoneNumber(user.getPhoneNumber());
-        userVM.setAssignedTasks(user.getAssignedTasks());
-        return userVM;
+
+    public UserVmGeneral userToViewModel(User user){
+        UserVmGeneral userVmGeneral = new UserVmGeneral();
+        userVmGeneral.setUsername(user.getUsername());
+        userVmGeneral.setEmailAddress(user.getEmailAddress());
+        userVmGeneral.setPhoneNumber(user.getPhoneNumber());
+        return userVmGeneral;
     }
 
-    public User userVMToUserModel(UserVM userVM) {
+    public User userVMToUserModel(UserVmGeneral userVmGeneral) {
         User user = new User();
-        user.setUserId(userVM.getUserId());
-        user.setUsername(userVM.getUsername());
-        user.setEmailAddress(userVM.getEmailAddress());
-        user.setPhoneNumber(userVM.getPhoneNumber());
-        user.setCurrentPassword(userVM.getCurrentPassword());
-        user.setPassword(userVM.getPassword());
-        user.setPasswordRepeat(userVM.getPasswordRepeat());
-        user.setAssignedTasks(userVM.getAssignedTasks());
+        user.setUsername(userVmGeneral.getUsername());
+        user.setEmailAddress(userVmGeneral.getEmailAddress());
+        user.setPhoneNumber(userVmGeneral.getPhoneNumber());
+        user.setPassword(userVmGeneral.getPassword());
+        user.setPasswordRepeat(userVmGeneral.getPasswordRepeat());
+        return user;
+    }
+
+    public UserVmEditPassword userToViewModelEditPassword(User user){
+        UserVmEditPassword userVmEditPassword = new UserVmEditPassword();
+        userVmEditPassword.setUsername(user.getUsername());
+        return userVmEditPassword;
+    }
+
+    public User userVmEditPasswordToUserModel(UserVmEditPassword userVmEditPassword) {
+        User user = new User();
+        user.setCurrentPassword(userVmEditPassword.getCurrentPassword());
+        user.setPassword(userVmEditPassword.getPassword());
+        user.setPasswordRepeat(userVmEditPassword.getPasswordRepeat());
         return user;
     }
 }
