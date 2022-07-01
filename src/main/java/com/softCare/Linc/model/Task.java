@@ -30,6 +30,8 @@ public class Task {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Circle circle;
 
+    private String circleName;
+
     @ManyToOne
     @JoinColumn(name = "user_user_id")
     private User user;

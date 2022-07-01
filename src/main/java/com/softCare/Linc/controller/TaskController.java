@@ -144,22 +144,22 @@ public class TaskController {
         if (task.isPresent()) {
             currentTask = task.get();
             currentTask.setCircle(circleController.currentCircle);
+            currentTask.setCircleName(circleController.currentCircle.getCircleName());
             currentTask.setUser(user);
+            currentTask.setClaimedUserName(user.getUsername());
             taskServiceInterface.save(currentTask);
         }
         return "redirect:/circle/" + circleController.currentCircle.getCircleId();
     }
 
-
-
     @PostMapping({"/task/claim"})
     protected String claimTask(@RequestParam(name = "taskId") Long taskId, @AuthenticationPrincipal User user) {
             currentTask = taskServiceInterface.findById(taskId).get();
             currentTask.setCircle(circleController.currentCircle);
+            currentTask.setCircleName(circleController.currentCircle.getCircleName());
             currentTask.setUser(user);
             currentTask.setClaimedUserName(user.getUsername());
             taskServiceInterface.save(currentTask);
-
         return "redirect:/circle/" + circleController.currentCircle.getCircleId();
     }
 

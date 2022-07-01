@@ -4,6 +4,10 @@
     width: 100%;
 }
 
+h4 {
+    font-weight: lighter;
+}
+
 body{
     min-height: 100vh;
     display: flex;
@@ -18,6 +22,8 @@ body{
     font-size: xx-large;
     font-weight: normal;
 }
+
+
 
 #taskDescription {
     height: 200px;

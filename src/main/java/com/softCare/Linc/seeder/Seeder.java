@@ -104,7 +104,7 @@ public class Seeder {
     }
 
     public void seedTasks() {
-        LocalDate exampleDate = LocalDate.of(2022, 07, 30);
+        LocalDate exampleDate = LocalDate.of(2022, 7, 30);
         taskServiceInterface.save(new Task(
                 "Boodschappen doen",
                 "Havermout, melk, boter",

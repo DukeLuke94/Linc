@@ -94,5 +94,4 @@ public class TaskService implements TaskServiceInterface {
         return claimedTasks;
     }
 
-
 }
