@@ -56,7 +56,7 @@
                                                 </div>
 <!--                                                Displays due date, if available-->
                                                 <div th:if="${task.dueDate != null}" class="text-left">
-                                                    <img src="/static/images/calendar-check.svg" th:text="' ' + ${#temporals.format(task.dueDate, 'dd-MMMM-yyyy', new java.util.Locale('en', 'EN'))}" class="" alt="calender">
+                                                    <img src="/static/images/calendar-check.svg" th:text="' ' + ${#temporals.format(task.dueDate, 'dd MMMM yyyy', new java.util.Locale('en', 'EN'))}" class="" alt="calender">
                                                 </div>
 <!--                                                Displays claimants name if claimed-->
                                                     <div th:if="${task.claimedUserName != null}" class="text-right">
