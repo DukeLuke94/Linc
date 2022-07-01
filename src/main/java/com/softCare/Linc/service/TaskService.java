@@ -86,10 +86,9 @@ public class TaskService implements TaskServiceInterface {
     public Object findAllClaimedTasksForUser(User user) {
         List<Task> allTasks = taskRepository.findAll();
         List<Task> claimedTasks = new ArrayList<>();
-
-        for (Task allTask : allTasks) {
-            if (allTask.getUser() == user){
-                claimedTasks.add(allTask);
+        for (Task task : allTasks) {
+            if (task.getUser() != null) {
+                claimedTasks.add(task);
             }
         }
         return claimedTasks;
