@@ -6,14 +6,12 @@ import com.softCare.Linc.model.UserVmGeneral;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Project: UserMapperTest
  * @author Jan Willem vd Wal on 30-6-2022.
- * Test of usermapper class goed werkt
+ * Tests if usermapper class works propperly
  */
 class UserMapperTest {
 

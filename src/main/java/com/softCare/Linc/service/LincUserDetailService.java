@@ -28,7 +28,7 @@ public class LincUserDetailService implements UserDetailsService, LincUserDetail
 
 
     @Override
-    public UserDetails loadUserByUsername(String emailAddress) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String emailAddress) {
         if (emailAddress.contains("@")){
             return userRepository.findByEmailAddress(emailAddress).orElseThrow(
                     () -> new UsernameNotFoundException("User with email " + emailAddress + " was not found."));
@@ -54,7 +54,7 @@ public class LincUserDetailService implements UserDetailsService, LincUserDetail
     }
 
     @Override
-    public Optional<User> findByeEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return userRepository.findByEmailAddress(email);
     }
 
