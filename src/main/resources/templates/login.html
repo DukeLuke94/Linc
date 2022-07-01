@@ -24,6 +24,14 @@
         <!--            LOGIN CONTENT START-->
         <div class="col-3">
             <form method="post" th:action="@{/login}">
+                <div th:if="${param.error}" class="alert alert-primary">
+                    Invalid email address and/or password
+                </div>
+                <div th:if="${param.logout}" class="alert alert-primary">
+                    You've been logged out
+                </div>
+
+
               <div class="form-group">
                  <label for="emailAddress">Email address</label>
                  <input name="emailAddress" id="emailAddress" type="text" class="form-control" placeholder="Email address">
@@ -35,6 +43,11 @@
 
                 <input type="submit" class="btn btn-primary" value="Log in">
             </form>
+
+            <div th:if="${errorMessage}" class="alert alert-primary" role="alert">
+                <span th:text="${errorMessage}">Error</span>
+            </div>
+
         </div>
     </div>
 </div>
