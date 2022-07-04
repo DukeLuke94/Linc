@@ -22,4 +22,5 @@ public interface TaskServiceInterface {
 
     Object findAllClaimedTasksForUser(User user);
 
+    Object findAllTasksPerUser(User user);
 }

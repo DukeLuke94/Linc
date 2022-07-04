@@ -31,7 +31,7 @@
                 <div class="tab-pane fade show active" id="v-pills-tasks" role="tabpanel" aria-labelledby="v-pills-tasks-tab">
 
             <!--            TASK CONTENT START-->
-                                        <div class="card w-100" th:each="task : ${tasksToDo}">
+                                        <div class="card w-100 card-tasks" th:each="task : ${tasksToDo}">
 <!--                                            Task title & description-->
                                             <div class="card-body">
                                                 <h5 class="card-title"><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a></h5>

@@ -144,7 +144,6 @@ public class TaskController {
         if (task.isPresent()) {
             currentTask = task.get();
             currentTask.setCircle(circleController.currentCircle);
-            currentTask.setCircleName(circleController.currentCircle.getCircleName());
             currentTask.setUser(user);
             currentTask.setClaimedUserName(user.getUsername());
             taskServiceInterface.save(currentTask);
@@ -156,7 +155,6 @@ public class TaskController {
     protected String claimTask(@RequestParam(name = "taskId") Long taskId, @AuthenticationPrincipal User user) {
             currentTask = taskServiceInterface.findById(taskId).get();
             currentTask.setCircle(circleController.currentCircle);
-            currentTask.setCircleName(circleController.currentCircle.getCircleName());
             currentTask.setUser(user);
             currentTask.setClaimedUserName(user.getUsername());
             taskServiceInterface.save(currentTask);

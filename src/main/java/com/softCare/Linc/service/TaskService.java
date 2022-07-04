@@ -52,7 +52,6 @@ public class TaskService implements TaskServiceInterface {
             }
 
         }
-
         return tasksToDo;
     }
 
@@ -67,8 +66,6 @@ public class TaskService implements TaskServiceInterface {
             }
         }
         return tasksToDo;
-
-
     }
 
     @Override
@@ -93,5 +90,19 @@ public class TaskService implements TaskServiceInterface {
         }
         return claimedTasks;
     }
+
+    public Object findAllTasksPerUser(User user) {
+        User currentUser = user;
+        List<Task> allTasks = taskRepository.findAll();
+        List<Task> tasksPerUser = new ArrayList<>();
+
+        for (Task task : allTasks) {
+            allTasks.add(task);
+        }
+
+        return tasksPerUser;
+    }
+
+
 
 }
