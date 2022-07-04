@@ -36,46 +36,47 @@
                                             <div class="card-body">
                                                 <h5 class="card-title"><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a></h5>
                                                 <p class="card-text" th:text="${task.taskDescription}"></p>
+                                                <!--                                                           Claim button if unclaimed-->
                                                     <div th:if="${task.user == null}" class="">
-                                                        <form th:action="@{/task/claim}" method="post" class="">
-<!--                                                           Claim button if unclaimed-->
-                                                            <div class="text-right float-right">
+                                                        <form th:action="@{/task/claim}" method="post" class="" >
+                                                            <div class="text-right float-right" style="display:inline;">
                                                                 <button type="submit" class="btn btn-primary text-right">Claim</button>
                                                             </div>
-                                                            <label>
+                                                            <span>
                                                                 <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
-                                                            </label>
+                                                            </span>
                                                         </form>
                                                     </div>
+                                                <!--                                                 Done button if claimed & owned-->
+                                                <div th:if="${task.claimedUserName == currentUser}" class="">
+                                                    <form th:action="@{/task/done}" method="post" th:object="${task}">
+                                                        <span>
+                                                            <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
+                                                        </span>
+                                                        <div class="text-right float-right" style="display:inline;">
+                                                            <button type="submit" class="btn btn-primary text-right">Done</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
 <!--                                                Displays duration, if available-->
-                                                <div th:if="${task.duration > 0}" class="text-left">
+                                                <span th:if="${task.duration > 0}" class="text-left" style="display:inline;">
                                                     <img th:if="${task.duration < 59}" src="/static/images/clock-history.svg" th:text="' '+${task.duration}+'  minutes'" class="" alt="duration">
                                                     <img th:if="${(task.duration < 120) && (task.duration > 59)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(1 - (task.duration/60))}+'+ hour'" class="" alt="duration">
                                                     <img th:if="${(task.duration < 180) && (task.duration > 119)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(2 - (task.duration/60))}+'+ hours'" class="" alt="duration">
                                                     <img th:if="${(task.duration < 240) && (task.duration > 179)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(3 - (task.duration/60))}+'+ hours'" class="" alt="duration">
                                                     <img th:if="${(task.duration < 300) && (task.duration > 239)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(4 - (task.duration/60))}+'+ hours'" class="" alt="duration">
                                                 <br>
-                                                </div>
+                                                </span>
 <!--                                                Displays due date, if available-->
-                                                <div th:if="${task.dueDate != null}" class="text-left">
+                                                <span th:if="${task.dueDate != null}" class="text-left" style="display:inline;">
                                                     <img src="/static/images/calendar-check.svg" th:text="' ' + ${#temporals.format(task.dueDate, 'dd MMMM yyyy', new java.util.Locale('en', 'EN'))}" class="" alt="calender">
-                                                </div>
+                                                </span>
 <!--                                                Displays claimants name if claimed-->
-                                                    <div th:if="${task.claimedUserName != null}" class="text-right">
+                                                    <span th:if="${task.claimedUserName != null}" class="text-right">
                                                     <span th:if="${task.claimedUserName != currentUser}" class="d-block small opacity-50 text-right" th:text="'Claimed by: '+${task.claimedUserName}">
                                                     </span>
-                                                    </div>
-<!--                                                 Done button if claimed & owned-->
-                                                    <div th:if="${task.claimedUserName == currentUser}" class="">
-                                                        <form th:action="@{/task/done}" method="post" th:object="${task}">
-                                                            <label>
-                                                                <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
-                                                            </label>
-                                                            <div class="text-right">
-                                                                <button type="submit" class="btn btn-primary text-right">Done</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
+                                                    </span>
+
                                             </div>
                                         </div>
             <a class="btn btn-primary float-right"  href="/task/new">New task</a>
