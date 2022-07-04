@@ -17,6 +17,10 @@ public class TaskMapper {
         viewmodel.setTaskId(task.getTaskId());
         viewmodel.setTaskName(task.getTaskName());
         viewmodel.setTaskDescription(task.getTaskDescription());
+        viewmodel.setCircle(task.getCircle());
+        viewmodel.setDueDate(task.getDueDate());
+        viewmodel.setDuration(task.getDuration());
+
         return viewmodel;
     }
 
