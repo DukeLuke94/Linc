@@ -43,6 +43,7 @@ public class CircleController {
     protected String showHome(Model model,@AuthenticationPrincipal User user) {
         model.addAttribute("allCircles", circleMemberInterface.findAllCirclesWhereMemberOf(user));
         model.addAttribute("claimedTasks", taskServiceInterface.findAllClaimedTasksForUser(user));
+        model.addAttribute("circle",new Circle());
         return "dashboard";
     }
 

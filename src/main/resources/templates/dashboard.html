@@ -52,7 +52,17 @@
 
                 <div class="tab-pane fade" id="v-pills-newcircle" role="tabpanel" aria-labelledby="v-pills-newcircle-tab">
                     <!--            NEW CIRCLE CONTENT START-->
-                    coming soon...
+                    <div class="col-3">
+                        <form method="post" th:action="@{/circle/new}" th:object="${circle}">
+                            <div class="form-group">
+                                <label for="circleName">Circle name</label>
+                                <input name="circleName" id="circleName" type="text" class="form-control"
+                                       th:field="*{circleName}" placeholder="Circle name">
+                            </div>
+
+                            <input type="submit" class="btn btn-primary" value="Create">
+                        </form>
+                    </div>
 
                     <!--            NEW CIRCLE CONTENT END-->
                 </div>
