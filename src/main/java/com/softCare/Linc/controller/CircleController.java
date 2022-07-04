@@ -38,17 +38,9 @@ public class CircleController {
         this.circleMemberInterface = circleMemberInterface;
     }
 
-
-    @GetMapping({"/dashboard"})
-    protected String showHome(Model model,@AuthenticationPrincipal User user) {
-        model.addAttribute("allCircles", circleMemberInterface.findAllCirclesWhereMemberOf(user));
-        return "dashboard";
-    }
-
     @GetMapping("/circle/{circleId}")
     protected String showCircleDetails(@PathVariable("circleId") Long circleId, Model model,@AuthenticationPrincipal User user) {
         Optional<Circle> circle = circleServiceInterface.findById(circleId);
-        Long currentUserId = user.getUserId();
         if (circle.isPresent()) {
             if (circleMemberInterface.isMember(user, circle.get())) {
                 boolean isAdmin = circleMemberInterface.isAdmin(user,circle.get());

@@ -13,6 +13,7 @@ body{
     display: flex;
     flex-direction: column;
     color: #1D3557;
+    padding-bottom: 50px;
 }
 .card.w-100{
     margin-bottom: 5px;
