@@ -50,8 +50,10 @@
 <!--                                                Displays duration, if available-->
                                                 <div th:if="${task.duration > 0}" class="text-left">
                                                     <img th:if="${task.duration < 59}" src="/static/images/clock-history.svg" th:text="' '+${task.duration}+'  minutes'" class="" alt="duration">
-                                                    <img th:if="${(task.duration < 120) && (task.duration > 59)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(1 - (task.duration/60))}+'  hour  '+ ${task.duration - 60}+ '  minutes'" class="" alt="duration">
-                                                    <img th:if="${(task.duration > 120)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(1 - (task.duration/60))}+'  hours  '+ ${task.duration - 60}+ '  minutes'" class="" alt="duration">
+                                                    <img th:if="${(task.duration < 120) && (task.duration > 59)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(1 - (task.duration/60))}+'+ hour'" class="" alt="duration">
+                                                    <img th:if="${(task.duration < 180) && (task.duration > 119)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(2 - (task.duration/60))}+'+ hours'" class="" alt="duration">
+                                                    <img th:if="${(task.duration < 240) && (task.duration > 179)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(3 - (task.duration/60))}+'+ hours'" class="" alt="duration">
+                                                    <img th:if="${(task.duration < 300) && (task.duration > 239)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(4 - (task.duration/60))}+'+ hours'" class="" alt="duration">
                                                 <br>
                                                 </div>
 <!--                                                Displays due date, if available-->
