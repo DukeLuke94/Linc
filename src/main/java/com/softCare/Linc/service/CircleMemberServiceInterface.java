@@ -18,4 +18,10 @@ public interface CircleMemberServiceInterface {
     List<Circle> findAllCirclesWhereMemberOf(User user);
 
     Object findAllMembers(Circle circle);
+
+    void deleteByUserIdAndCircleId(Long userId, Long circleId);
+
+    Optional<CircleMember> findByUserIdAndCircleId(Long userId, Long circleId);
+
+    void delete(CircleMember circleMember);
 }

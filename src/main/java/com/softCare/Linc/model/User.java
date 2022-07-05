@@ -58,6 +58,10 @@ public class User implements UserDetails {
         authorityList.add(new SimpleGrantedAuthority("ROLE_USER"));
         return authorityList;
     }
+    public void removeMember(CircleMember circleMember){
+        this.circleMembers.remove(circleMember);
+
+    }
 
     @Override
     public boolean isAccountNonExpired() {

@@ -16,4 +16,6 @@ public interface LincUserDetailServiceInterface {
 
     Optional<User> findByUsername(String username);
     Optional<User> findByEmail(String email);
+
+    Optional<User> findByUserId(Long userId);
 }
