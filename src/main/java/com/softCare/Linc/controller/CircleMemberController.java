@@ -36,13 +36,16 @@ public class CircleMemberController {
     @PostMapping("/new/member")
     protected String newMember(@Valid @ModelAttribute("newMemberUser") User user, BindingResult result, Model model) {
         boolean userExists = userInterface.findByEmail(user.getEmailAddress()).isPresent();
+        Optional<User> toBeMember = userInterface.findByEmail(user.getEmailAddress());
         if (!userExists){
             model.addAttribute("unknownEmail",true);
             return "redirect:/circle/" + circleController.currentCircle.getCircleId();
         }
 
+        boolean noMemberYet = circleMemberServiceInterface.findByUserIdAndCircleId(toBeMember.get().getUserId(), circleController.currentCircle.getCircleId()).isEmpty();
+
         Optional<User> member = userInterface.findByEmail(user.getEmailAddress());
-        if (member.isPresent()){
+        if (member.isPresent() && noMemberYet){
             CircleMember circleMember = new CircleMember(member.get(),circleController.currentCircle,false,false  );
             circleMemberServiceInterface.save(circleMember);
         }

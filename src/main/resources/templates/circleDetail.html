@@ -99,7 +99,7 @@
             <div class="collapse" id="collapseNewUser">
                     <form method="post" th:action="@{/new/member}" th:object="${newMemberUser}" >
                         <label for="emailAddress">Email address</label>
-                        <input name ="emailAddress" id="emailAddress" type="email" class="form-control"
+                        <input name ="emailAddress" id="emailAddress" type="email" th:required="required" class="form-control"
                                th:field="*{emailAddress}" placeholder="Email address">
                         <br>
                         <p class="text-danger" th:if="${unknownEmail == true}">No such user
