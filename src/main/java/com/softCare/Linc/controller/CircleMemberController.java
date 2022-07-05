@@ -49,6 +49,20 @@ public class CircleMemberController {
         return "redirect:/circle/" + circleController.currentCircle.getCircleId();
     }
 
+    @PostMapping("/remove/member")
+    protected String newMember(@ModelAttribute("userId") Long userId) {
+        Optional<User> user = userInterface.findByUserId(userId);
+        if (user.isPresent()){
+            Optional<CircleMember> circleMember = circleMemberServiceInterface.findByUserIdAndCircleId(userId,circleController.currentCircle.getCircleId());
+            if (circleMember.isPresent()){
+                user.get().removeMember(circleMember.get());
+                circleMemberServiceInterface.delete(circleMember.get());
+            }
+        }
+        return "redirect:/circle/" + circleController.currentCircle.getCircleId();
+    }
+
+
 
 
 }

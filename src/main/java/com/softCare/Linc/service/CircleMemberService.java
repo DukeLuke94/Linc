@@ -68,4 +68,22 @@ public class CircleMemberService implements CircleMemberServiceInterface {
         }
         return userList;
     }
+
+    @Override
+    public void deleteByUserIdAndCircleId(Long userId, Long circleId) {
+        Optional<CircleMember> member = circleMemberRepository.findByUserUserIdAndCircle_CircleId(userId,circleId);
+        member.ifPresent(circleMember -> circleMemberRepository.deleteById(circleMember.getCircleMemberId()));
+
+    }
+
+    @Override
+    public Optional<CircleMember> findByUserIdAndCircleId(Long userId, Long circleId) {
+        return circleMemberRepository.findByUserUserIdAndCircle_CircleId(userId,circleId);
+    }
+
+    @Override
+    public void delete(CircleMember circleMember) {
+        circleMemberRepository.delete(circleMember);
+
+    }
 }

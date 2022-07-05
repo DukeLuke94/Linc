@@ -58,4 +58,8 @@ public class LincUserDetailService implements UserDetailsService, LincUserDetail
         return userRepository.findByEmailAddress(email);
     }
 
+    public Optional<User> findByUserId(Long userId){
+        return userRepository.findByUserId(userId);
+    }
+
 }
