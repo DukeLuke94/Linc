@@ -24,10 +24,10 @@
         <!--            LOGIN CONTENT START-->
         <div class="col-3">
             <form method="post" th:action="@{/login}">
-                <div th:if="${param.error}" class="alert alert-primary">
+                <div th:if="${param.error}" class="alert alert-info">
                     Invalid email address and/or password
                 </div>
-                <div th:if="${param.logout}" class="alert alert-primary">
+                <div th:if="${param.logout}" class="alert alert-info">
                     You've been logged out
                 </div>
 
