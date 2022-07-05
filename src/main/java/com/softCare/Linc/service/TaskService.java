@@ -7,18 +7,21 @@ import com.softCare.Linc.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
 public class TaskService implements TaskServiceInterface {
+
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
+    private final CircleMemberServiceInterface circleMemberServiceInterface;
 
-    public TaskService(TaskRepository taskRepository, TaskMapper taskMapper) {
+    public TaskService(TaskRepository taskRepository, TaskMapper taskMapper, CircleMemberServiceInterface circleMemberServiceInterface) {
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
+        this.circleMemberServiceInterface = circleMemberServiceInterface;
     }
 
     @Override
@@ -52,7 +55,6 @@ public class TaskService implements TaskServiceInterface {
             }
 
         }
-
         return tasksToDo;
     }
 
@@ -67,8 +69,6 @@ public class TaskService implements TaskServiceInterface {
             }
         }
         return tasksToDo;
-
-
     }
 
     @Override
@@ -93,5 +93,24 @@ public class TaskService implements TaskServiceInterface {
         }
         return claimedTasks;
     }
+
+    public Object findAllTasksPerUser(User user) {
+        User currentUser = user;
+        List<Task> allTasks = taskRepository.findAll();
+        List<Circle> allCircles = circleMemberServiceInterface.findAllCirclesWhereMemberOf(user);
+
+        List<Task> tasksPerUser = new ArrayList<>();
+
+        for (Task task : allTasks) {
+            for (Circle circle : allCircles) {
+                if(Objects.equals(task.getCircle().getCircleId(), circle.getCircleId())) {
+                    tasksPerUser.add(task);
+                }
+            }
+        }
+        return tasksPerUser;
+    }
+
+
 
 }

@@ -23,9 +23,9 @@
         <div class="col-6">
             <div class="card w-100">
                 <div class="card-body">
-                    <h4>Tasks</h4>
-                    <p th:unless="${claimedTasks.size != 0}" class="">You have not claimed any tasks yet...</p>
-                    <div class="card w-100" th:each="task: ${claimedTasks}">
+                    <h5 class="card-title">Tasks</h5>
+                    <p th:unless="${tasksPerUser.size != 0}" class="">There are no tasks in your circle(s) yet</p>
+                    <div class="card w-100" th:each="task: ${tasksPerUser}">
                         <div class="card-body">
                             <h5 class="card-title"><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a></h5>
                             <p class="card-text" th:text="${task.taskDescription}"></p>
@@ -39,7 +39,7 @@
         <div class="col-2">
             <div class="card w-100">
                 <div class="card-body">
-                    <h4>Circles</h4>
+                    <h5 class="card-title">Circles</h5>
                     <p th:unless="${allCircles.size != 0}" class="">You are not invited to any circles yet..</p>
                     <ul th:each="circle : ${allCircles}">
                         <li><a th:href="@{/circle/{circleId}(circleId=${circle.circleId})}" th:text="${circle.circleName}"></a></li>

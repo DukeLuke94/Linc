@@ -24,7 +24,7 @@ public class DashboardController {
     @GetMapping({"/dashboard"})
     protected String showHome(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("allCircles", circleMemberServiceInterface.findAllCirclesWhereMemberOf(user));
-        model.addAttribute("claimedTasks", taskServiceInterface.findAllClaimedTasksForUser(user));
+        model.addAttribute("tasksPerUser", taskServiceInterface.findAllTasksPerUser(user));
         model.addAttribute("circle",new Circle());
         return "dashboard";
     }
