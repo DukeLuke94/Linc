@@ -6,10 +6,8 @@ import com.softCare.Linc.model.Task;
 import com.softCare.Linc.model.User;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskService implements TaskServiceInterface {
@@ -55,7 +53,7 @@ public class TaskService implements TaskServiceInterface {
             }
 
         }
-        return tasksToDo;
+        return tasksToDo.stream().sorted((o1, o2) ->o1.getDueDate().compareTo(o2.getDueDate())).collect(Collectors.toList());
     }
 
     public Object findAllTasksToDoAndToClaimInCircle(Circle circle) {
@@ -103,12 +101,12 @@ public class TaskService implements TaskServiceInterface {
 
         for (Task task : allTasks) {
             for (Circle circle : allCircles) {
-                if(Objects.equals(task.getCircle().getCircleId(), circle.getCircleId())) {
+                if(Objects.equals(task.getCircle().getCircleId(), circle.getCircleId()) && !task.isTaskDone()) {
                     tasksPerUser.add(task);
                 }
             }
         }
-        return tasksPerUser;
+        return tasksPerUser.stream().sorted((o1, o2) ->o1.getDueDate().compareTo(o2.getDueDate())).collect(Collectors.toList());
     }
 
 
