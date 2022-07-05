@@ -27,6 +27,7 @@
                     <p th:unless="${tasksPerUser.size != 0}" class="">There are no tasks in your circle(s) yet</p>
                     <div class="card w-100 card-tasks" th:each="task: ${tasksPerUser}">
                         <div class="card-body">
+                            <a th:href="@{/task/{taskId}(taskId=${task.taskId})}" class="stretched-link"></a>
                             <h5 class="card-title"><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a></h5>
                             <p class="card-text" th:text="${task.taskDescription}"></p>
                             <!--                                                           Claim button if unclaimed-->
