@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -18,12 +17,15 @@ import javax.validation.constraints.Size;
 public class UserVmEditPassword {
 
     private String username;
+
     @NotEmpty(message = "This field has to be filled")
     private String currentPassword;
+
     @NotEmpty(message = "This field has to be filled")
-    @Size(message = "Password has to be at least 6 characters", min = 6)
+    @Size(message = "Password has to be at least 6 characters", min = 6, max = 20)
     private String password;
+
     @NotEmpty(message = "This field has to be filled")
-    @Size(message = "Password has to be at least 6 characters", min = 6)
+    @Size(message = "Password has to be at least 6 characters", min = 6, max = 20)
     private String passwordRepeat;
 }

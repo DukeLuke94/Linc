@@ -19,10 +19,8 @@ import java.util.Optional;
 
 @Controller
 public class UserController {
-
-    public final String USERNAME_YOU_CHOSE_IS_ALREADY_IN_USE = "The username you chose is already in use";
     public final String EMAIL_ALREADY_IN_USE = "This Email-address is already in use";
-    public final String CURRENT_PASSWORDS_IS_NOT_CORRECT = "The current passwords is not correct";
+    public final String CURRENT_PASSWORD_IS_NOT_CORRECT = "The current password is not correct";
     private final String PASSWORD_REPEAT_NO_MATCH = "The newly entered passwords are not an exact match or aren't given";
 
     private final LincUserDetailServiceInterface userInterface;
@@ -98,14 +96,15 @@ public class UserController {
                 if (!result.hasErrors()) {
                     User user = setUpdatedUserWithNewPassword(userVmEditPassword, loggedInUser);
                     userInterface.save(user);
+                    return "redirect:/user/profile";
                 }
-                return "redirect:/user/profile";
+                return "editPasswordForm";
             }
             model.addAttribute("errorMessage", PASSWORD_REPEAT_NO_MATCH);
             return "editPasswordForm";
         }
         //TODO: make this message hidden when all fields are blank
-        model.addAttribute("errorMessage", CURRENT_PASSWORDS_IS_NOT_CORRECT);
+        model.addAttribute("errorMessage", CURRENT_PASSWORD_IS_NOT_CORRECT);
         return "editPasswordForm";
     }
 

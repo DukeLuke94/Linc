@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CircleService implements  CircleServiceInterface{
+public class CircleService implements CircleServiceInterface{
     private final CircleRepository circleRepository;
     private final CircleMapper circleMapper;
 
