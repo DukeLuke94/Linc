@@ -1,15 +1,13 @@
 package com.softCare.Linc.controller;
 
 
+import com.softCare.Linc.model.Circle;
 import com.softCare.Linc.model.Task;
 import com.softCare.Linc.model.User;
 import com.softCare.Linc.service.CircleServiceInterface;
+import com.softCare.Linc.service.LincUserDetailServiceInterface;
 import com.softCare.Linc.service.TaskServiceInterface;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,12 +25,14 @@ public class TaskController {
 
     private final CircleServiceInterface circleServiceInterface;
     private final TaskServiceInterface taskServiceInterface;
+    private final LincUserDetailServiceInterface userService;
 
-    public TaskController(CircleController circleController, UserController userController, CircleServiceInterface circleServiceInterface, TaskServiceInterface taskServiceInterface) {
+    public TaskController(CircleController circleController, UserController userController, CircleServiceInterface circleServiceInterface, TaskServiceInterface taskServiceInterface, LincUserDetailServiceInterface userService) {
         this.circleController = circleController;
         this.userController = userController;
         this.circleServiceInterface = circleServiceInterface;
         this.taskServiceInterface = taskServiceInterface;
+        this.userService = userService;
     }
 
     @GetMapping({"/task/new"})
@@ -66,9 +66,16 @@ public class TaskController {
 
     @PostMapping({"/task/edit"})
     protected String saveEditedTask(@ModelAttribute("task") Task task, BindingResult result) {
+        Circle circleToSet = taskServiceInterface.findById(task.getTaskId()).get().getCircle();
+        User userToSet = taskServiceInterface.findById(task.getTaskId()).get().getUser();
+        String claimedUserName = null;
         if (!result.hasErrors()) {
-            task.setCircle(circleController.currentCircle);
-            task.setTaskId(currentTask.getTaskId());
+            if (task.getClaimedUserName().length()>2){
+                claimedUserName = task.getClaimedUserName();
+            }
+            task.setClaimedUserName(claimedUserName);
+            task.setCircle(circleToSet);
+            task.setUser(userToSet);
             taskServiceInterface.save(task);
         }
         return "redirect:/task/" + task.getTaskId();
@@ -79,6 +86,7 @@ public class TaskController {
         Optional<Task> task = taskServiceInterface.findById(taskId);
         if (task.isPresent()) {
             currentTask = task.get();
+            model.addAttribute("currentUser",user.getUsername());
             model.addAttribute("task", task.get());
             return "taskDetails";
         } else {
@@ -88,8 +96,8 @@ public class TaskController {
 
     @GetMapping("/task/delete")
     protected String deleteTask() {
+        String referer = String.valueOf(currentTask.getCircle().getCircleId());
         taskServiceInterface.delete(currentTask);
-        String referer = circleController.currentCircle.getCircleId().toString();
         return "redirect:/circle/" + referer;
     }
 

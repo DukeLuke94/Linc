@@ -249,5 +249,17 @@ button:hover::after, button:focus::after {
 }
 
 #remove-member:hover {
+    transform: scale(1.25);
     filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
+}
+
+#delete-task:hover {
+    transform: scale(1.25);
+    filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
+
+}
+
+#edit-task:hover {
+    transform: scale(1.25);
+    filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(25deg) brightness(104%) contrast(97%);
 }

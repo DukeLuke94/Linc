@@ -22,6 +22,7 @@ public class TaskMapper {
         viewmodel.setDuration(task.getDuration());
         viewmodel.setClaimedUserName(task.getClaimedUserName());
         viewmodel.setTaskDone(task.isTaskDone());
+        viewmodel.setUser(task.getUser());
 
         return viewmodel;
     }
