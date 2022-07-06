@@ -11,7 +11,6 @@
         <div class="row">
             <div class="col-2"></div>
             <div class="col-9">
-                <h1 class="display-4" th:text="'Details of ' + ${task.taskName}"></h1>
             </div>
         </div>
     </div>
@@ -20,26 +19,86 @@
     <div class="row">
         <div class="col-2"></div>
 
-            <!--            TASK FORM CONTENT START-->
-        <div class="col-9">
-        <p th:text="${task.taskDescription}"></p>
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <form action="/task/claim">
-                    <input type="submit" class="btn claim" name="Claim" value="Claim">
-                </form>
-
-                <form action="/task/done">
-                    <input type="submit" value="Done" class="btn done" >
-                </form>
-
-                <form th:action="@{/task/edit/{taskId}(taskId=${task.taskId})}">
-                    <input type="submit" class="btn edit" value="Edit">
-                </form>
-
-                <form action="/task/delete">
-                    <input type="submit" class="btn delete"  value="Delete">
+            <!--    TASK FORM CONTENT START-->
+        <div class="col-8 card w-100 card">
+        <div class="card-body">
+            <h1 class="display-4" th:text="${task.taskName}"></h1>
+            <p th:text="${task.taskDescription}"></p>
+            <!--       Claim button if unclaimed-->
+            <div th:if="${task.claimedUserName == null}" class="">
+                <form th:action="@{/task/detail/claim}" method="post" class="" >
+                    <div class="text-right float-right" style="display:inline;">
+                        <button type="submit" class="btn btn-primary text-right">Claim</button>
+                    </div>
+                    <span>
+                        <input class="list-group-item-check pe-none mr-1"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
+                    </span>
                 </form>
             </div>
+            <!--      Done button if claimed & owned-->
+            <div th:if="${task.claimedUserName == currentUser}" class="">
+                <form th:action="@{/task/detail/done}" method="post" th:object="${task}">
+                    <span>
+                        <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
+                    </span>
+                    <div class="text-right float-right" style="display:inline;">
+                        <button type="submit" class="btn btn-primary text-right">Done</button>
+                    </div>
+                </form>
+            </div>
+            <!--       Unclaim button if claimed & owned-->
+            <div th:if="${(task.claimedUserName == currentUser) && !(task.isTaskDone())}" class="">
+                <form th:action="@{/task/detail/unclaim}" method="post" class="" >
+                    <div class="text-right float-right" style="display:inline;">
+                        <button type="submit" class="btn btn-primary text-right">Unclaim</button>
+                    </div>
+                    <span>
+                        <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
+                    </span>
+                </form>
+            </div>
+
+
+
+
+            <!--                                                Displays duration, if available-->
+            <span th:if="${task.duration > 0}" class="text-left" style="display:inline;">
+                <img th:if="${task.duration < 59}" src="/static/images/clock-history.svg" th:text="' '+${task.duration}+'  minutes'" class="" alt="duration">
+                <img th:if="${(task.duration < 120) && (task.duration > 59)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(1 - (task.duration/60))}+'+ hour'" class="" alt="duration">
+                <img th:if="${(task.duration < 180) && (task.duration > 119)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(2 - (task.duration/60))}+'+ hours'" class="" alt="duration">
+                <img th:if="${(task.duration < 240) && (task.duration > 179)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(3 - (task.duration/60))}+'+ hours'" class="" alt="duration">
+                <img th:if="${(task.duration < 300) && (task.duration > 239)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(4 - (task.duration/60))}+'+ hours'" class="" alt="duration">
+                <br>
+            </span>
+            <!--                                                Displays due date, if available-->
+            <span th:if="${task.dueDate != null}" class="text-left" style="display:inline;">
+                <img src="/static/images/calendar-check.svg" th:text="' ' + ${#temporals.format(task.dueDate, 'dd MMMM yyyy', new java.util.Locale('en', 'EN'))}" class="" alt="calender">
+            </span>
+            <!--                                                Displays claimants name if claimed-->
+            <span th:if="${task.claimedUserName != null}" class="text-right">
+                <span th:if="${task.claimedUserName != currentUser}" class="d-block small opacity-50 text-right" th:text="'Claimed by: '+${task.claimedUserName}">
+                </span>
+            </span>
+
+        </div>
+<!--            <div class="btn-group" role="group" aria-label="Basic example">-->
+<!--                <form action="/task/claim">-->
+<!--                    <input type="submit" class="btn claim" name="Claim" value="Claim">-->
+<!--                </form>-->
+
+<!--                <form action="/task/done">-->
+<!--                    <input type="submit" value="Done" class="btn done" >-->
+<!--                </form>-->
+
+<!--                <form th:action="@{/task/edit/{taskId}(taskId=${task.taskId})}">-->
+<!--                    <input type="submit" class="btn edit" value="Edit">-->
+<!--                </form>-->
+
+<!--                <form action="/task/delete">-->
+<!--                    <input type="submit" class="btn delete"  value="Delete">-->
+<!--                </form>-->
+<!--            </div>-->
+        </div>
         </div>
     </div>
 </div>

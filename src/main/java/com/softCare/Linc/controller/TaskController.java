@@ -75,7 +75,7 @@ public class TaskController {
     }
 
     @GetMapping("/task/{taskId}")
-    protected String showTaskDetails(@PathVariable("taskId") Long taskId, Model model) {
+    protected String showTaskDetails(@PathVariable("taskId") Long taskId, Model model, @AuthenticationPrincipal User user) {
         Optional<Task> task = taskServiceInterface.findById(taskId);
         if (task.isPresent()) {
             currentTask = task.get();
@@ -168,4 +168,32 @@ public class TaskController {
 
         return "redirect:/circle/" + circleController.currentCircle.getCircleId();
     }
+
+    @PostMapping({"/task/detail/claim"})
+    protected String claimDetailTask(@RequestParam(name = "taskId") Long taskId, @AuthenticationPrincipal User user) {
+        currentTask = taskServiceInterface.findById(taskId).get();
+        currentTask.setUser(user);
+        currentTask.setClaimedUserName(user.getUsername());
+        taskServiceInterface.save(currentTask);
+        return "redirect:/task/" + taskId;
+    }
+
+    @PostMapping({"/task/detail/done"})
+    protected String doneDetailTask(@RequestParam(name = "taskId") Long taskId, @AuthenticationPrincipal User user) {
+        currentTask = taskServiceInterface.findById(taskId).get();
+        currentTask.setTaskDone(true);
+        taskServiceInterface.save(currentTask);
+
+        return "redirect:/circle/" + taskId;
+    }
+
+    @PostMapping({"/task/detail/unclaim"})
+    protected String unclaimDetailTask(@RequestParam(name = "taskId") Long taskId, @AuthenticationPrincipal User user) {
+        currentTask = taskServiceInterface.findById(taskId).get();
+        currentTask.setUser(null);
+        currentTask.setClaimedUserName(null);
+        taskServiceInterface.save(currentTask);
+        return "redirect:/task/" + taskId;
+    }
+
 }

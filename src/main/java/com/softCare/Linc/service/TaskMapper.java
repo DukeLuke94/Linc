@@ -20,6 +20,8 @@ public class TaskMapper {
         viewmodel.setCircle(task.getCircle());
         viewmodel.setDueDate(task.getDueDate());
         viewmodel.setDuration(task.getDuration());
+        viewmodel.setClaimedUserName(task.getClaimedUserName());
+        viewmodel.setTaskDone(task.isTaskDone());
 
         return viewmodel;
     }
