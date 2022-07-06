@@ -115,6 +115,8 @@ public class UserController {
         return "userProfile";
     }
 
+
+
     private User setUpdatedUserWithNewPassword(UserVmEditPassword userVmEditPassword, User loggedInUser) {
         User user = userMapper.userVmEditPasswordToUserModel(userVmEditPassword);
         user.setUserId(loggedInUser.getUserId());
