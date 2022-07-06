@@ -50,7 +50,7 @@ public class LincUserDetailService implements UserDetailsService, LincUserDetail
 
     @Override
     public Optional<User> findByUsername(String username) {
-        return Optional.empty();
+        return userRepository.findByUsername(username);
     }
 
     @Override

@@ -2,10 +2,10 @@ package com.softCare.Linc.controller;
 
 import com.softCare.Linc.model.Circle;
 import com.softCare.Linc.model.CircleMember;
-import com.softCare.Linc.model.Task;
 import com.softCare.Linc.model.User;
 import com.softCare.Linc.service.CircleMemberServiceInterface;
 import com.softCare.Linc.service.CircleServiceInterface;
+import com.softCare.Linc.service.LincUserDetailServiceInterface;
 import com.softCare.Linc.service.TaskServiceInterface;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -30,12 +28,15 @@ public class CircleController {
     private final CircleServiceInterface circleServiceInterface;
     private final TaskServiceInterface taskServiceInterface;
     private final CircleMemberServiceInterface circleMemberInterface;
+
+    private final LincUserDetailServiceInterface userService;
     public Circle currentCircle;
 
-    public CircleController(CircleServiceInterface circleServiceInterface, TaskServiceInterface taskServiceInterface, CircleMemberServiceInterface circleMemberInterface, CircleMemberServiceInterface circleMemberInterface1) {
+    public CircleController(CircleServiceInterface circleServiceInterface, TaskServiceInterface taskServiceInterface, CircleMemberServiceInterface circleMemberInterface, CircleMemberServiceInterface circleMemberInterface1, LincUserDetailServiceInterface userService) {
         this.circleServiceInterface = circleServiceInterface;
         this.taskServiceInterface = taskServiceInterface;
         this.circleMemberInterface = circleMemberInterface;
+        this.userService = userService;
     }
 
     @GetMapping("/circle/{circleId}")
@@ -48,10 +49,11 @@ public class CircleController {
                 model.addAttribute("circle", circle.get());
                 model.addAttribute("tasksToDo", taskServiceInterface.findAllTasksToDoInCircle(currentCircle));
                 model.addAttribute("doneTasks", taskServiceInterface.findAllDoneTasksInCircle(currentCircle));
-                model.addAttribute("circleMembers",circleMemberInterface.findAllMembers(circle.get()));
+                model.addAttribute("users",circleMemberInterface.findAllMembers(circle.get()));
                 model.addAttribute("currentUser",user.getUsername());
                 model.addAttribute("isAdmin",isAdmin);
                 model.addAttribute("newMemberUser", new User());
+                model.addAttribute("userPermissions",circleMemberInterface.findCircleMembers(circle.get()).get());
                 return "circleDetail";
             }
             //TODO: add 'no access' error page
@@ -72,6 +74,8 @@ public class CircleController {
         if (!result.hasErrors()) {
             circleServiceInterface.save(circle);
             CircleMember circleMember = new CircleMember(user, circle, true, true);
+            Optional<User> admin = userService.findByUsername("Admin");
+            admin.ifPresent(value -> circleMemberInterface.save(new CircleMember(value, circle, true, true)));
             circleMemberInterface.save(circleMember);
         } else if (result.hasErrors()) {
             return "redirect:/circle/new";

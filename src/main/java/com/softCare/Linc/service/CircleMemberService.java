@@ -85,4 +85,9 @@ public class CircleMemberService implements CircleMemberServiceInterface {
         circleMemberRepository.delete(circleMember);
 
     }
+
+    @Override
+    public Optional<List<CircleMember>> findCircleMembers(Circle circle) {
+        return circleMemberRepository.findByCircleCircleId(circle.getCircleId());
+    }
 }
