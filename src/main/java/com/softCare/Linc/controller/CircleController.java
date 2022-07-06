@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -25,6 +26,7 @@ import java.util.Optional;
 public class CircleController {
 
 
+    public static final String CIRCLE_NAME_MUST_BE_FILLED_IN = "A new Circle has to have a name";
     private final CircleServiceInterface circleServiceInterface;
     private final TaskServiceInterface taskServiceInterface;
     private final CircleMemberServiceInterface circleMemberInterface;
@@ -69,17 +71,18 @@ public class CircleController {
     }
 
     @PostMapping("/circle/new")
-    @Transactional
-    protected String saveCircle(@ModelAttribute("circle") @Valid Circle circle, BindingResult result,@AuthenticationPrincipal User user) {
-        if (!result.hasErrors()) {
+    protected String saveCircle(@ModelAttribute("circle") Circle circle, BindingResult result, @AuthenticationPrincipal User user, RedirectAttributes redirectAttributes) {
+        if (!result.hasErrors() && !circle.getCircleName().equals("")) {
             circleServiceInterface.save(circle);
             CircleMember circleMember = new CircleMember(user, circle, true, true);
             Optional<User> admin = userService.findByUsername("Admin");
-            admin.ifPresent(value -> circleMemberInterface.save(new CircleMember(value, circle, true, true)));
+                if (admin.isPresent() && !user.getUserId().equals(admin.get().getUserId())) {
+                    circleMemberInterface.save(new CircleMember(admin.get(), circle, true, true));
+                }
             circleMemberInterface.save(circleMember);
-        } else if (result.hasErrors()) {
-            return "redirect:/circle/new";
+            return "redirect:/dashboard";
         }
+        redirectAttributes.addFlashAttribute("errorMessage", CIRCLE_NAME_MUST_BE_FILLED_IN);
         return "redirect:/dashboard";
     }
 
