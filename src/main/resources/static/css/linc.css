@@ -60,6 +60,20 @@ a {
     position: relative;
 }
 
+.btn.delete {
+    background-color: #E63946;
+    border-color: #E63946;
+    color: white;
+}
+
+.btn.delete:hover {
+    background-color: #E63946;
+    border-color: #E63946;
+    opacity: 0.7;
+    transition: 0.3s;
+    color: white;
+}
+
 .wrap {
     height: 100%;
     display: flex;
