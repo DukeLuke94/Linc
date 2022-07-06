@@ -57,7 +57,7 @@ public class CircleMemberController {
     protected String newMember(@ModelAttribute("circleMemberId") Long circleMemberId) {
         Optional<User> user = userInterface.findByUserId(circleMemberId);
         if (user.isPresent()){
-            Optional<CircleMember> circleMember = circleMemberServiceInterface.findByUserIdAndCircleId(circleMemberId,circleController.currentCircle.getCircleId());
+            Optional<CircleMember> circleMember = circleMemberServiceInterface.findByUserIdAndCircleId(circleMemberId, circleController.currentCircle.getCircleId());
             if (circleMember.isPresent()){
                 user.get().removeMember(circleMember.get());
                 circleMemberServiceInterface.delete(circleMember.get());
@@ -65,6 +65,18 @@ public class CircleMemberController {
         }
         return "redirect:/circle/" + circleController.currentCircle.getCircleId();
     }
+
+    @PostMapping({"/assignRole/admin"})
+    protected String assignRoleAdmin(@ModelAttribute("circleMemberId") Long circleMemberId) {
+        Optional<User> user = userInterface.findByUserId(circleMemberId);
+        if (user.isPresent()) {
+            Optional<CircleMember> circleMember = circleMemberServiceInterface.findByUserIdAndCircleId(circleMemberId, circleController.currentCircle.getCircleId());
+            circleMember.ifPresent(member -> member.setAdmin(true));
+            circleMemberServiceInterface.save(circleMember.get());
+        }
+        return "redirect:/circle/" + circleController.currentCircle.getCircleId();
+    }
+
 
 
 
