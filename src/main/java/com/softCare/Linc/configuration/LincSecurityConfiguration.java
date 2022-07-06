@@ -29,7 +29,7 @@ public class LincSecurityConfiguration {
             )
                 .formLogin().loginPage("/login").permitAll()
                 .usernameParameter("emailAddress")
-//                .successForwardUrl("/dashboard")
+                .defaultSuccessUrl("/dashboard")
                 .and()
                 .logout().logoutSuccessUrl("/");
         return http.build();

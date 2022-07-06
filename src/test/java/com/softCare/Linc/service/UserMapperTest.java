@@ -109,7 +109,8 @@ class UserMapperTest {
     }
 
     @Test
-    void userVmEditPasswordToUserModel() {
+    @DisplayName("userEditPasswordViewModelToUserModel")
+    void userEditPasswordViewModelToUserModel() {
         //arrange:
         UserVmEditPassword userVmEditPassword3 = new UserVmEditPassword("User1", "123test", "test123", "test123");
         UserVmEditPassword userVmEditPassword4 = new UserVmEditPassword("User2", "test123", "123test", "123test");

@@ -55,74 +55,9 @@ a {
     width: 250px;
 }
 
-.btn.done{
-    background-color: #4FD1C5;
-    border-color: #4FD1C5;
-    color: white;
-}
-
-.btn.done:hover {
-    background-color: #4FD1C5;
-    border-color: #4FD1C5;
-    opacity: 0.7;
-    transition: 0.3s;
-    color: white;
-}
-
-.btn.delete {
-    background-color: #E63946;
-    border-color: #E63946;
-    color: white;
-}
-
-.btn.delete:hover {
-    background-color: #E63946;
-    border-color: #E63946;
-    opacity: 0.7;
-    transition: 0.3s;
-    color: white;
-}
-
-.btn.edit {
-    background-color: #457B9D;
-    border-color: #457B9D;
-    color: white;
-}
-
-.btn.edit:hover {
-    background-color: #457B9D;
-    border-color: #457B9D;
-    opacity: 0.7;
-    transition: 0.3s;
-    color: white;
-}
-
-.btn.new {
-    background-color: #1D3557;
-    border-color: #1D3557;
-    color: white;
-}
-
-.btn.new:hover {
-    background-color: #1D3557;
-    border-color: #1D3557;
-    opacity: 0.7;
-    transition: 0.3s;
-    color: white;
-}
-
-.btn.claim {
-    background-color: #2B50AA;
-    border-color: #2B50AA;
-    color: white;
-}
-
-.btn.claim:hover {
-    background-color: #2B50AA;
-    border-color: #2B50AA;
-    opacity: 0.7;
-    transition: 0.3s;
-    color: white;
+.btn-primary {
+    z-index: 2;
+    position: relative;
 }
 
 .wrap {
@@ -242,4 +177,8 @@ button:hover::after, button:focus::after {
 .card-tasks:hover{
     transform: scale(1.025);
     box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+#remove-member:hover {
+    filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
 }

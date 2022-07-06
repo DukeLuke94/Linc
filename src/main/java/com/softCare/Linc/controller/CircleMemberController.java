@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -33,7 +34,7 @@ public class CircleMemberController {
         this.circleController = circleController;
     }
 
-    @PostMapping("/new/member")
+    @PostMapping("/member/new")
     protected String newMember(@Valid @ModelAttribute("newMemberUser") User user, BindingResult result, Model model) {
         boolean userExists = userInterface.findByEmail(user.getEmailAddress()).isPresent();
         Optional<User> toBeMember = userInterface.findByEmail(user.getEmailAddress());
@@ -52,11 +53,11 @@ public class CircleMemberController {
         return "redirect:/circle/" + circleController.currentCircle.getCircleId();
     }
 
-    @PostMapping("/remove/member")
-    protected String newMember(@ModelAttribute("userId") Long userId) {
-        Optional<User> user = userInterface.findByUserId(userId);
+    @PostMapping("/member/remove")
+    protected String newMember(@ModelAttribute("circleMemberId") Long circleMemberId) {
+        Optional<User> user = userInterface.findByUserId(circleMemberId);
         if (user.isPresent()){
-            Optional<CircleMember> circleMember = circleMemberServiceInterface.findByUserIdAndCircleId(userId,circleController.currentCircle.getCircleId());
+            Optional<CircleMember> circleMember = circleMemberServiceInterface.findByUserIdAndCircleId(circleMemberId,circleController.currentCircle.getCircleId());
             if (circleMember.isPresent()){
                 user.get().removeMember(circleMember.get());
                 circleMemberServiceInterface.delete(circleMember.get());
@@ -64,7 +65,6 @@ public class CircleMemberController {
         }
         return "redirect:/circle/" + circleController.currentCircle.getCircleId();
     }
-
 
 
 

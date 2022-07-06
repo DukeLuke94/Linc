@@ -34,6 +34,7 @@
                                         <div class="card w-100 card-tasks" th:each="task : ${tasksToDo}">
 <!--                                            Task title & description-->
                                             <div class="card-body">
+                                                <a th:href="@{/task/{taskId}(taskId=${task.taskId})}" class="stretched-link"></a>
                                                 <h5 class="card-title"><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a></h5>
                                                 <p class="card-text" th:text="${task.taskDescription}"></p>
                                                 <!--                                                           Claim button if unclaimed-->
@@ -82,22 +83,53 @@
             <a class="btn btn-primary float-right"  href="/task/new">New task</a>
             </div>
 <!--            TASK CONTENT END-->
-        <div class="tab-pane fade" id="v-pills-users" role="tabpanel" aria-labelledby="v-pills-users-tab">
+        <div class="tab-pane fade col-4" id="v-pills-users" role="tabpanel" aria-labelledby="v-pills-users-tab">
             <!--        USER CONTENT START-->
-            <div class="">
-                    <ul th:each="user: ${circleMembers}">
-                        <li th:text="${user.username}"></li>
-                    </ul>
+            <div class="card w-100" th:each="circleMember: ${circleMembers}">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${circleMember.username}" style="display: inline"></h5>
+                        <span th:if="${isAdmin}" style="display: inline" class="text-right float-right">
+                            <label class="text-right">
+                                <input class="text-right" id="remove-member" type="image" src="/static/images/removeMember.svg" alt="Submit"
+                                       data-toggle="modal" th:attr="data-target=${'#modalRemoveMember' + circleMember.userId}"/>
+                        </label>
+                    </span>
+                </div>
+            </div>
+            <div th:if="${isAdmin}" class="modal" th:each="circleMember: ${circleMembers}" th:attr="id=${'modalRemoveMember' + circleMember.userId}"
+                 tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Are you sure?</h5>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                You are about to remove <span th:block th:text="${circleMember.username}"></span>
+                                from this Circle.
+                                <br><br>
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            <form th:action="@{/member/remove}" method="post">
+                                <input class="list-group-item-check pe-none text-right"
+                                       checked type="hidden" th:name="circleMemberId" th:value="${circleMember.userId}">
+                                <input type="submit"  value="remove member" class="btn delete">
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
 <!--            New member content, if admin-->
-            <div class="col-3">
+            <div class="">
             <p>
                 <a class="btn btn-primary" th:if="${isAdmin}" data-toggle="collapse" href="#collapseNewUser" role="button" aria-expanded="false" aria-controls="collapseExample">
                     Add members
                 </a>
             </p>
             <div class="collapse" id="collapseNewUser">
-                    <form method="post" th:action="@{/new/member}" th:object="${newMemberUser}" >
+                    <form method="post" th:action="@{/member/new}" th:object="${newMemberUser}" >
                         <label for="emailAddress">Email address</label>
                         <input name ="emailAddress" id="emailAddress" type="email" th:required="required" class="form-control"
                                th:field="*{emailAddress}" placeholder="Email address">
