@@ -77,6 +77,17 @@ public class CircleMemberController {
         return "redirect:/circle/" + circleController.currentCircle.getCircleId();
     }
 
+    @PostMapping({"/assignRole/client"})
+    protected String assignRoleClient(@ModelAttribute("circleMemberId") Long circleMemberId) {
+        Optional<User> user = userInterface.findByUserId(circleMemberId);
+        if (user.isPresent()) {
+            Optional<CircleMember> circleMember = circleMemberServiceInterface.findByUserIdAndCircleId(circleMemberId, circleController.currentCircle.getCircleId());
+            circleMember.ifPresent(member -> member.setClient(true));
+            circleMemberServiceInterface.save(circleMember.get());
+        }
+        return "redirect:/circle/" + circleController.currentCircle.getCircleId();
+    }
+
 
 
 

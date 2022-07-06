@@ -107,10 +107,21 @@
                                     <label class="text-left">
                                         <input class="list-group-item-check pe-none text-left"
                                                checked type="hidden" th:name="circleMemberId" th:value="${user.userId}">
-                                        <input type="submit"  value="Make admin" class="btn btn-primary">
+                                        <input type="submit"  value="Make admin" class="btn btn-primary mr-1">
                                     </label>
                                 </form>
                             </span>
+
+                            <span th:if="${(isAdmin) and (userpermission.isClient() == false)}" style="display: inline" class="text-left float-left">
+                                <form th:action="@{/assignRole/client}" method="post">
+                                    <label class="text-left">
+                                        <input class="list-group-item-check pe-none text-left"
+                                               checked type="hidden" th:name="circleMemberId" th:value="${user.userId}">
+                                        <input type="submit"  value="Make client" class="btn btn-primary">
+                                    </label>
+                                </form>
+                            </span>
+
                             <span th:if="${isAdmin}" style="display: inline" class="text-right float-right">
                                     <label class="text-right">
                                         <input class="text-right" id="remove-member" type="image" src="/static/images/removeMember.svg" alt="Submit"
