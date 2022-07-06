@@ -94,6 +94,10 @@
                         </a>
                     </p>
 
+                    <div th:if="${errorMessage}" class="alert alert-info" role="alert">
+                        <span th:text="${errorMessage}">errorMessage</span>
+                    </div>
+
                     <div class="collapse" id="collapseNewCircle">
                         <form method="post" th:action="@{/circle/new}" th:object="${circle}">
                             <div class="form-group">
