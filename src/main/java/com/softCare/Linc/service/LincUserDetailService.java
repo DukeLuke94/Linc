@@ -62,4 +62,9 @@ public class LincUserDetailService implements UserDetailsService, LincUserDetail
         return userRepository.findByUserId(userId);
     }
 
+    @Override
+    public void delete(User user) {
+        userRepository.delete(user);
+    }
+
 }

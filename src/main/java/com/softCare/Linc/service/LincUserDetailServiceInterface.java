@@ -18,4 +18,6 @@ public interface LincUserDetailServiceInterface {
     Optional<User> findByEmail(String email);
 
     Optional<User> findByUserId(Long userId);
+
+    void delete(User user);
 }

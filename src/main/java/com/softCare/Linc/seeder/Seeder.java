@@ -44,14 +44,14 @@ public class Seeder {
             seedCircles();
             seedTasks();
         }
-        if (lincUserDetailServiceInterface.findByUsername("admin").isEmpty()) {
+        if (lincUserDetailServiceInterface.findByUsername("sysAdmin").isEmpty()) {
             seedUsers();
         }
     }
 
     private void seedUsers() {
         // seed user "admin"
-        User admin = new User("Admin",passwordEncoder.encode("admin"),"a@a.nl", "0909090909");
+        User admin = new User("sysAdmin",passwordEncoder.encode("admin"),"a@a.nl", "0909090909");
         lincUserDetailServiceInterface.save(admin);
 
         //seed permissions for the admin

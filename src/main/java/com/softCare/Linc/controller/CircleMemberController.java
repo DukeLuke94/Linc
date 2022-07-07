@@ -2,15 +2,21 @@ package com.softCare.Linc.controller;
 
 import com.softCare.Linc.model.CircleMember;
 import com.softCare.Linc.model.User;
+import com.softCare.Linc.model.UserVmGeneral;
 import com.softCare.Linc.service.CircleMemberServiceInterface;
 import com.softCare.Linc.service.LincUserDetailServiceInterface;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -87,6 +93,28 @@ public class CircleMemberController {
         }
         return "redirect:/circle/" + circleController.currentCircle.getCircleId();
     }
+
+    @GetMapping({"/sysAdmin/users"})
+    protected String sysAdminDashboard(@AuthenticationPrincipal User user, Model model) {
+        if (user.getUsername().equals("sysAdmin")){
+            Collection<? extends User> allUsers = userInterface.findAll();
+            model.addAttribute("userList",allUsers);
+            return "sysAdminDashboard";
+        }else {
+            return "redirect:/" ;
+        }
+    }
+
+    @PostMapping({"/sysAdmin/users/delete"})
+    protected String sysAdminDeleteUser(@ModelAttribute("userId") Long userId) {
+        Optional<User> user = userInterface.findByUserId(userId);
+        if (user.isPresent()) {
+            userInterface.delete(user.get());
+        }
+        return "redirect:/sysAdmin/users" ;
+    }
+
+
 
 
 

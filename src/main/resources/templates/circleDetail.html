@@ -85,7 +85,7 @@
 <!--            TASK CONTENT END-->
         <div class="tab-pane fade col-4" id="v-pills-users" role="tabpanel" aria-labelledby="v-pills-users-tab">
             <!--        USER CONTENT START-->
-            <div class="card w-100" th:each="user: ${users}" th:unless="${user.username == 'Admin'}">
+            <div class="card w-100" th:each="user: ${users}" th:unless="${user.username == 'sysAdmin'}">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${user.username}" style="display: inline"></h5>
                     <div th:each="userpermission: ${userPermissions}">
