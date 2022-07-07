@@ -263,3 +263,7 @@ button:hover::after, button:focus::after {
     transform: scale(1.25);
     filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(25deg) brightness(104%) contrast(97%);
 }
+
+.profileButton{
+    filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(212deg) brightness(104%) contrast(97%);
+    }

@@ -29,7 +29,7 @@
             <a class="btn btn-primary" sec:authorize="isAuthenticated()" href="/logout">Logout</a>
             <a class="btn done" sec:authorize="isAnonymous()" href="/user/new">Register</a>
             <a class="" sec:authorize="isAuthenticated()" href="/user/profile">
-                <img  src="/static/images/user.png" width="50" height="50" aria-label="Bootstrap" alt="profile">
+                <img  class="profileButton" src="/static/images/person-circle.svg" width="40" height="40" type="image" alt="profile">
             </a>
         </div>
     </header>
