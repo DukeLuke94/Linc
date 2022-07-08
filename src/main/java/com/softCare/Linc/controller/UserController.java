@@ -13,12 +13,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
 public class UserController {
+    public final String NO_EMPTY_FIELDS = "All fields have to be filled in";
     public final String EMAIL_ALREADY_IN_USE = "This Email-address is already in use";
     public final String CURRENT_PASSWORD_IS_NOT_CORRECT = "The current password is not correct";
     private final String PASSWORD_REPEAT_NO_MATCH = "The newly entered passwords are not an exact match or aren't given";
@@ -81,31 +83,44 @@ public class UserController {
 
     @GetMapping({"/user/edit/password"})
     protected String editUserPassword(Authentication authentication, Model model) {
-        User user = (User) userInterface.loadUserByUsername(authentication.getName());
-        UserVmEditPassword userVmEditPassword = userMapper.userToViewModelEditPassword(user);
-        model.addAttribute("userVM", userVmEditPassword);
+        if (!model.containsAttribute("userVM")) {
+            System.out.println("Check");
+            User user = (User) userInterface.loadUserByUsername(authentication.getName());
+            UserVmEditPassword userVmEditPassword = userMapper.userToViewModelEditPassword(user);
+            model.addAttribute("userVM", userVmEditPassword);
+        }
         return "editPasswordForm";
     }
 
 
     @PostMapping({"/user/edit/password"})
     protected String editUserPassword(@Valid @ModelAttribute("userVM") UserVmEditPassword userVmEditPassword, BindingResult result,
-                                      @AuthenticationPrincipal User loggedInUser, Model model) {
-        if (loggedInUserPasswordMatches(userVmEditPassword, loggedInUser)) {
-            if (newGivenPasswordsAreEqual(userVmEditPassword)) {
-                if (!result.hasErrors()) {
-                    User user = setUpdatedUserWithNewPassword(userVmEditPassword, loggedInUser);
-                    userInterface.save(user);
-                    return "redirect:/user/profile";
+                                      @AuthenticationPrincipal User loggedInUser, RedirectAttributes redirectAttributes) {
+        if (notAllFieldsAreBlank(userVmEditPassword)) {
+            if (loggedInUserPasswordMatches(userVmEditPassword, loggedInUser)) {
+                if (newGivenPasswordsAreEqual(userVmEditPassword)) {
+                    if (!result.hasErrors()) {
+                        User user = setUpdatedUserWithNewPassword(userVmEditPassword, loggedInUser);
+                        userInterface.save(user);
+                        return "redirect:/user/profile";
+                    }
+                    return "editPasswordForm";
                 }
-                return "editPasswordForm";
+                redirectAttributes.addFlashAttribute("errorMessage", PASSWORD_REPEAT_NO_MATCH);
+                return "redirect:/user/edit/password";
             }
-            model.addAttribute("errorMessage", PASSWORD_REPEAT_NO_MATCH);
-            return "editPasswordForm";
+            redirectAttributes.addFlashAttribute("errorMessage", CURRENT_PASSWORD_IS_NOT_CORRECT);
+            return "redirect:/user/edit/password";
         }
-        //TODO: make this message hidden when all fields are blank
-        model.addAttribute("errorMessage", CURRENT_PASSWORD_IS_NOT_CORRECT);
+//        redirectAttributes.addFlashAttribute("errorMessage", NO_EMPTY_FIELDS);
+//        redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userVmEditPassword", result);
+//        redirectAttributes.addFlashAttribute("userVM", userVmEditPassword);
+//        return "redirect:/user/edit/password";
         return "editPasswordForm";
+    }
+
+    private boolean notAllFieldsAreBlank(UserVmEditPassword userVmEditPassword) {
+        return !userVmEditPassword.getCurrentPassword().isBlank() && !userVmEditPassword.getPassword().isBlank() && !userVmEditPassword.getPasswordRepeat().isBlank();
     }
 
 

@@ -267,7 +267,7 @@ button:hover::after, button:focus::after {
 
 .page-header{
     text-align: left;
-    margin-bottom: 30px;
+    margin-bottom: 1rem;
 }
 
 .user-buttons {
@@ -348,4 +348,26 @@ button:hover::after, button:focus::after {
 }
 #unClaimButton{
     filter:  contrast(15%);
+}
+
+/*dashboard dedicated styling*/
+
+.card-title {
+    margin-bottom: 0.2rem;
+}
+
+.card-body {
+    padding: 0.75rem;
+}
+
+.card-tasks {
+    padding: 0;
+}
+
+#card-body-inner {
+    max-height: 8rem;
+}
+
+.new-circle-dashboard {
+    display: flex;
 }
