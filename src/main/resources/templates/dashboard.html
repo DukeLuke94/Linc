@@ -4,14 +4,43 @@
     <title>Dashboard</title>
 </head>
 <body>
-<div th:replace="fragments/general :: header"></div>
+<div class="container-fluid" th:fragment="header">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+
+        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none" sec:authorize="isAnonymous()">
+            <div class="wrap">
+                <button class="logo">linc</button>
+            </div>
+        </a>
+
+        <a href="/dashboard" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none" sec:authorize="isAuthenticated()">
+            <div class="wrap">
+                <button class="logo">linc</button>
+            </div>
+        </a>
+
+        <h5 class="card-title" th:text="'Welcome ' + ${currentUser}"></h5>
+
+        <div class="col-md-3 user-buttons">
+            <a class="btn btn-primary" sec:authorize="isAnonymous()" href="/login">Login</a>
+            <a class="btn btn-primary" sec:authorize="isAuthenticated()" href="/logout">Logout</a>
+            <a class="btn done" sec:authorize="isAnonymous()" href="/user/new">Register</a>
+            <a class="" sec:authorize="isAuthenticated()" href="/user/profile">
+                <img  class="profileButton" src="/static/images/person-circle.svg" width="40" height="40" type="image" alt="profile">
+            </a>
+        </div>
+    </header>
+</div>
+<!--HEAD CONTENT ENDS-->
+
+
 <div class="container-fluid">
 
     <div class="page-header">
         <div class="row">
             <div class="col-2"></div>
             <div class="col-9">
-                <h1 class="display-4">Dashboard</h1>
+                <h1 class="display-4">My Dashboard</h1>
             </div>
         </div>
     </div>
@@ -23,13 +52,13 @@
         <div class="col-6">
             <div class="card w-100">
                 <div class="card-body">
-                    <h5 class="card-title">Tasks</h5>
+                    <h5 class="card-title">My Tasks</h5>
                     <p th:unless="${tasksPerUser.size != 0}" class="">There are no tasks in your circle(s) yet</p>
                     <div class="card w-100 card-tasks" th:each="task: ${tasksPerUser}">
                         <div class="card-body">
                             <a th:href="@{/task/{taskId}(taskId=${task.taskId})}" class="stretched-link"></a>
                             <h5 class="card-title"><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a></h5>
-                            <p class="card-text" th:text="${task.taskDescription}"></p>
+                            <h6 class="card-subtitle mb-2 text-muted" th:text="${task.circleName}"></h6>
                             <!--                                                           Claim button if unclaimed-->
                             <div th:if="${task.user == null}" class="">
                                 <form th:action="@{/task/claimFD}" method="post" class="" >
@@ -80,7 +109,7 @@
         <div class="col-2">
             <div class="card w-100">
                 <div class="card-body">
-                    <h5 class="card-title">Circles</h5>
+                    <h5 class="card-title">My Circles</h5>
                     <p th:unless="${allCircles.size != 0}" class="">You are not invited to any circles yet..</p>
                     <ul th:each="circle : ${allCircles}">
                         <li><a th:href="@{/circle/{circleId}(circleId=${circle.circleId})}" th:text="${circle.circleName}"></a></li>

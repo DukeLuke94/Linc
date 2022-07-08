@@ -30,6 +30,8 @@ public class Task {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Circle circle;
 
+    private String circleName;
+
     @ManyToOne
     @JoinColumn(name = "user_user_id")
     private User user;
@@ -37,11 +39,12 @@ public class Task {
     private String claimedUserName;
     private int duration;
 
-    public Task(String taskName, String taskDescription, boolean taskDone, Circle circle, LocalDate dueDate, int duration) {
+    public Task(String taskName, String taskDescription, boolean taskDone, Circle circle, String circleName, LocalDate dueDate, int duration) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskDone = taskDone;
         this.circle = circle;
+        this.circleName = circleName;
         this.dueDate = dueDate;
         this.duration = duration;
     }

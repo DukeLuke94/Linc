@@ -46,6 +46,7 @@ public class TaskController {
     protected String saveNewTask(@ModelAttribute("task") Task task, BindingResult result) {
         if (!result.hasErrors()) {
             task.setCircle(circleController.currentCircle);
+            task.setCircleName(circleController.currentCircle.getCircleName());
             taskServiceInterface.save(task);
         }
         String referer = circleController.currentCircle.getCircleId().toString();

@@ -119,90 +119,105 @@ public class Seeder {
                 "Havermout, melk, boter",
                 false,
                 circleServiceInterface.findByCircleName("Oom Diederik"),
+                "Oom Diederik",
                 date8,30));
         taskServiceInterface.save(new Task(
                 "Gras maaien",
                 "Niet te kort AUB",
                 false,
                 circleServiceInterface.findByCircleName("Oom Diederik"),
+                "Oom Diederik",
                 date2,72));
         taskServiceInterface.save(new Task(
                 "Naar de kapper",
                 "Komende woensdagmiddag",
                 false,
                 circleServiceInterface.findByCircleName("Oom Diederik"),
+                "Oom Diederik",
                 date5,120));
         taskServiceInterface.save(new Task(
                 "Ramen wassen",
                 "-",
                 false,
                 circleServiceInterface.findByCircleName("Tante Geertruida"),
+                "Tante Geertruida",
                 date4,45));
         taskServiceInterface.save(new Task(
                 "Auto APK",
                 "Komende donderdagochtend 8 uur",
                 false,
                 circleServiceInterface.findByCircleName("Tante Geertruida"),
+                "Tante Geertruida",
                 date1,120));
         taskServiceInterface.save(new Task(
                 "Schuur opruimen",
                 "-",
                 false,
                 circleServiceInterface.findByCircleName("Tante Geertruida"),
+                "Tante Geertruida",
                 date6,180));
         taskServiceInterface.save(new Task(
                 "Grijze container bij de weg zetten",
                 "Komende maandagochtend voor 8 uur",
                 false,
                 circleServiceInterface.findByCircleName("Zorgboerderij 't Haantje"),
+                "Zorgboerderij 't Haantje",
                 date2,2));
         taskServiceInterface.save(new Task(
                 "Schutting repareren",
                 "-",
                 false,
                 circleServiceInterface.findByCircleName("Zorgboerderij 't Haantje"),
+                "Zorgboerderij 't Haantje",
                 date8,540));
         taskServiceInterface.save(new Task(
                 "Rummikub spelen",
                 "Idealiter in het weekend",
                 false,
                 circleServiceInterface.findByCircleName("Zorgboerderij 't Haantje"),
+                "Zorgboerderij 't Haantje",
                 date3,90));
         taskServiceInterface.save(new Task(
                 "Medicijnen ophalen bij de apotheek",
                 "Dinsdagmiddag",
                 false,
                 circleServiceInterface.findByCircleName("Oma Jantina"),
+                "Oma Jantina",
                 date2,15));
         taskServiceInterface.save(new Task(
                 "Gras maaien",
                 "Achter en voor huis",
                 false,
                 circleServiceInterface.findByCircleName("Oma Jantina"),
+                "Oma Jantina",
                 date3,25));
         taskServiceInterface.save(new Task(
                 "TV repareren",
                 "Zenders zitten niet meer op de goede plek",
                 false,
                 circleServiceInterface.findByCircleName("Oma Jantina"),
+                "Oma Jantina",
                 date8,15));
         taskServiceInterface.save(new Task(
                 "Boodschappen doen",
                 "Havermout, melk, boter",
                 false,
                 circleServiceInterface.findByCircleName("Woongroep Middenmeer"),
+                "Woongroep Middenmeer",
                 date5,45));
         taskServiceInterface.save(new Task(
                 "Vissen voeren",
                 "2 theelepels",
                 false,
                 circleServiceInterface.findByCircleName("Woongroep Middenmeer"),
+                "Woongroep Middenmeer",
                 date5,2));
         taskServiceInterface.save(new Task(
                 "Visvoer bestellen",
                 "Voor komend weekend in huis graag",
                 false,
                 circleServiceInterface.findByCircleName("Woongroep Middenmeer"),
+                "Woongroep Middenmeer",
                 date7,5));
     }
 
