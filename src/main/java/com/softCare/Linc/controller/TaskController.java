@@ -170,8 +170,8 @@ public class TaskController {
             currentTask = taskServiceInterface.findById(taskId).get();
             currentTask.setUser(user);
             currentTask.setClaimedUserName(user.getUsername());
-            currentTask.setCircle(circleController.currentCircle);
-            currentTask.setCircleName(circleController.currentCircle.getCircleName());
+            currentTask.setCircle(currentTask.getCircle());
+            currentTask.setCircleName(currentTask.getCircleName());
             taskServiceInterface.save(currentTask);
         return "redirect:/circle/" + circleController.currentCircle.getCircleId();
     }
@@ -190,8 +190,8 @@ public class TaskController {
         currentTask = taskServiceInterface.findById(taskId).get();
         currentTask.setUser(user);
         currentTask.setClaimedUserName(user.getUsername());
-        currentTask.setCircle(circleController.currentCircle);
-        currentTask.setCircleName(circleController.currentCircle.getCircleName());
+        currentTask.setCircle(currentTask.getCircle());
+        currentTask.setCircleName(currentTask.getCircleName());
         taskServiceInterface.save(currentTask);
         return "redirect:/task/" + taskId;
     }
