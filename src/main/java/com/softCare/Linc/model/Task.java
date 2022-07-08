@@ -1,5 +1,6 @@
 package com.softCare.Linc.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-@Entity @Getter @Setter
+@Entity @Getter @Setter @AllArgsConstructor
 public class Task {
 
     @Id
@@ -36,6 +37,17 @@ public class Task {
 
     private String claimedUserName;
     private int duration;
+
+    public Task(String taskName, String taskDescription, boolean taskDone, LocalDate dueDate, Circle circle, User user, String claimedUserName, int duration) {
+        this.taskName = taskName;
+        this.taskDescription = taskDescription;
+        this.taskDone = taskDone;
+        this.dueDate = dueDate;
+        this.circle = circle;
+        this.user = user;
+        this.claimedUserName = claimedUserName;
+        this.duration = duration;
+    }
 
     public Task(String taskName, String taskDescription, boolean taskDone, Circle circle, LocalDate dueDate, int duration) {
         this.taskName = taskName;

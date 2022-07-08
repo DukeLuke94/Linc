@@ -34,14 +34,16 @@
                                         <div class="card w-100 card-tasks" th:each="task : ${tasksToDo}">
 <!--                                            Task title & description-->
                                             <div class="card-body">
-                                                <a th:href="@{/task/{taskId}(taskId=${task.taskId})}" class="stretched-link"></a>
-                                                <h5 class="card-title"><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a></h5>
+
+                                                <h5 class="card-title" style="transform: rotate(0);"><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" class="stretched-link"></a></h5>
                                                 <p class="card-text" th:text="${task.taskDescription}"></p>
                                                 <!--                                                           Claim button if unclaimed-->
                                                     <div th:if="${task.user == null}" class="">
                                                         <form th:action="@{/task/claim}" method="post" class="" >
                                                             <div class="text-right float-right" style="display:inline;">
-                                                                <button type="submit" class="btn btn-primary text-right">Claim</button>
+                                                                <label>
+                                                                    <input type="image"  src="/static/images/plus.svg" height="55" width="55" id="claimButton" alt="claim">
+                                                                </label>
                                                             </div>
                                                             <span>
                                                                 <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
@@ -55,7 +57,9 @@
                                                             <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
                                                         </span>
                                                         <div class="text-right float-right" style="display:inline;">
-                                                            <button type="submit" class="btn btn-primary text-right">Done</button>
+                                                            <label>
+                                                                <input type="image"  src="/static/images/check-lg.svg" height="50" width="50" id="doneButton" alt="done">
+                                                            </label>
                                                         </div>
                                                     </form>
                                                 </div>

@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class Seeder {
@@ -113,6 +114,12 @@ public class Seeder {
         LocalDate date7 = LocalDate.of(2022, 9, 2);
         LocalDate date8 = LocalDate.of(2022, 9, 14);
         LocalDate date9 = LocalDate.of(2022, 9, 5);
+
+        Optional<User> hendrik = lincUserDetailServiceInterface.findByUsername("Hendrik");
+        if (hendrik.isPresent()){
+            Task task = new Task("Hulp bij zolder opruimen","Oude foto albums wel bewaren graag!",false,date1, circleServiceInterface.findByCircleName("Oom Diederik"),hendrik.get(),hendrik.get().getUsername(),90);
+            taskServiceInterface.save(task);
+        }
 
         taskServiceInterface.save(new Task(
                 "Boodschappen doen",

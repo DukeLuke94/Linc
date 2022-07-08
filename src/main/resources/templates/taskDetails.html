@@ -88,7 +88,9 @@
             <div th:if="${task.claimedUserName == null}" class="">
                 <form th:action="@{/task/detail/claim}" method="post" class="" >
                     <div class="text-right float-right" style="display:inline;">
-                        <button type="submit" class="btn btn-primary text-right">Claim</button>
+                        <label>
+                            <input type="image"  src="/static/images/plus.svg" height="55" width="55" id="claimButton" alt="claim">
+                        </label>
                     </div>
                     <span>
                         <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
@@ -102,7 +104,9 @@
                         <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
                     </span>
                     <div class="text-right float-right" style="display:inline;">
-                        <button type="submit" class="btn btn-primary text-right">Done</button>
+                        <label>
+                            <input type="image"  src="/static/images/check-lg.svg" height="50" width="50" id="doneButton" alt="done">
+                        </label>
                     </div>
                 </form>
             </div>
@@ -110,7 +114,9 @@
             <div th:if="${(task.claimedUserName == currentUser) && !(task.isTaskDone())}" class="">
                 <form th:action="@{/task/detail/unclaim}" method="post" class="" >
                     <div class="text-right float-right" style="display:inline;">
-                        <button type="submit" class="btn btn-primary text-right mr-2">Unclaim</button>
+                        <label>
+                            <input type="image" class="mt-1"  src="/static/images/x-lg.svg" height="40" width="40" id="unClaimButton" alt="claim">
+                        </label>
                     </div>
                     <span>
                         <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
