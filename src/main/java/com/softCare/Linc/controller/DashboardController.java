@@ -41,6 +41,8 @@ public class DashboardController {
         currentTask = taskServiceInterface.findById(taskId).get();
         currentTask.setUser(user);
         currentTask.setClaimedUserName(user.getUsername());
+        currentTask.setCircle(currentTask.getCircle());
+        currentTask.setCircleName(currentTask.getCircle().getCircleName());
         taskServiceInterface.save(currentTask);
         return "redirect:/dashboard/";
     }
