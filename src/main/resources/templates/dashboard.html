@@ -53,10 +53,10 @@
             <div class="card w-100">
                 <div class="card-body">
                     <h5 class="card-title">My Tasks</h5>
+                    <br>
                     <p th:unless="${tasksPerUser.size != 0}" class="">There are no tasks in your circle(s) yet</p>
                     <div class="card w-100 card-tasks" th:each="task: ${tasksPerUser}">
                         <div class="card-body" id="card-body-inner">
-<!--                            <a th:href="@{/task/{taskId}(taskId=${task.taskId})}" class="stretched-link"></a>-->
                             <h5 class="card-title" style="transform: rotate(0);"><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" class="stretched-link"></a></h5>
                             <h6 class="card-subtitle mb-2 text-muted" th:text="${task.circleName}"></h6>
                             <!--                                                           Claim button if unclaimed-->
@@ -114,6 +114,7 @@
             <div class="card w-100">
                 <div class="card-body">
                     <h5 class="card-title">My Circles</h5>
+                    <br>
                     <p th:unless="${allCircles.size != 0}" class="">You are not invited to any circles yet..</p>
                     <ul th:each="circle : ${allCircles}" style="padding-left: 20px;">
                         <li><a th:href="@{/circle/{circleId}(circleId=${circle.circleId})}" th:text="${circle.circleName}"></a></li>
@@ -132,12 +133,21 @@
                     </div>
 
                     <div class="collapse" id="collapseNewCircle">
+                        <br>
                         <form method="post" th:action="@{/circle/new}" th:object="${circle}">
                             <div class="form-group">
                                 <label for="circleName">Circle name</label>
                                 <input name="circleName" id="circleName" type="text" class="form-control"
                                        th:field="*{circleName}" placeholder="Circle name">
                             </div>
+
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="clientCheckbox" value="clientCheckbox" checked>
+                                    I am the client in this Circle
+                                </label>
+                            </div>
+
                             <input type="submit" class="btn btn-primary" value="Create">
                         </form>
                     </div>

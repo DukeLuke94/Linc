@@ -110,6 +110,11 @@ a {
     width: 500px;
 }
 
+.radio {
+    display:inline-block;
+    vertical-align:top;
+}
+
 .text {
     width: 250px;
 }

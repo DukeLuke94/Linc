@@ -11,10 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.transaction.Transactional;
@@ -71,14 +68,22 @@ public class CircleController {
     }
 
     @PostMapping("/circle/new")
-    protected String saveCircle(@ModelAttribute("circle") Circle circle, BindingResult result, @AuthenticationPrincipal User user, RedirectAttributes redirectAttributes) {
+    protected String saveCircle(@ModelAttribute("circle") Circle circle, @RequestParam(value = "clientCheckbox", required = false) String clientCheckbox, BindingResult result, @AuthenticationPrincipal User user, RedirectAttributes redirectAttributes) {
         if (!result.hasErrors() && !circle.getCircleName().equals("")) {
             circleServiceInterface.save(circle);
-            CircleMember circleMember = new CircleMember(user, circle, true, true);
+
+            boolean isClient = false;
+            if(clientCheckbox != null) {
+                isClient = true;
+            }
+
+            CircleMember circleMember = new CircleMember(user, circle, isClient, true);
+
             Optional<User> admin = userService.findByUsername("Admin");
                 if (admin.isPresent() && !user.getUserId().equals(admin.get().getUserId())) {
                     circleMemberInterface.save(new CircleMember(admin.get(), circle, true, true));
                 }
+
             circleMemberInterface.save(circleMember);
             return "redirect:/dashboard";
         }
