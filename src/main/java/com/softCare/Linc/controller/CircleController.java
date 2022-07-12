@@ -72,10 +72,7 @@ public class CircleController {
         if (!result.hasErrors() && !circle.getCircleName().equals("")) {
             circleServiceInterface.save(circle);
 
-            boolean isClient = false;
-            if(clientCheckbox != null) {
-                isClient = true;
-            }
+            boolean isClient = clientCheckbox != null;
 
             CircleMember circleMember = new CircleMember(user, circle, isClient, true);
 
