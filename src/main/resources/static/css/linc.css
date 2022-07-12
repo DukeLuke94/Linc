@@ -95,6 +95,21 @@ a {
     padding-bottom: 10px;
 }
 
+.error {
+    align-content: center;
+    justify-items: center;
+    text-align: center;
+    margin: 50px;
+    color: black;
+}
+
+.error-card {
+    color: black;
+    margin: auto;
+    float: none;
+    width: 500px;
+}
+
 .text {
     width: 250px;
 }
