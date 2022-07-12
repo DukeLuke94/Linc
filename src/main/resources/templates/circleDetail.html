@@ -91,10 +91,19 @@
             <!--        USER CONTENT START-->
             <div class="card w-100" th:each="user: ${users}" th:unless="${user.username == 'sysAdmin'}">
                 <div class="card-body">
-                    <h5 class="card-title" th:text="${user.username}" style="display: inline"></h5>
-                    <div th:each="userpermission: ${userPermissions}">
-                        <div th:if="${(user.userId == userpermission.user.getUserId())}">
-<!--                            User based roles-->
+                    <h5 class="card-title"  th:text="${user.username}" style="display: inline" ></h5>
+                    <span th:each="userpermission: ${userPermissions}">
+                        <span th:if="${(user.userId == userpermission.user.getUserId())}">
+
+                    <span th:if="${isAdmin}" style="display: inline" class="">
+                        <label class="text-right">
+                            <input class="text-left ml-1" id="remove-member" type="image" src="/static/images/removeMember.svg" alt="Submit"
+                                   data-toggle="modal" th:attr="data-target=${'#modalRemoveMember' + user.userId}"/>
+                            <input th:if="${isAdmin}" class="text-left ml-1" id="edit-task" type="image" src="/static/images/pencil.svg" alt="Submit"
+                                   data-toggle="modal" th:attr="data-target=${'#changeRoles' + userpermission.getCircleMemberId()}"/>
+                        </label>
+                    </span>
+
                             <div  th:if="${userpermission.isAdmin() == true}">
                                 Admin
                             </div>
@@ -105,36 +114,42 @@
                                 Caregiver
                             </div>
 
-                            <br>
-                            <span th:if="${(isAdmin) and (userpermission.isAdmin() == false)}" style="display: inline" class="text-left float-left">
-                                <form th:action="@{/assignRole/admin}" method="post">
-                                    <label class="text-left">
-                                        <input class="list-group-item-check pe-none text-left"
-                                               checked type="hidden" th:name="circleMemberId" th:value="${user.userId}">
-                                        <input type="submit"  value="Make admin" class="btn btn-primary mr-1">
-                                    </label>
-                                </form>
-                            </span>
+                            <div th:if="${isAdmin}" class="modal fade" th:each="userPermission: ${userPermissions}" th:attr="id=${'changeRoles' + userpermission.getCircleMemberId()}"
+                                 tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" th:text="${user.username}+'`s permissions'"></h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row ml-2">
+                                                <form th:action="@{/assignRole/admin}" method="post" style="float:left;">
+                                                    <label class="text-left">
+                                                        <input class="list-group-item-check pe-none text-left"
+                                                               checked type="hidden" th:name="circleMemberId" th:value="${userpermission.user.getUserId()}">
+                                                        <input type="submit"  value="Make admin" class="btn btn-primary mr-1">
+                                                    </label>
+                                                </form>
 
-                            <span th:if="${(isAdmin) and (userpermission.isClient() == false)}" style="display: inline" class="text-left float-left">
-                                <form th:action="@{/assignRole/client}" method="post">
-                                    <label class="text-left">
-                                        <input class="list-group-item-check pe-none text-left"
-                                               checked type="hidden" th:name="circleMemberId" th:value="${user.userId}">
-                                        <input type="submit"  value="Make client" class="btn btn-primary">
-                                    </label>
-                                </form>
-                            </span>
-
-                            <span th:if="${isAdmin}" style="display: inline" class="text-right float-right">
-                                    <label class="text-right">
-                                        <input class="text-right" id="remove-member" type="image" src="/static/images/removeMember.svg" alt="Submit"
-                                               data-toggle="modal" th:attr="data-target=${'#modalRemoveMember' + user.userId}"/>
-                                    </label>
-                            </span>
-                        </div>
-                    </div>
+                                                <form th:action="@{/assignRole/client}" method="post" style="float:right;">
+                                                    <label class="text-left">
+                                                        <input class="list-group-item-check pe-none text-left ml-2"
+                                                               checked type="hidden" th:name="circleMemberId" th:value="${userpermission.user.getUserId()}">
+                                                        <input type="submit"  value="Make client" class="btn btn-primary">
+                                                    </label>
+                                                </form>
+                                            </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </span>
+                    </span>
                 </div>
+            </div>
             </div>
             <div th:if="${isAdmin}" class="modal" th:each="user: ${users}" th:attr="id=${'modalRemoveMember' + user.userId}"
                  tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
