@@ -4,6 +4,7 @@ package com.softCare.Linc.controller;
 import com.softCare.Linc.model.Circle;
 import com.softCare.Linc.model.Task;
 import com.softCare.Linc.model.User;
+import com.softCare.Linc.service.CircleMemberServiceInterface;
 import com.softCare.Linc.service.CircleServiceInterface;
 import com.softCare.Linc.service.LincUserDetailServiceInterface;
 import com.softCare.Linc.service.TaskServiceInterface;
@@ -14,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -26,13 +28,15 @@ public class TaskController {
     private final CircleServiceInterface circleServiceInterface;
     private final TaskServiceInterface taskServiceInterface;
     private final LincUserDetailServiceInterface userService;
+    private final CircleMemberServiceInterface circleMemberServiceInterface;
 
-    public TaskController(CircleController circleController, UserController userController, CircleServiceInterface circleServiceInterface, TaskServiceInterface taskServiceInterface, LincUserDetailServiceInterface userService) {
+    public TaskController(CircleController circleController, UserController userController, CircleServiceInterface circleServiceInterface, TaskServiceInterface taskServiceInterface, LincUserDetailServiceInterface userService, CircleMemberServiceInterface circleMemberServiceInterface) {
         this.circleController = circleController;
         this.userController = userController;
         this.circleServiceInterface = circleServiceInterface;
         this.taskServiceInterface = taskServiceInterface;
         this.userService = userService;
+        this.circleMemberServiceInterface = circleMemberServiceInterface;
     }
 
     @GetMapping({"/task/new"})
@@ -43,9 +47,10 @@ public class TaskController {
     }
 
     @PostMapping({"/task/new"})
-    protected String saveNewTask(@ModelAttribute("task") Task task, BindingResult result) {
+    protected String saveNewTask(@ModelAttribute("task") Task task, BindingResult result,@AuthenticationPrincipal User user) {
         if (!result.hasErrors()) {
             task.setCircle(circleController.currentCircle);
+            task.setAuthor(user);
             task.setCircleName(circleController.currentCircle.getCircleName());
             taskServiceInterface.save(task);
         }
@@ -67,6 +72,7 @@ public class TaskController {
 
     @PostMapping({"/task/edit"})
     protected String saveEditedTask(@ModelAttribute("task") Task task, BindingResult result) {
+        Optional<Task> currentTask = taskServiceInterface.findById(task.getTaskId());
         Circle circleToSet = taskServiceInterface.findById(task.getTaskId()).get().getCircle();
         User userToSet = taskServiceInterface.findById(task.getTaskId()).get().getUser();
         String claimedUserName = null;
@@ -74,6 +80,7 @@ public class TaskController {
             if (task.getClaimedUserName().length()>2){
                 claimedUserName = task.getClaimedUserName();
             }
+            task.setAuthor(currentTask.get().getAuthor());
             task.setClaimedUserName(claimedUserName);
             task.setCircle(circleToSet);
             task.setCircleName(circleToSet.getCircleName());
@@ -87,7 +94,11 @@ public class TaskController {
     protected String showTaskDetails(@PathVariable("taskId") Long taskId, Model model, @AuthenticationPrincipal User user) {
         Optional<Task> task = taskServiceInterface.findById(taskId);
         if (task.isPresent()) {
+
+            boolean isAuthor =(task.get().getAuthor().getUserId() == user.getUserId());
             currentTask = task.get();
+            model.addAttribute("isAuthor", isAuthor);
+            model.addAttribute("isAdmin",circleMemberServiceInterface.isAdminOfTask(user,task.get()));
             model.addAttribute("currentUser",user.getUsername());
             model.addAttribute("task", task.get());
             return "taskDetails";

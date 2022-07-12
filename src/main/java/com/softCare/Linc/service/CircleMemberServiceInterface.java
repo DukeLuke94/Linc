@@ -2,6 +2,7 @@ package com.softCare.Linc.service;
 
 import com.softCare.Linc.model.Circle;
 import com.softCare.Linc.model.CircleMember;
+import com.softCare.Linc.model.Task;
 import com.softCare.Linc.model.User;
 
 import java.util.List;
@@ -14,6 +15,8 @@ public interface CircleMemberServiceInterface {
 
     boolean isMember(User user, Circle circle);
     boolean isAdmin(User user, Circle circle);
+
+    boolean isAdminOfTask(User user, Task task);
 
     List<Circle> findAllCirclesWhereMemberOf(User user);
 

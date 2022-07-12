@@ -2,9 +2,11 @@ package com.softCare.Linc.service;
 
 import com.softCare.Linc.Repository.CircleMemberRepository;
 import com.softCare.Linc.Repository.CircleRepository;
+import com.softCare.Linc.Repository.TaskRepository;
 import com.softCare.Linc.Repository.UserRepository;
 import com.softCare.Linc.model.Circle;
 import com.softCare.Linc.model.CircleMember;
+import com.softCare.Linc.model.Task;
 import com.softCare.Linc.model.User;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +21,13 @@ public class CircleMemberService implements CircleMemberServiceInterface {
     private final UserRepository userRepository;
     private final CircleRepository circleRepository;
 
-    public CircleMemberService(CircleMemberRepository circleMemberRepository, UserRepository userRepository, CircleRepository circleRepository) {
+    private final TaskRepository taskRepository;
+
+    public CircleMemberService(CircleMemberRepository circleMemberRepository, UserRepository userRepository, CircleRepository circleRepository, TaskRepository taskRepository) {
         this.circleMemberRepository = circleMemberRepository;
         this.userRepository = userRepository;
         this.circleRepository = circleRepository;
+        this.taskRepository = taskRepository;
     }
 
     @Override
@@ -40,6 +45,16 @@ public class CircleMemberService implements CircleMemberServiceInterface {
     public boolean isAdmin(User user, Circle circle) {
         Optional<CircleMember> circleMember = circleMemberRepository.findByUserUserIdAndCircle_CircleId(user.getUserId(),circle.getCircleId());
         return circleMember.map(CircleMember::isAdmin).orElse(false);
+    }
+
+
+    public boolean isAdminOfTask(User user, Task task) {
+        Optional<Task> currentTask = taskRepository.findById(task.getTaskId());
+        Optional<Circle> circle = circleRepository.findById(currentTask.get().getCircle().getCircleId());
+        if (circle.isPresent()){
+            return isAdmin(user,circle.get());
+        }
+        return false;
     }
 
     @Override

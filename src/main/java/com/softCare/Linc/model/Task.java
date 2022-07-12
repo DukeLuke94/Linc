@@ -37,10 +37,14 @@ public class Task {
     @JoinColumn(name = "user_user_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "author_user_id")
+    private User author;
+
     private String claimedUserName;
     private int duration;
 
-    public Task(String taskName, String taskDescription, boolean taskDone, LocalDate dueDate, Circle circle, String circleName, User user, String claimedUserName, int duration) {
+    public Task(String taskName, String taskDescription, boolean taskDone, LocalDate dueDate, Circle circle, String circleName, User user, String claimedUserName, int duration,User author) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskDone = taskDone;
@@ -50,6 +54,7 @@ public class Task {
         this.user = user;
         this.claimedUserName = claimedUserName;
         this.duration = duration;
+        this.author = author;
     }
 
     public Task(String taskName, String taskDescription, boolean taskDone, Circle circle, String circleName, LocalDate dueDate, int duration) {
@@ -60,6 +65,17 @@ public class Task {
         this.circleName = circleName;
         this.dueDate = dueDate;
         this.duration = duration;
+    }
+
+    public Task(String taskName, String taskDescription, boolean taskDone, Circle circle, String circleName, LocalDate dueDate, int duration, User author) {
+        this.taskName = taskName;
+        this.taskDescription = taskDescription;
+        this.taskDone = taskDone;
+        this.circle = circle;
+        this.circleName = circleName;
+        this.dueDate = dueDate;
+        this.duration = duration;
+        this.author = author;
     }
 
     public Task() {
