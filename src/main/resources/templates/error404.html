@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: baseHeader(~{:: title})">
+    <title>HTTP 404 Page Not Found</title>
+<body>
+<div th:replace="fragments/general :: header"></div>
+
+<div class="error">
+    <div class="card error-card">
+        <div class="card-body">
+            <h1 class="card-title">Something went wrong!</h1>
+            <br>
+            <h2 class="card-subtitle mb-2 text-muted">Error 404 Page Not Found</h2>
+            <br>
+            <p class="card-text">This page doesn't exist (yet)
+                <br> In the mean time....</p>
+            <a href="/dashboard" class="btn btn-primary">Go back to My dashboard</a>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/general :: footer"></div>
+<div th:replace="fragments/general :: bottomScripts"></div>
+</body>
+</html>
