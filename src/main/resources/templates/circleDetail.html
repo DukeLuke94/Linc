@@ -211,6 +211,25 @@
         <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
 <!--            SETTINGS CONTENT START-->
             <button type="button" class="btn delete" data-toggle="modal" data-target="#myModal">Delete circle</button>
+
+            <div>
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapseNewCircleInviteCode" role="button"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    Generate new Circle invite-code
+                </a>
+            </div>
+
+            <div class="collapse" id="collapseNewCircleInviteCode">
+                <form th:action="@{/invitecode/new}" method="post" th:object="${circleInviteCode}">
+                    <div class="form-group">
+                        <label>Invite-code: </label>
+                        <input type="text" name="inviteCode" id="inviteCode"
+                               class="form-control" th:field="*{inviteCode}" readonly>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Save">
+                </form>
+            </div>
+
             <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">

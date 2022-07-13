@@ -84,7 +84,6 @@ public class UserController {
     @GetMapping({"/user/edit/password"})
     protected String editUserPassword(Authentication authentication, Model model) {
         if (!model.containsAttribute("userVM")) {
-            System.out.println("Check");
             User user = (User) userInterface.loadUserByUsername(authentication.getName());
             UserVmEditPassword userVmEditPassword = userMapper.userToViewModelEditPassword(user);
             model.addAttribute("userVM", userVmEditPassword);
