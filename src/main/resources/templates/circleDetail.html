@@ -219,24 +219,10 @@
         </div>
         <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
 <!--            SETTINGS CONTENT START-->
-            <button type="button" class="btn delete" data-toggle="modal" data-target="#myModal">Delete circle</button>
-
             <div>
-                <a class="btn btn-primary" data-toggle="collapse" href="#collapseNewCircleInviteCode" role="button"
-                   aria-expanded="false" aria-controls="collapseExample">
-                    Generate new Circle invite-code
-                </a>
-            </div>
-
-            <div class="collapse" id="collapseNewCircleInviteCode">
-                <form th:action="@{/invitecode/new}" method="post" th:object="${circleInviteCode}">
-                    <div class="form-group">
-                        <label>Invite-code: </label>
-                        <input type="text" name="inviteCode" id="inviteCode"
-                               class="form-control" th:field="*{inviteCode}" readonly>
-                    </div>
-                    <input type="submit" class="btn btn-primary" value="Save">
-                </form>
+                <button type="button" class="btn delete" data-toggle="modal" data-target="#myModal">Delete circle</button>
+                <button th:if="${circleInviteCode.getCircle() == null}" class="btn btn-primary"
+                        data-toggle="modal" data-target="#generateInviteCode">Generate invite-code</button>
             </div>
 
             <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
@@ -261,6 +247,42 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="modal" id="generateInviteCode" tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmationTitle">Generate invite-code</h5>
+                        </div>
+                        <div class="modal-body">
+                            <form th:action="@{/invitecode/new}" method="post" th:object="${circleInviteCode}">
+                                <div class="form-group">
+                                    <label>Invite-code: </label>
+                                    <h5 th:text="*{inviteCode}"></h5>
+                                    <button type="submit" class="btn btn-primary" th:formaction="@{/invitecode/renew}">
+                                        <img id="refresh" src="/static/images/arrow-repeat.svg" alt="Refresh"></button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            <form th:action="@{/invitecode/new}" method="post" th:object="${circleInviteCode}">
+                                <input type="hidden" name="inviteCode" id="inviteCode"
+                                       class="form-control" th:field="*{inviteCode}">
+                                <input type="submit" class="btn btn-primary" value="Save">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div th:if="${circleInviteCode.getCircle() != null}">
+                <form method="post" th:object="${circleInviteCode}">
+                    <h5 th:text="*{inviteCode}"></h5>
+                    <p th:text="'Valid untill: ' + ${#temporals.format(circleInviteCode.date, 'dd MMMM yyyy', new java.util.Locale('en', 'EN'))}"></p>
+                    <input type="submit" class="btn delete" th:formaction="@{/invitecode/delete}" value="Revoke invite-code">
+                </form>
             </div>
 <!--            SETTINGS CONTENT END-->
         </div>

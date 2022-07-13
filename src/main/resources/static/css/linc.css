@@ -392,3 +392,7 @@ button:hover::after, button:focus::after {
 .new-circle-dashboard {
     display: flex;
 }
+
+#refresh {
+    filter: invert(100%);
+}

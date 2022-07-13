@@ -37,7 +37,7 @@ public class CircleController {
     }
 
     @GetMapping("/circle/{circleId}")
-    protected String showCircleDetails(@PathVariable("circleId") Long circleId, Model model,@AuthenticationPrincipal User user) {
+    protected String showCircleDetails(@PathVariable("circleId") Long circleId, Model model, @AuthenticationPrincipal User user) {
         Optional<Circle> circle = circleServiceInterface.findById(circleId);
         if (circle.isPresent()) {
             if (circleMemberInterface.isMember(user, circle.get())) {
