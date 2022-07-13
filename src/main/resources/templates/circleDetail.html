@@ -75,6 +75,9 @@
 <!--                                                Displays due date, if available-->
                                                 <span th:if="${task.dueDate != null}" class="text-left" style="display:inline;">
                                                     <img src="/static/images/calendar-check.svg" th:text="' ' + ${#temporals.format(task.dueDate, 'dd MMMM yyyy', new java.util.Locale('en', 'EN'))}" class="" alt="calender">
+                                                        <span th:each="notification : ${notificationList}">
+                                                            <span th:if="${task.taskName == notification.task.taskName}" class="badge badge-danger">!</span>
+                                                        </span>
                                                 </span>
 <!--                                                Displays claimants name if claimed-->
                                                     <span th:if="${task.claimedUserName != null}" class="text-right">
