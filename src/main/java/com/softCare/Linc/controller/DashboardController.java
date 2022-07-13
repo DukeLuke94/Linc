@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 public class DashboardController {
 
@@ -33,6 +35,8 @@ public class DashboardController {
         model.addAttribute("tasksPerUser", taskServiceInterface.findAllTasksPerUser(user));
         model.addAttribute("circle",new Circle());
         model.addAttribute("currentUser", user.getUsername());
+        model.addAttribute("notificationList",taskServiceInterface.dueDateNotificationsPerCircle(circleMemberServiceInterface.findAllCirclesWhereMemberOf(user)).get());
+
         return "dashboard";
     }
 
