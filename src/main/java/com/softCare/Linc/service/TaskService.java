@@ -2,24 +2,31 @@ package com.softCare.Linc.service;
 
 import com.softCare.Linc.Repository.TaskRepository;
 import com.softCare.Linc.model.Circle;
+import com.softCare.Linc.model.Notification;
 import com.softCare.Linc.model.Task;
 import com.softCare.Linc.model.User;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class TaskService implements TaskServiceInterface {
 
+
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
     private final CircleMemberServiceInterface circleMemberServiceInterface;
+    private final CircleServiceInterface circleServiceInterface;
 
-    public TaskService(TaskRepository taskRepository, TaskMapper taskMapper, CircleMemberServiceInterface circleMemberServiceInterface) {
+    public TaskService(TaskRepository taskRepository, TaskMapper taskMapper, CircleMemberServiceInterface circleMemberServiceInterface, CircleServiceInterface circleServiceInterface) {
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
         this.circleMemberServiceInterface = circleMemberServiceInterface;
+        this.circleServiceInterface = circleServiceInterface;
     }
 
     @Override
@@ -109,6 +116,35 @@ public class TaskService implements TaskServiceInterface {
         return tasksPerUser.stream().sorted((o1, o2) ->o1.getDueDate().compareTo(o2.getDueDate())).collect(Collectors.toList());
     }
 
+
+
+    @Override
+    public Optional<Set<Notification>> dueDateNotificationsPerCircle(List<Circle> circleList) {
+        Set<Notification> notificationSet = new HashSet<>();
+
+        //start iterating every circle
+        for (Circle circle : circleList) {
+            int nrNotifications = 0;
+            List<Task> taskList = circle.getTasks();
+
+            // start iteration tasks of that circle
+            for (Task task : taskList) {
+                LocalDate dueDate = task.getDueDate();
+                LocalDate today = LocalDate.now();
+
+                // if task is soon due, and not done yet, add nrNotifications
+                long daysLeft = ChronoUnit.DAYS.between(today,dueDate);
+                if ((daysLeft<3) && !task.isTaskDone()){
+                    nrNotifications++;
+                }
+            }
+            //make 1 notification per circle that has a due task
+            Notification notification = new Notification(circle,nrNotifications);
+            notificationSet.add(notification);
+        }
+
+        return Optional.of(notificationSet);
+    }
 
 
 }

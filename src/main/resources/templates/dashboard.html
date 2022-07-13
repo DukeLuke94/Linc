@@ -124,7 +124,11 @@
                     <br>
                     <p th:unless="${allCircles.size != 0}" class="">You are not invited to any circles yet..</p>
                     <ul th:each="circle : ${allCircles}" style="padding-left: 20px;">
-                        <li><a th:href="@{/circle/{circleId}(circleId=${circle.circleId})}" th:text="${circle.circleName}"></a></li>
+                        <li><a th:href="@{/circle/{circleId}(circleId=${circle.circleId})}" th:text="${circle.circleName}"></a>
+                            <span th:each="notification : ${notificationList}">
+                                 <span th:if="${(circle.getCircleName()== notification.circle.getCircleName()) && notification.getNumberOfNotifications()>0}" class="badge badge-danger" th:text="${notification.getNumberOfNotifications()}"></span>
+                            </span>
+                        </li>
                     </ul>
 
                     <!--   NEW CIRCLE -->

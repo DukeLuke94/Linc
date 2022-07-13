@@ -112,6 +112,7 @@ public class Seeder {
         LocalDate date7 = LocalDate.of(2022, 9, 2);
         LocalDate date8 = LocalDate.of(2022, 9, 14);
         LocalDate date9 = LocalDate.of(2022, 9, 5);
+        LocalDate date10 = LocalDate.now().plusDays(2);
 
 
             Task task = new Task("Hulp bij zolder opruimen","Oude foto albums wel bewaren graag!",false,date1, circleServiceInterface.findByCircleName("Oom Diederik"),"Oom Diederik",hendrik,hendrik.getUsername(),90,diederik);
@@ -131,7 +132,7 @@ public class Seeder {
                 false,
                 circleServiceInterface.findByCircleName("Oom Diederik"),
                 "Oom Diederik",
-                date2,72,hendrik));
+                date10,72,hendrik));
         taskServiceInterface.save(new Task(
                 "Naar de kapper",
                 "Komende woensdagmiddag",
@@ -166,7 +167,7 @@ public class Seeder {
                 false,
                 circleServiceInterface.findByCircleName("Zorgboerderij 't Haantje"),
                 "Zorgboerderij 't Haantje",
-                date2,2,baas));
+                date10,2,baas));
         taskServiceInterface.save(new Task(
                 "Schutting repareren",
                 "-",
@@ -201,7 +202,7 @@ public class Seeder {
                 false,
                 circleServiceInterface.findByCircleName("Oma Jantina"),
                 "Oma Jantina",
-                date8,15,jantina));
+                date10,15,jantina));
         taskServiceInterface.save(new Task(
                 "Boodschappen doen",
                 "Havermout, melk, boter",
