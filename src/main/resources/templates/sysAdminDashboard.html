@@ -16,33 +16,70 @@
         </div>
     </div>
 
-
+    <!--        potential nav bar-->
     <div class="row">
-        <div class="col-2">
-            <!--        potential nav bar-->
-        </div>
-        <div class="col-4">
-            <div class="page-header">
-                <h1 class="display-4"></h1>
-                <div th:each="user: ${userList}" class="card w-100" th:unless="${user.username == 'sysAdmin'}">
-                    <form method="post" th:action="@{/sysAdmin/users/delete}" class="form-inline">
-                        <div class="card-body">
-                        <h5 th:text="${user.username}" style="display: inline" class="card-title"></h5>
-                            <label class="mx-1 ml-2"  style="display: inline">
-                                <input class="text-right mb-1" id="delete-task" type="image" height="14" width="14" src="/static/images/removeMember.svg" alt="delete"/>
-                            </label>
-                            <p th:text="${user.emailAddress}"></p>
-                        <label>
-                            <input class="ui-icon-radio-on" type="hidden" th:name="userId" checked th:value="${user.userId}">
-                        </label>
+        <div class="col-2"></div>
+
+        <!--        user content start-->
+
+        <div class="col-8">
+
+                    <table class="table">
+                        <tr>
+                            <th scope="col">Email</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">X</th>
+                        </tr>
+                        <tr th:each="user: ${userList}" th:unless="${user.username == 'sysAdmin'}">
+                            <td th:text="${user.emailAddress}"></td>
+                            <td th:text="${user.username}"></td>
+                            <td>
+                                <input data-toggle="modal" th:attr="data-target=${'#deleteUserModal' + user.userId}" class="text-right mb-1" id="delete-task" type="image" height="14" width="14" src="/static/images/removeMember.svg" alt="delete">
+                            </td>
+                        </tr>
+                    </table>
+
+            <div class="modal" th:each="user: ${userList}" th:attr="id=${'deleteUserModal' + user.userId}" tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Are you sure?</h5>
                         </div>
-                    </form>
+                        <div class="modal-body">
+                            <p>
+                                You are about to delete <span th:text="${user.username}"></span>
+                                from Linc completely.
+                                <br><br>
+                                Deleting a user can not be undone!
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            <form th:action="@{/sysAdmin/users/delete}" class="delete-button-bottom" method="post">
+
+                                <input class="list-group-item-check pe-none text-right"
+                                       checked type="hidden" th:name="userId" th:value="${user.userId}">
+
+                                <input type="submit" value="Delete user" class="btn delete">
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+
+
+
+
         </div>
     </div>
-
-    <div th:replace="fragments/general :: footer"></div>
-    <div th:replace="fragments/general :: bottomScripts"></div>
+</div>
+<div th:replace="fragments/general :: footer"></div>
+<div th:replace="fragments/general :: bottomScripts"></div>
 </body>
 </html>
+
+<!--<form  method="post">-->
+<!--    <input class="text-right mb-1" id="delete-task" type="image" height="14" width="14" src="/static/images/removeMember.svg" alt="delete">-->
+<!--    <input class="ui-icon-radio-on" type="hidden" th:name="userId" checked th:value="${user.userId}">-->
+<!--</form>-->

@@ -94,29 +94,4 @@ public class CircleMemberController {
         return "redirect:/circle/" + circleController.currentCircle.getCircleId();
     }
 
-    @GetMapping({"/sysAdmin/users"})
-    protected String sysAdminDashboard(@AuthenticationPrincipal User user, Model model) {
-        if (user.getUsername().equals("sysAdmin")){
-            Collection<? extends User> allUsers = userInterface.findAll();
-            model.addAttribute("userList",allUsers);
-            return "sysAdminDashboard";
-        }else {
-            return "redirect:/" ;
-        }
-    }
-
-    @PostMapping({"/sysAdmin/users/delete"})
-    protected String sysAdminDeleteUser(@ModelAttribute("userId") Long userId) {
-        Optional<User> user = userInterface.findByUserId(userId);
-        if (user.isPresent()) {
-            userInterface.delete(user.get());
-        }
-        return "redirect:/sysAdmin/users" ;
-    }
-
-
-
-
-
-
 }

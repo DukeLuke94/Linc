@@ -12,6 +12,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import static javax.persistence.CascadeType.ALL;
+
 @Entity @Getter @Setter @AllArgsConstructor
 public class Task {
 
@@ -39,6 +41,7 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "author_user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User author;
 
     private String claimedUserName;
