@@ -18,7 +18,7 @@ public interface TaskServiceInterface {
 
     void delete(Task task);
 
-    Object findAllTasksToDoInCircle(Circle circle);
+    Optional<List<Task>> findAllTasksToDoInCircle(Circle circle);
 
     Object findAllTasksToDoAndToClaimInCircle(Circle circle);
 
@@ -29,4 +29,6 @@ public interface TaskServiceInterface {
     Object findAllTasksPerUser(User user);
 
     Optional<Set<Notification>> dueDateNotificationsPerCircle(List<Circle> circleList);
+
+    Optional<Set<Notification>> dueDateNotificationsPerTask(List<Task> taskList);
 }

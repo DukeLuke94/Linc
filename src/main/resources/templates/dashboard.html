@@ -53,13 +53,6 @@
             <div class="card w-100">
                 <div class="card-body">
                     <h5 class="card-title">My Tasks</h5>
-
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="customSwitches" name="tasksToggle" value="tasksToggle">
-                        <label class="custom-control-label" for="customSwitches">My tasks o</label>
-                    </div>
-
-
                     <br>
                     <p th:unless="${tasksPerUser.size != 0}" class="">There are no tasks in your circle(s) yet</p>
                     <div class="card w-100 card-tasks" th:each="task: ${tasksPerUser}">

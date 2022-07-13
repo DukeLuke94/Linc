@@ -49,7 +49,7 @@ public class TaskService implements TaskServiceInterface {
         return taskRepository.findByCircle(circle);
     }
 
-    public Object findAllTasksToDoInCircle(Circle circle){
+    public Optional<List<Task>> findAllTasksToDoInCircle(Circle circle){
         Optional<List<Task>> allTasks = taskRepository.findByCircle(circle);
         List<Task> tasksToDo = new ArrayList<>();
         if (allTasks.isPresent()){
@@ -60,7 +60,7 @@ public class TaskService implements TaskServiceInterface {
             }
 
         }
-        return tasksToDo.stream().sorted((o1, o2) ->o1.getDueDate().compareTo(o2.getDueDate())).collect(Collectors.toList());
+        return Optional.of(tasksToDo.stream().sorted((o1, o2) ->o1.getDueDate().compareTo(o2.getDueDate())).collect(Collectors.toList()));
     }
 
     public Object findAllTasksToDoAndToClaimInCircle(Circle circle) {
@@ -143,6 +143,24 @@ public class TaskService implements TaskServiceInterface {
             notificationSet.add(notification);
         }
 
+        return Optional.of(notificationSet);
+    }
+
+    public Optional<Set<Notification>> dueDateNotificationsPerTask(List<Task> taskList){
+        Set<Notification> notificationSet = new HashSet<>();
+
+        //start iteration task
+        for (Task task : taskList) {
+            LocalDate dueDate = task.getDueDate();
+            LocalDate today = LocalDate.now();
+            Long daysLeft = ChronoUnit.DAYS.between(today,dueDate);
+
+            //if task is almost due, add it to the list
+            if (daysLeft<3 && !task.isTaskDone()){
+                Notification notification = new Notification(task,1);
+                notificationSet.add(notification);
+            }
+        }
         return Optional.of(notificationSet);
     }
 
