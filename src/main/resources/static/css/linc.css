@@ -23,6 +23,7 @@
     border-color: #2B50AA;
     z-index: -2;
 }
+
 .claimButton:before {
     content: "";
     position: absolute;
@@ -35,14 +36,13 @@
     border-radius: 10rem;
     z-index: -1;
 }
+
 .claimButton:hover {
     color: #fff;
 }
 .claimButton:hover:before {
     width: 100%;
 }
-
-
 
 .footer{
     position: fixed;
@@ -118,6 +118,7 @@ a {
 .text {
     width: 250px;
 }
+
 .btn-primary {
     z-index: 2;
     position: relative;
