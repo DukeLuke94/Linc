@@ -28,8 +28,4 @@ public class Circle {
     @OneToMany (mappedBy = "circle", cascade = CascadeType.REMOVE)
     private List<Task> tasks;
 
-
-
-
-
 }
