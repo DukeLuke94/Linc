@@ -215,6 +215,17 @@ public class TaskController {
         return "redirect:/circle/" + taskId;
     }
 
+    @PostMapping({"/task/detail/unclaimCD"})
+    protected String unclaimCircleDetailTask(@RequestParam(name = "taskId") Long taskId, @AuthenticationPrincipal User user) {
+        currentTask = taskServiceInterface.findById(taskId).get();
+        currentTask.setUser(null);
+        currentTask.setClaimedUserName(null);
+        currentTask.setCircle(currentTask.getCircle());
+        currentTask.setCircleName(currentTask.getCircleName());
+        taskServiceInterface.save(currentTask);
+        return "redirect:/circle/" + circleController.currentCircle.getCircleId();
+    }
+
     @PostMapping({"/task/detail/unclaim"})
     protected String unclaimDetailTask(@RequestParam(name = "taskId") Long taskId, @AuthenticationPrincipal User user) {
         currentTask = taskServiceInterface.findById(taskId).get();

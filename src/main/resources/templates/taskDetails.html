@@ -123,7 +123,7 @@
             </div>
             <!--       Unclaim button if claimed & owned-->
             <div th:if="${(task.claimedUserName == currentUser) && !(task.isTaskDone())}" class="">
-                <form th:action="@{/task/detail/unclaim}" method="post" class="" >
+                <form th:action="@{/task/detail/unclaimCD}" method="post" class="" >
                     <div class="text-right float-right" style="display:inline;">
                         <label>
                             <input type="image" class="mt-1"  src="/static/images/x-lg.svg" height="40" width="40" id="unClaimButton" alt="claim" title="Unclaim this task">
