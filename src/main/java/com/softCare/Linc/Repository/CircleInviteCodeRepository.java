@@ -1,5 +1,6 @@
 package com.softCare.Linc.Repository;
 
+import com.softCare.Linc.model.Circle;
 import com.softCare.Linc.model.CircleInviteCode;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,6 +16,5 @@ public interface CircleInviteCodeRepository extends JpaRepository<CircleInviteCo
 
     Optional<CircleInviteCode> findById(Long aLong);
     Optional<CircleInviteCode> findByCircle_CircleId(Long circleId);
-
     Optional<CircleInviteCode> findByInviteCode(String circleInviteCode);
 }

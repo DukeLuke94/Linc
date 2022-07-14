@@ -30,10 +30,10 @@
                 <div class="form-group">
                     <label for="username">Name</label>
                     <input name="username" id="username" type="text" class="form-control"
-                           th:field="*{username}" placeholder="Name">
+                           th:value="${username}" th:field="*{username}" placeholder="Name">
                     <ul class="text-danger" th:each="error: ${#fields.errors('username')}">
                         <li th:each="message : ${error.split(',')}">
-                            <p class="error" th:text="${message}"></p>
+                            <p class="error-register" th:text="${message}"></p>
                         </li>
                     </ul>
                 </div>
@@ -44,7 +44,7 @@
                            th:field="*{password}" placeholder="Password">
                     <ul class="text-danger" th:each="error: ${#fields.errors('password')}">
                         <li th:each="message : ${error.split(',')}">
-                            <p class="error" th:text="${message}"></p>
+                            <p class="error-register" th:text="${message}"></p>
                         </li>
                     </ul>
                 </div>
@@ -55,7 +55,7 @@
                            th:field="*{passwordRepeat}" placeholder="Repeat password">
                     <ul class="text-danger" th:each="error: ${#fields.errors('passwordRepeat')}">
                         <li th:each="message : ${error.split(',')}">
-                            <p class="error" th:text="${message}"></p>
+                            <p class="error-register" th:text="${message}"></p>
                         </li>
                     </ul>
                 </div>
@@ -66,7 +66,7 @@
                            th:field="*{emailAddress}" placeholder="Email address">
                     <ul class="text-danger" th:each="error: ${#fields.errors('emailAddress')}">
                         <li th:each="message : ${error.split(',')}">
-                            <p class="error" th:text="${message}"></p>
+                            <p class="error-register" th:text="${message}"></p>
                         </li>
                     </ul>
                 </div>
@@ -77,9 +77,13 @@
                            th:field="*{phoneNumber}" placeholder="Phone number">
                     <ul class="text-danger" th:each="error: ${#fields.errors('phoneNumber')}">
                         <li th:each="message : ${error.split(',')}">
-                            <p class="error" th:text="${message}"></p>
+                            <p class="error-register" th:text="${message}"></p>
                         </li>
                     </ul>
+                </div>
+
+                <div class="form-group">
+                    <input type="hidden" name="inviteCode" id="inviteCode" th:value="${inviteCode}">
                 </div>
 
                 <input type="submit" class="btn btn-primary" value="Register">

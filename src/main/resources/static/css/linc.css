@@ -103,6 +103,10 @@ a {
     color: black;
 }
 
+.error-register {
+    color: crimson;
+}
+
 .error-card {
     color: black;
     margin: auto;
@@ -293,10 +297,6 @@ button:hover::after, button:focus::after {
 
 .user-buttons {
     text-align: right;
-}
-
-.error {
-    color: crimson;
 }
 
 .card-tasks{

@@ -34,4 +34,7 @@ public class UserVmGeneral {
     @NotEmpty(message = "This field has to be filled")
     @Size(message = "Password has to be at least 6 characters", min = 6)
     private String passwordRepeat;
+    public UserVmGeneral(String username) {
+        this.username = username;
+    }
 }

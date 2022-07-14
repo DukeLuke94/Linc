@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})">
   <title>Linc by SoftCare</title>
 </head>
@@ -11,9 +11,39 @@
       <div class="col-lg-7 text-center text-lg-start">
         <h1 class="display-4 fw-bold lh-1 mb-3">Linc is sharing together</h1>
         <p class="fs-4">Linc offers an intuitive and clean platform to ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo </p>
+<!--        <div th:if="${errorMessage}" class="alert alert-info" role="alert">-->
+<!--          <span th:text="${errorMessage}">errorMessage</span>-->
+<!--        </div>-->
+<!--        <div class="inviteCodeSubmit">-->
+<!--          <form th:action="@{/invitecode/join}" method="get">-->
+<!--            <div th:class="form-group">-->
+<!--              <label for="inviteCode">Invite-code</label>-->
+<!--              <input name="inviteCode" id="" type="text" class="form-control" placeholder="Your invite-code">-->
+<!--            </div>-->
+<!--            <input type="submit" class="btn btn-primary" value="Sign-up and join my Circle">-->
+<!--          </form>-->
+<!--        </div>-->
       </div>
       <div class="col-md-10 mx-auto col-lg-5">
-              <img  src="/static/images/frontpage.jpg"  width="70%" height="70%" aria-label="Bootstrap" class="frontpage-image" alt="holding hands">
+        <form class="p-4 p-md-5 border rounded-3 bg-light" th:action="@{/invitecode/join}" method="get">
+          <div class="form-floating mb-3">
+            <div th:if="${errorMessage}" class="alert alert-info" role="alert">
+              <span th:text="${errorMessage}">errorMessage</span>
+            </div>
+            <label for="name">Name</label>
+            <input type="text" class="form-control" name="username" id="username" placeholder="Name">
+          </div>
+          <div class="form-floating mb-3">
+            <label for="inviteCode">(optional) Invite-code</label>
+            <input type="text" class="form-control" name="inviteCode" id="inviteCode" placeholder="Your invite-code">
+          </div>
+<!--          <div class="checkbox mb-3">-->
+<!--            <label>-->
+<!--              <input type="checkbox" value="remember-me"> Remember me-->
+<!--            </label>-->
+<!--          </div>-->
+          <button class="w-100 btn btn-lg btn-primary" type="submit">Sign-up</button>
+        </form>
       </div>
     </div>
   </div>

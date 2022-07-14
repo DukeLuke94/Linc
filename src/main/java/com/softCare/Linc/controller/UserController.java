@@ -1,8 +1,8 @@
 package com.softCare.Linc.controller;
 
-import com.softCare.Linc.model.User;
-import com.softCare.Linc.model.UserVmEditPassword;
-import com.softCare.Linc.model.UserVmGeneral;
+import com.softCare.Linc.model.*;
+import com.softCare.Linc.service.CircleInviteCodeServiceInterface;
+import com.softCare.Linc.service.CircleMemberServiceInterface;
 import com.softCare.Linc.service.LincUserDetailServiceInterface;
 import com.softCare.Linc.service.UserMapper;
 import org.springframework.security.core.Authentication;
@@ -28,14 +28,19 @@ public class UserController {
     private final String PASSWORD_REPEAT_NO_MATCH = "The newly entered passwords are not an exact match or aren't given";
 
     private final LincUserDetailServiceInterface userInterface;
+    private final CircleMemberServiceInterface circleMemberServiceInterface;
+    private final CircleInviteCodeServiceInterface circleInviteCodeServiceInterface;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
 
 
     public UserController(LincUserDetailServiceInterface userInterface,
+                          CircleMemberServiceInterface circleMemberServiceInterface, CircleInviteCodeServiceInterface circleInviteCodeServiceInterface,
                           PasswordEncoder passwordEncoder,
                           UserMapper userMapper) {
         this.userInterface = userInterface;
+        this.circleMemberServiceInterface = circleMemberServiceInterface;
+        this.circleInviteCodeServiceInterface = circleInviteCodeServiceInterface;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = userMapper;
     }
@@ -46,14 +51,19 @@ public class UserController {
     }
 
     @GetMapping({"/user/new"})
-    protected String newUser(Model model) {
-        model.addAttribute("userVM", new UserVmGeneral());
+    protected String newUser(@RequestParam(required = false, name = "inviteCode") String inviteCode,
+                             @RequestParam(required = false, name = "username") String username,
+                             Model model) {
+        model.addAttribute("userVM", new UserVmGeneral(username));
+        model.addAttribute("inviteCode", inviteCode);
         return "userForm";
     }
 
     @PostMapping("/user/new")
-    protected String saveOrUpdateUser(@AuthenticationPrincipal User loggedInUser,
-                                      @Valid @ModelAttribute("userVM") UserVmGeneral userVmGeneral, BindingResult result,
+    protected String saveOrUpdateUser(@RequestParam(required = false, name = "inviteCode") String inviteCode,
+                                      @AuthenticationPrincipal User loggedInUser,
+                                      @Valid @ModelAttribute("userVM") UserVmGeneral userVmGeneral,
+                                      BindingResult result,
                                       Model model) {
         if (thereIsALoggedInUser(loggedInUser)) {
             User user = userMapper.userVMToUserModel(userVmGeneral);
@@ -67,10 +77,16 @@ public class UserController {
             model.addAttribute("errorMessage", PASSWORD_REPEAT_NO_MATCH);
             return "userForm";
         } else if (!result.hasErrors()) {
-            User user = userMapper.userVMToUserModel(userVmGeneral);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            userInterface.save(user);
-            return "redirect:/user/profile";
+            User newUser = userMapper.userVMToUserModel(userVmGeneral);
+            newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+            userInterface.save(newUser);
+            boolean isInviteCodeConnectedToCircle =
+                    circleInviteCodeServiceInterface.findByCircleInviteCode(inviteCode).isPresent();
+            if (isInviteCodeConnectedToCircle) {
+                Circle circleToAddNewUserTo = circleInviteCodeServiceInterface.findByCircleInviteCode(inviteCode).get().getCircle();
+                circleMemberServiceInterface.save(new CircleMember(newUser, circleToAddNewUserTo,false,false));
+            }
+            return "redirect:/dashboard";
         }
         return "userForm";
     }
