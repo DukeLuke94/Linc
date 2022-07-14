@@ -114,10 +114,10 @@ public class Seeder {
         LocalDate date9 = LocalDate.of(2022, 9, 5);
         LocalDate date10 = LocalDate.now().plusDays(2);
 
-        String outdoor = "Outdoor & Garden";
-        String indoor = "Indoor chores";
-        String trips = "Trips & Transport";
-        String games = "Keeping company";
+        String outdoor = "Outdoor";
+        String indoor = "Indoor";
+        String trips = "Transport";
+        String games = "Company";
 
 
             Task task = new Task("Hulp bij zolder opruimen","Oude foto albums wel bewaren graag!",

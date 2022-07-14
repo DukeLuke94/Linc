@@ -45,6 +45,17 @@
                                th:field="*{duration}">
                     </div>
 
+                    <div class="form-group">
+                        <label for="categorySelect">Category</label>
+                        <select class="form-control" id="categorySelect" th:field="*{category}">
+                            <option th:value="'Null'" disabled>Please select...</option>
+                            <option th:value="'Outdoor'">Outdoor & Garden</option>
+                            <option th:value="'Indoor'">Indoor chores</option>
+                            <option th:value="'Transport'">Trips & transport</option>
+                            <option th:value="'Company'">Keeping company</option>
+                        </select>
+                    </div>
+
                     <input type="submit" class="btn btn-primary" value="Create">
                 </form>
             </div>

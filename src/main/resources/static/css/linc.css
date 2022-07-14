@@ -355,11 +355,11 @@ button:hover::after, button:focus::after {
 
 #doneButton:hover{
 
-    transform: scale(1.25);
+    transform: scale(1.1);
     filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(180deg) brightness(125%) contrast(97%);
 }
 #doneButton{
-    filter:  contrast(15%);
+    filter:  contrast(5%);
 }
 
 #unClaimButton:hover{
@@ -395,4 +395,52 @@ button:hover::after, button:focus::after {
 
 #refresh {
     filter: invert(100%);
+}
+
+.sideTag{
+    background-color: salmon;
+    border-bottom-left-radius: 7%;
+    border-top-left-radius: 7%;
+    width: 40px;
+}
+
+.Indoor chores{
+
+}
+
+#OutdoorLabel{
+    background-color: #8cb369;
+    border-bottom-left-radius: 7%;
+    border-top-left-radius: 7%;
+    width: 40px;
+}
+
+#IndoorLabel{
+    background-color: #598392;
+    border-bottom-left-radius: 7%;
+    border-top-left-radius: 7%;
+    width: 40px;
+}
+
+#TransportLabel{
+    background-color: #8a817c;
+    border-bottom-left-radius: 7%;
+    border-top-left-radius: 7%;
+    width: 40px;
+}
+
+#CompanyLabel{
+    background-color: #ff9b54;
+    border-bottom-left-radius: 7%;
+    border-top-left-radius: 7%;
+    width: 40px;
+}
+
+#categoryIcon{
+    filter: invert(100%);
+    width: 20px;
+    height: 20px;
+    margin-top: 60%;
+    margin-right: 20%;
+
 }
