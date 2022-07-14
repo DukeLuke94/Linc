@@ -191,7 +191,9 @@ public class TaskController {
     protected String doneTask(@RequestParam(name = "taskId") Long taskId, @AuthenticationPrincipal User user) {
         currentTask = taskServiceInterface.findById(taskId).get();
         currentTask.setTaskDone(true);
+        currentTask.setClaimedUserName(user.getUsername());
         taskServiceInterface.save(currentTask);
+
 
         return "redirect:/circle/" + circleController.currentCircle.getCircleId();
     }
