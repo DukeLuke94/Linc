@@ -25,6 +25,8 @@ public class Task {
     private String taskDescription;
     private boolean taskDone;
 
+    private String category;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dueDate;
 
@@ -47,7 +49,7 @@ public class Task {
     private String claimedUserName;
     private int duration;
 
-    public Task(String taskName, String taskDescription, boolean taskDone, LocalDate dueDate, Circle circle, String circleName, User user, String claimedUserName, int duration,User author) {
+    public Task(String taskName, String taskDescription, boolean taskDone, LocalDate dueDate, Circle circle, String circleName, User user, String claimedUserName, int duration,User author,String category) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskDone = taskDone;
@@ -58,6 +60,7 @@ public class Task {
         this.claimedUserName = claimedUserName;
         this.duration = duration;
         this.author = author;
+        this.category = category;
     }
 
     public Task(String taskName, String taskDescription, boolean taskDone, Circle circle, String circleName, LocalDate dueDate, int duration) {
@@ -70,7 +73,7 @@ public class Task {
         this.duration = duration;
     }
 
-    public Task(String taskName, String taskDescription, boolean taskDone, Circle circle, String circleName, LocalDate dueDate, int duration, User author) {
+    public Task(String taskName, String taskDescription, boolean taskDone, Circle circle, String circleName, LocalDate dueDate, int duration, User author,String category) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskDone = taskDone;
@@ -79,6 +82,7 @@ public class Task {
         this.dueDate = dueDate;
         this.duration = duration;
         this.author = author;
+        this.category = category;
     }
 
     public Task() {

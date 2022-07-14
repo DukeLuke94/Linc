@@ -34,10 +34,11 @@
                                         <div class="card w-100 card-tasks" th:each="task : ${tasksToDo}">
 <!--                                            Task title & description-->
                                             <div class="card-body">
-
-                                                <h5 class="card-title" style="transform: rotate(0);"><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" class="stretched-link"></a></h5>
+<!--                                                displays category icon if available-->
+                                                <span th:if="${task.category != null}"><img th:attr="src=${'/static/images/categoryImages/' + task.category +'.svg'}" class="mb-1" alt="category"></span>
+                                                <h5 class="card-title" style="display: inline; transform: rotate(0)"><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" class="stretched-link"></a></h5>
                                                 <p class="card-text" th:text="${task.taskDescription}"></p>
-                                                <!--                                                           Claim button if unclaimed-->
+                                                <!--     Claim button if unclaimed-->
                                                     <div th:if="${task.user == null}" class="">
                                                         <form th:action="@{/task/claim}" method="post" class="" >
                                                             <div class="text-right float-right" style="display:inline;">

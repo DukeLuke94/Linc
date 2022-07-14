@@ -72,6 +72,17 @@
                                         <input name="taskDone" id="taskDone" type="hidden" class="form-control"
                                                th:field="*{taskDone}">
                                     </div>
+
+                                    <div class="form-group">
+                                        <label for="categorySelect">Category</label>
+                                        <select class="form-control" id="categorySelect" th:field="*{category}">
+                                            <option th:value="'Null'" disabled>Please select...</option>
+                                            <option th:value="'Outdoor & Garden'">Outdoor & Garden</option>
+                                            <option th:value="'Indoor chores'">Indoor chores</option>
+                                            <option th:value="'Trips & Transport'">Trips & Transport</option>
+                                            <option th:value="'Keeping company'">Keeping company</option>
+                                        </select>
+                                    </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary text-left float-left" data-dismiss="modal">Close</button>
                                         <input type="submit" class="btn btn-primary text-right" value="Save">
