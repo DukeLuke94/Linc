@@ -28,6 +28,8 @@ public interface TaskServiceInterface {
 
     List<Task> findAllTasksPerUser(User user);
 
+    List<Task> findAllTasksPerUserByCategory(User user, String category);
+
     Optional<Set<Notification>> dueDateNotificationsPerCircle(List<Circle> circleList);
 
     Optional<Set<Notification>> dueDateNotificationsPerTask(List<Task> taskList);

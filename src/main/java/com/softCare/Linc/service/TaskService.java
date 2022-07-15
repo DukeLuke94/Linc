@@ -116,6 +116,17 @@ public class TaskService implements TaskServiceInterface {
         return tasksPerUser.stream().sorted((o1, o2) ->o1.getDueDate().compareTo(o2.getDueDate())).collect(Collectors.toList());
     }
 
+    @Override
+    public List<Task> findAllTasksPerUserByCategory(User user, String category) {
+        List<Task> allTasksPerUser = findAllTasksPerUser(user);
+        List<Task> filteredByCategory = new ArrayList<>();
+        for (Task task : allTasksPerUser) {
+            if (task.getCategory().equals(category)){
+                filteredByCategory.add(task);
+            }
+        }
+        return filteredByCategory;
+    }
 
 
     @Override

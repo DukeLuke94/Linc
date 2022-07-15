@@ -30,14 +30,18 @@ public class DashboardController {
 
 
     @GetMapping({"/dashboard"})
-    protected String showHome(Model model, @AuthenticationPrincipal User user) {
+    protected String showHome(Model model, @AuthenticationPrincipal User user,@RequestParam(value = "categoryFilter", required = false) String category) {
         model.addAttribute("allCircles", circleMemberServiceInterface.findAllCirclesWhereMemberOf(user));
-        model.addAttribute("tasksPerUser", taskServiceInterface.findAllTasksPerUser(user));
+        if (category == null){
+            model.addAttribute("tasksPerUser", taskServiceInterface.findAllTasksPerUser(user));
+        }else {
+            model.addAttribute("tasksPerUser",taskServiceInterface.findAllTasksPerUserByCategory(user,category));
+        }
         model.addAttribute("circle",new Circle());
         model.addAttribute("currentUser", user.getUsername());
         model.addAttribute("notificationList",taskServiceInterface.dueDateNotificationsPerCircle(circleMemberServiceInterface.findAllCirclesWhereMemberOf(user)).get());
         model.addAttribute("taskNotificationList",taskServiceInterface.dueDateNotificationsPerTask( taskServiceInterface.findAllTasksPerUser(user)).get());
-
+        System.out.println(category);
         return "dashboard";
     }
 

@@ -48,8 +48,29 @@
     <div class="row">
         <div class="col-2"></div>
 
-        <!--        TASK CONTENT START-->
+<!--        Filter & sort bar-->
         <div class="col-6">
+            <div class="row">
+                <div class="col-8">
+                    <p class="mt-1">All available task in your circles</p>
+                </div>
+                <div class="col-4">
+                    <div class="form-group form-inline" id="categoryFilterForm">
+                        <label for="categoryFilter"></label>
+                        <form method="get" th:action="@{/dashboard}" >
+                            <select class="form-control mt-1" id="categoryFilter" name="categoryFilter" th:placeholder="'Please select'" onChange="this.form.submit()">
+                                <option disabled selected value="">Filter by category</option>
+                                <option th:value="'Outdoor'" name="categoryFilter">Outdoor & Garden</option>
+                                <option th:value="'Indoor'" name="categoryFilter">Indoor chores</option>
+                                <option th:value="'Transport'" name="categoryFilter">Trips & transport</option>
+                                <option th:value="'Company'" name="categoryFilter">Keeping company</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <!--        TASK CONTENT START-->
             <p th:unless="${tasksPerUser.size != 0}" class="">There are no tasks in your circle(s) yet</p>
             <div class="card w-100 card-tasks" th:each="task: ${tasksPerUser}">
                 <!--                                            Task title & description-->
@@ -64,17 +85,17 @@
                                 <!--                                                 Done button if claimed & owned-->
                                 <div class="col-1">
                                     <form th:action="@{/task/doneFD}" method="post" th:object="${task}">
-                                                        <span>
-                                                            <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
-                                                        </span>
-                                        <div>
-                                            <label>
-                                                <input type="image" width="40" height="40" id="doneButton" alt="done"
+                                        <span>
+                                            <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
+                                        </span>
+                                            <div>
+                                                <label>
+                                                    <input type="image" width="40" height="40" id="doneButton" alt="done"
                                                        src="/static/images/icons/square.svg" class="mt-1"
                                                        onmouseleave="this.src='/static/images/icons/square.svg';"
                                                        onmouseover="this.src='/static/images/icons/check-square.svg';">
-                                            </label>
-                                        </div>
+                                                </label>
+                                            </div>
                                     </form>
                                 </div>
                                 <!--                                                    Title & description-->
@@ -99,43 +120,9 @@
                                         <span th:each="notification : ${taskNotificationList}">
                                             <span th:if="${task.taskName == notification.task.taskName}" class="badge badge-danger">!</span></span>
                                     </span>
-<!--                                    <span th:if="${task.claimedUserName != null}">-->
-<!--                                    <span th:if="${task.claimedUserName != currentUser}" class="mt-2" th:text="'Assigned to: '+${task.claimedUserName}"></span>-->
-                                    <!--                                                Displays claimants name if claimed-->
                                 </div>
-                                <!--                                                    Category & button-->
 
-<!--                                <span th:if="${task.claimedUserName != null}">-->
-<!--                                    <span th:if="${task.claimedUserName != currentUser}" class="mt-2" th:text="'Assigned to: '+${task.claimedUserName}"></span>-->
-                                    <!--       Unclaim button if claimed & owned-->
-<!--                                                    <span th:if="${(task.claimedUserName == currentUser) && !(task.isTaskDone())}" class="">-->
-<!--                                                        <form th:action="@{/task/detail/unclaimCD}" method="post" class="" >-->
-<!--                                                            <div class="text-right float-right" style="display:inline;">-->
-<!--                                                                <label>-->
-<!--                                                                    <button type="submit" class="btn btn-outline-primary mt-2">Unnassign</button>-->
-<!--                                                                </label>-->
-<!--                                                            </div>-->
-<!--                                                            <span>-->
-<!--                                                                <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">-->
-<!--                                                            </span>-->
-<!--                                                        </form>-->
-<!--                                                    </span>-->
 
-                                </span>
-
-                                <!--                                                        Claim button -->
-<!--                                <span th:if="${task.user == null}" class="">-->
-<!--                                                            <form th:action="@{/task/claim}" method="post" class="" >-->
-<!--                                                                <div class="text-right float-right" style="display:inline;">-->
-<!--                                                                    <label>-->
-<!--                                                                        <button type="submit" class="btn btn-outline-primary mt-2">Assign to me</button>-->
-<!--                                                                    </label>-->
-<!--                                                                </div>-->
-<!--                                                                <span>-->
-<!--                                                                <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">-->
-<!--                                                            </span>-->
-<!--                                                            </form>-->
-<!--                                                        </span>-->
                             </div>
                         </div>
                     </div>
