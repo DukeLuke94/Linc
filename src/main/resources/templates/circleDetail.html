@@ -86,13 +86,13 @@
                                                     <!--                                                    Category & button-->
 
                                                         <span th:if="${task.claimedUserName != null}">
-                                                                <span th:if="${task.claimedUserName != currentUser}" class="" th:text="'Assigned to: '+${task.claimedUserName}"></span>
+                                                                <span th:if="${task.claimedUserName != currentUser}" class="mt-2" th:text="'Assigned to: '+${task.claimedUserName}"></span>
                                                                  <!--       Unclaim button if claimed & owned-->
                                                     <span th:if="${(task.claimedUserName == currentUser) && !(task.isTaskDone())}" class="">
                                                         <form th:action="@{/task/detail/unclaimCD}" method="post" class="" >
                                                             <div class="text-right float-right" style="display:inline;">
                                                                 <label>
-                                                                    <button type="submit" class="btn btn-outline-primary mt-1">Unnassign</button>
+                                                                    <button type="submit" class="btn btn-outline-primary mt-2">Unnassign</button>
                                                                 </label>
                                                             </div>
                                                             <span>
@@ -108,7 +108,7 @@
                                                             <form th:action="@{/task/claim}" method="post" class="" >
                                                                 <div class="text-right float-right" style="display:inline;">
                                                                     <label>
-                                                                        <button type="submit" class="btn btn-outline-primary mt-1">Assign to me</button>
+                                                                        <button type="submit" class="btn btn-outline-primary mt-2">Assign to me</button>
                                                                     </label>
                                                                 </div>
                                                                 <span>
@@ -116,8 +116,6 @@
                                                             </span>
                                                             </form>
                                                         </span>
-
-
                                                 </div>
                                                 </div>
                                             </div>

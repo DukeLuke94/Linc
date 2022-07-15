@@ -99,7 +99,7 @@ public class TaskService implements TaskServiceInterface {
         return claimedTasks;
     }
 
-    public Object findAllTasksPerUser(User user) {
+    public List<Task> findAllTasksPerUser(User user) {
         User currentUser = user;
         List<Task> allTasks = taskRepository.findAll();
         List<Circle> allCircles = circleMemberServiceInterface.findAllCirclesWhereMemberOf(user);

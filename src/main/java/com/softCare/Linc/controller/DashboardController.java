@@ -36,6 +36,7 @@ public class DashboardController {
         model.addAttribute("circle",new Circle());
         model.addAttribute("currentUser", user.getUsername());
         model.addAttribute("notificationList",taskServiceInterface.dueDateNotificationsPerCircle(circleMemberServiceInterface.findAllCirclesWhereMemberOf(user)).get());
+        model.addAttribute("taskNotificationList",taskServiceInterface.dueDateNotificationsPerTask( taskServiceInterface.findAllTasksPerUser(user)).get());
 
         return "dashboard";
     }
@@ -55,6 +56,7 @@ public class DashboardController {
     protected String doneTask(@RequestParam(name = "taskId") Long taskId, @AuthenticationPrincipal User user) {
         currentTask = taskServiceInterface.findById(taskId).get();
         currentTask.setTaskDone(true);
+        currentTask.setClaimedUserName(user.getUsername());
         taskServiceInterface.save(currentTask);
         return "redirect:/dashboard/";
     }

@@ -26,7 +26,7 @@ public interface TaskServiceInterface {
 
     Object findAllClaimedTasksForUser(User user);
 
-    Object findAllTasksPerUser(User user);
+    List<Task> findAllTasksPerUser(User user);
 
     Optional<Set<Notification>> dueDateNotificationsPerCircle(List<Circle> circleList);
 

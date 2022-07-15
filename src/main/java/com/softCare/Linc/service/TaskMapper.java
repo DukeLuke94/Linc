@@ -25,6 +25,7 @@ public class TaskMapper {
         viewmodel.setUser(task.getUser());
         viewmodel.setAuthor(task.getAuthor());
         viewmodel.setCategory(task.getCategory());
+        viewmodel.setCircleName(task.getCircleName());
 
         return viewmodel;
     }
