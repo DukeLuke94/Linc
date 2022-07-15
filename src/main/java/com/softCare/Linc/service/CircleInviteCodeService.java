@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * Project: CircleInviteCodeService
@@ -60,23 +61,24 @@ public class CircleInviteCodeService implements CircleInviteCodeServiceInterface
 
     @Override
     public String generateCode() {
-        Random random = new Random();
-        List<String> colors = List.of(
-                "Yellow", "Green", "Blue", "Violet", "Red", "Orange", "White", "Black", "White");
-        List<String> animals = List.of(
-                "Lynx", "Possum", "Panda", "Eagle", "Rooster", "Lamb", "Buck", "Alpaca", "Chicken", "Toad",
-                "Owl", "Dingo", "Giraffe", "Deer", "Zebra", "Cat", "Hamster", "Gazelle", "Turtle", "Kangaroo", "Bee",
-                "Mouse", "Fox", "Sheep");
-        String result;
-        StringBuilder stringBuilder = new StringBuilder();
-
-        int randomIndexColors = random.nextInt(colors.size());
-        int randomIndexAnimals = random.nextInt(animals.size());
-        int randomNumber = (int) (Math.random() * 100);
-        result = String.valueOf(stringBuilder
-                .append(colors.get(randomIndexColors))
-                .append(animals.get(randomIndexAnimals))
-                .append(randomNumber));
-        return result;
+        return UUID.randomUUID().toString();
+//        Random random = new Random();
+//        List<String> colors = List.of(
+//                "Yellow", "Green", "Blue", "Violet", "Red", "Orange", "White", "Black", "White");
+//        List<String> animals = List.of(
+//                "Lynx", "Possum", "Panda", "Eagle", "Rooster", "Lamb", "Buck", "Alpaca", "Chicken", "Toad",
+//                "Owl", "Dingo", "Giraffe", "Deer", "Zebra", "Cat", "Hamster", "Gazelle", "Turtle", "Kangaroo", "Bee",
+//                "Mouse", "Fox", "Sheep");
+//        String result;
+//        StringBuilder stringBuilder = new StringBuilder();
+//
+//        int randomIndexColors = random.nextInt(colors.size());
+//        int randomIndexAnimals = random.nextInt(animals.size());
+//        int randomNumber = (int) (Math.random() * 100);
+//        result = String.valueOf(stringBuilder
+//                .append(colors.get(randomIndexColors))
+//                .append(animals.get(randomIndexAnimals))
+//                .append(randomNumber));
+//        return result;
     }
 }

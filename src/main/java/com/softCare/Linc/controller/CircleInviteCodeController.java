@@ -1,10 +1,7 @@
 package com.softCare.Linc.controller;
 
-import com.softCare.Linc.model.Circle;
 import com.softCare.Linc.model.CircleInviteCode;
-import com.softCare.Linc.model.CircleMember;
 import com.softCare.Linc.service.CircleInviteCodeServiceInterface;
-import com.softCare.Linc.service.CircleMemberServiceInterface;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,16 +22,15 @@ import java.time.LocalDate;
 public class CircleInviteCodeController {
 
     private final CircleInviteCodeServiceInterface circleInviteCodeServiceInterface;
-    private final CircleMemberServiceInterface circleMemberServiceInterface;
     private final CircleController circleController;
 
     public CircleInviteCode currentInviteCode;
 
-    public CircleInviteCodeController(CircleInviteCodeServiceInterface circleInviteCodeServiceInterface, CircleMemberServiceInterface circleMemberServiceInterface, CircleController circleController) {
+    public CircleInviteCodeController(CircleInviteCodeServiceInterface circleInviteCodeServiceInterface, CircleController circleController) {
         this.circleInviteCodeServiceInterface = circleInviteCodeServiceInterface;
-        this.circleMemberServiceInterface = circleMemberServiceInterface;
         this.circleController = circleController;
     }
+
 
     @PostMapping("/invitecode/new")
     protected String getNewCircleInviteCode(@ModelAttribute("circleInviteCode") CircleInviteCode circleInviteCode) {
