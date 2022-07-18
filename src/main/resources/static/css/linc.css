@@ -442,3 +442,7 @@ button:hover::after, button:focus::after {
     margin-right: 20%;
 
 }
+.fadedIcon{
+    filter:  contrast(15%);
+
+}
