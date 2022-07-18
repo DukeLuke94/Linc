@@ -309,7 +309,7 @@ button:hover::after, button:focus::after {
 }
 
 .card-tasks:hover{
-    transform: scale(1.025);
+    /*transform: scale(1.025);*/
     box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
 }
 
@@ -326,18 +326,18 @@ button:hover::after, button:focus::after {
 }
 
 #remove-member:hover {
-    transform: scale(1.25);
+    /*transform: scale(1.25);*/
     filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
 }
 
 #delete-task:hover {
-    transform: scale(1.25);
+    /*transform: scale(1.25);*/
     filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
 
 }
 
 #edit-task:hover {
-    transform: scale(1.25);
+    /*transform: scale(1.25);*/
     filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(25deg) brightness(104%) contrast(97%);
 }
 
@@ -346,7 +346,7 @@ button:hover::after, button:focus::after {
     }
 
 #claimButton:hover{
-    transform: scale(1.25);
+    /*transform: scale(1.25);*/
     filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(180deg) brightness(125%) contrast(97%);
 }
 #claimButton{
@@ -355,7 +355,7 @@ button:hover::after, button:focus::after {
 
 #doneButton:hover{
 
-    transform: scale(1.1);
+    /*transform: scale(1.1);*/
     filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(180deg) brightness(125%) contrast(97%);
 }
 #doneButton{
@@ -364,7 +364,7 @@ button:hover::after, button:focus::after {
 
 #unClaimButton:hover{
 
-    transform: scale(1.25);
+    /*transform: scale(1.25);*/
     filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(180deg) brightness(125%) contrast(97%);
 }
 #unClaimButton{

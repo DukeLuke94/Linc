@@ -55,9 +55,9 @@
                     <p class="mt-1">All available task in your circles</p>
                 </div>
                 <div class="col-4">
-                    <div class="form-group form-inline" id="categoryFilterForm">
+                    <div class="form-group form-inline float-right">
                         <label for="categoryFilter"></label>
-                        <form method="get" th:action="@{/dashboard}" >
+                        <form method="get" th:action="@{/dashboard}" id="categoryFilterForm" >
                             <select class="form-control mt-1" id="categoryFilter" name="categoryFilter" th:placeholder="'Please select'" onChange="this.form.submit()">
                                 <option disabled selected value="">Filter by category</option>
                                 <option th:value="'Outdoor'" name="categoryFilter">Outdoor & Garden</option>
