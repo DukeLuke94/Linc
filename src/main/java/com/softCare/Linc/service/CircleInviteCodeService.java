@@ -5,10 +5,8 @@ import com.softCare.Linc.model.Circle;
 import com.softCare.Linc.model.CircleInviteCode;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.util.*;
 
 /**
  * Project: CircleInviteCodeService
@@ -51,13 +49,55 @@ public class CircleInviteCodeService implements CircleInviteCodeServiceInterface
 
     @Override
     public CircleInviteCode getCircleInviteCode(Circle circle) {
-        boolean isCodePresent =
-                circleInviteCodeRepository.findByCircle_CircleId(circle.getCircleId()).isPresent();
-        if (isCodePresent) {
-            return circleInviteCodeRepository.findByCircle_CircleId(circle.getCircleId()).get();
-        }
         return new CircleInviteCode(generateCode());
     }
+
+    @Override
+    public Optional<List<CircleInviteCode>> getAllCircleInviteCodes(Circle circle) {
+        Optional<List<CircleInviteCode>> allInviteCodes = circleInviteCodeRepository.findByCircle(circle);
+        List<CircleInviteCode> allInviteCodesList = new ArrayList<>();
+        if (allInviteCodes.isPresent()){
+            for (CircleInviteCode circleInviteCode : allInviteCodes.get()) {
+                if (circleInviteCode.getDate().isBefore(LocalDate.now())) {
+                    circleInviteCode.setExpired(true);
+                }
+                allInviteCodesList.add(circleInviteCode);
+            }
+        }
+        return Optional.of(allInviteCodesList);
+    }
+
+//    @Override
+//    public Optional<List<CircleInviteCode>> getAllValidCircleInviteCodes(Circle circle) {
+//        Optional<List<CircleInviteCode>> allInviteCodes = circleInviteCodeRepository.findByCircle(circle);
+//        List<CircleInviteCode> validInviteCodes = new ArrayList<>();
+//        if (allInviteCodes.isPresent()){
+//            for (CircleInviteCode circleInviteCode : allInviteCodes.get()) {
+//                if (!circleInviteCode.isExpired()) {
+//                    validInviteCodes.add(circleInviteCode);
+//                }
+//            }
+//        }
+//        return Optional.of(validInviteCodes);
+//    }
+
+//    && circleInviteCode.getUserId() <= 0
+
+//    @Override
+//    public Optional<List<CircleInviteCode>> getAllExpiredCircleInviteCodes(Circle circle) {
+//        Optional<List<CircleInviteCode>> allInviteCodes = circleInviteCodeRepository.findByCircle(circle);
+//        List<CircleInviteCode> expiredInviteCodes = new ArrayList<>();
+//        if (allInviteCodes.isPresent()){
+//            for (CircleInviteCode circleInviteCode : allInviteCodes.get()) {
+//                if (circleInviteCode.isExpired()) {
+//                    expiredInviteCodes.add(circleInviteCode);
+//                }
+//            }
+//        }
+//        return Optional.of(expiredInviteCodes);
+//    }
+
+//    || circleInviteCode.getUserId() > 0
 
     @Override
     public String generateCode() {
