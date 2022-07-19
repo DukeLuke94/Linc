@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -142,8 +143,11 @@ public class UserController {
 
 
     @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
-    public String currentUserName(Authentication authentication, Model model) {
+    public String currentUserName(@AuthenticationPrincipal User loggedInUser, Authentication authentication, Model model) {
         model.addAttribute("user",userInterface.loadUserByUsername(authentication.getName()));
+        if (loggedInUser.getProfilePicture() != null) {
+            model.addAttribute("profilePicture", Base64.getEncoder().encodeToString(loggedInUser.getProfilePicture()));
+        }
         return "userProfile";
     }
 

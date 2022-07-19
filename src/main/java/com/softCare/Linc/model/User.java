@@ -5,10 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.hibernate.annotations.Proxy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -41,6 +43,9 @@ public class User implements UserDetails {
     private String emailAddress;
     @NotNull
     private String phoneNumber;
+
+    @Lob @Column(name = "pic", length = 2000)
+    private byte[] profilePicture;
 
     @OneToMany(mappedBy = "user",  cascade = ALL,fetch = FetchType.EAGER)
     private List<CircleMember> circleMembers;

@@ -20,8 +20,25 @@
         <div class="col-2"></div>
 
         <!--            PROFIL CONTENT START-->
-        <div class="col-3">
+        <div class="col-2">
+            <img class="profile-picture rounded" th:if="${user.profilePicture == null}" src="/static/images/blank-profile-picture.png">
+            <img class="profile-picture rounded" th:if="${user.profilePicture != null}" th:src="@{'data:image/jpeg;base64,'+ ${profilePicture}}">
+            <form th:action="@{/upload/profilepicture/}" method="post" enctype="multipart/form-data">
+                <input class="form-control" name="file" type="file" id="formFile">
+                <input type="submit" value="Upload" class="btn btn-primary">
+            </form>
+        </div>
+        <div class="col-5">
+            <span><h5>Username: </h5><h6 th:text="${user.username}"></h6></span>
+            <span><h5>Email address: </h5><h6 th:text="${user.emailAddress}"></h6></span>
+            <span><h5>Phone number: </h5><h6 th:text="${user.phoneNumber}"></h6></span>
+
             <a class="btn btn-primary" href="/user/edit/password">Change password</a>
+
+
+
+
+
         </div>
         <div class="col-3">
             <a class="btn btn-danger" th:if="${user.username == 'sysAdmin'}" href="/sysAdmin/users">View application users</a>

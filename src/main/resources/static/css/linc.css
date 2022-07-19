@@ -82,6 +82,12 @@ a {
     color: #1D3557;
 }
 
+.profile-picture {
+    float: left;
+    object-fit: cover;
+    width:18rem;
+    height:18rem;
+}
 
 .list-group {
     max-width: 460px;
@@ -358,7 +364,7 @@ button:hover::after, button:focus::after {
     transform: scale(1.1);
     filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(180deg) brightness(125%) contrast(97%);
 }
-#doneButton{
+#doneButton, #doneButtonHistory{
     filter:  contrast(5%);
 }
 
