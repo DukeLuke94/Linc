@@ -1,4 +1,4 @@
-package com.softCare.Linc.model;
+package com.softCare.Linc.model.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

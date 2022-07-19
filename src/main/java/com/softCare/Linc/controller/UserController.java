@@ -1,6 +1,8 @@
 package com.softCare.Linc.controller;
 
 import com.softCare.Linc.model.*;
+import com.softCare.Linc.model.DTO.UserVmEditPassword;
+import com.softCare.Linc.model.DTO.UserVmGeneral;
 import com.softCare.Linc.service.CircleInviteCodeServiceInterface;
 import com.softCare.Linc.service.CircleMemberServiceInterface;
 import com.softCare.Linc.service.LincUserDetailServiceInterface;

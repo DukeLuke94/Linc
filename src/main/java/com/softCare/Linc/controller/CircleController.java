@@ -44,7 +44,7 @@ public class CircleController {
                 boolean isAdmin = circleMemberInterface.isAdmin(user,circle.get());
                 currentCircle = circle.get();
                 model.addAttribute("circle", circle.get());
-                model.addAttribute("tasksToDo", taskServiceInterface.findAllTasksToDoInCircle(currentCircle).get());
+                model.addAttribute("tasksToDo", taskServiceInterface.findAllShortTasksToDoInCircle(currentCircle).get());
                 model.addAttribute("doneTasks", taskServiceInterface.findAllDoneTasksInCircle(currentCircle));
                 model.addAttribute("users",circleMemberInterface.findAllMembers(circle.get()));
                 model.addAttribute("currentUser",user.getUsername());
@@ -55,7 +55,7 @@ public class CircleController {
                 model.addAttribute("notificationList",taskServiceInterface.dueDateNotificationsPerTask(taskServiceInterface.findAllTasksToDoInCircle(currentCircle).get()).get());
                 return "circleDetail";
             }
-            //TODO: add 'no access' error page
+
             return "redirect:/dashboard";
         }else return "redirect:/dashboard";
 
