@@ -26,7 +26,6 @@ public class LincUserDetailService implements UserDetailsService, LincUserDetail
         this.userMapper = userMapper;
     }
 
-
     @Override
     public UserDetails loadUserByUsername(String emailAddress) {
         if (emailAddress.contains("@")){

@@ -1,6 +1,7 @@
 package com.softCare.Linc.controller;
 
 import com.softCare.Linc.model.Circle;
+import com.softCare.Linc.model.CircleInviteCode;
 import com.softCare.Linc.model.CircleMember;
 import com.softCare.Linc.model.User;
 import com.softCare.Linc.service.*;
@@ -11,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,17 +44,20 @@ public class CircleController {
             if (circleMemberInterface.isMember(user, circle.get())) {
                 boolean isAdmin = circleMemberInterface.isAdmin(user,circle.get());
                 currentCircle = circle.get();
-                List<User> users = circleMemberInterface.findAllMembers(circle.get());
                 model.addAttribute("circle", circle.get());
                 model.addAttribute("tasksToDo", taskServiceInterface.findAllShortTasksToDoInCircle(currentCircle).get());
                 model.addAttribute("doneTasks", taskServiceInterface.findAllDoneTasksInCircle(currentCircle));
-                model.addAttribute("users",users);
+
+
+                model.addAttribute("users",circleMemberInterface.findAllMembers(circle.get()));
                 model.addAttribute("currentUser",user.getUsername());
                 model.addAttribute("isAdmin",isAdmin);
                 model.addAttribute("newMemberUser", new User());
                 model.addAttribute("userPermissions", circleMemberInterface.findCircleMembers(circle.get()).get());
                 model.addAttribute("circleInviteCode", circleInviteCodeServiceInterface.getCircleInviteCode(currentCircle));
                 model.addAttribute("AllCircleInviteCodes", circleInviteCodeServiceInterface.getAllCircleInviteCodes(currentCircle).get());
+//                model.addAttribute("validCircleInviteCodes", circleInviteCodeServiceInterface.getAllValidCircleInviteCodes(currentCircle).get());
+//                model.addAttribute("expiredCircleInviteCodes", circleInviteCodeServiceInterface.getAllExpiredCircleInviteCodes(currentCircle).get());
                 model.addAttribute("notificationList",taskServiceInterface.dueDateNotificationsPerTask(taskServiceInterface.findAllTasksToDoInCircle(currentCircle).get()).get());
                 return "circleDetail";
             }

@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-2"></div>
             <div class="col-9">
-                <h1><span class="display-4" th:text="${user.username}"></span></h1>
+                <h1><span class="display-4" th:text="${user.username} + 's profile'"></span></h1>
             </div>
         </div >
     </div>
@@ -18,28 +18,41 @@
     <!--    POTENTIAL VERTICAL NAV BAR -->
     <div class="row">
         <div class="col-2"></div>
-
         <!--            PROFIL CONTENT START-->
-        <div class="col-2">
-            <img class="profile-picture rounded" th:if="${user.profilePicture == null}" src="/static/images/blank-profile-picture.png">
-            <img class="profile-picture rounded" th:if="${user.profilePicture != null}" th:src="@{'data:image/jpeg;base64,'+ ${profilePicture}}">
-            <form th:action="@{/upload/profilepicture/}" method="post" enctype="multipart/form-data">
-                <input class="form-control" name="file" type="file" id="formFile">
-                <input type="submit" value="Upload" class="btn btn-primary">
-            </form>
-        </div>
-        <div class="col-5">
-            <span><h5>Username: </h5><h6 th:text="${user.username}"></h6></span>
-            <span><h5>Email address: </h5><h6 th:text="${user.emailAddress}"></h6></span>
-            <span><h5>Phone number: </h5><h6 th:text="${user.phoneNumber}"></h6></span>
+                <div class="col-2">
+                    <img class="profile-picture rounded" th:if="${user.profilePicture == null}" src="/static/images/blank-profile-picture.png">
+                    <img class="profile-picture rounded" th:if="${user.profilePicture != null}" th:src="@{'data:image/jpeg;base64,'+ ${profilePicture}}">
 
-            <a class="btn btn-primary" href="/user/edit/password">Change password</a>
+                        <a class="btn btn-primary mt-4" data-toggle="collapse" href="#collapseProfilePicture" role="button"
+                           aria-expanded="false" aria-controls="collapseExample">
+                            <span th:if="${user.profilePicture != null}">Change profile picture</span>
+                            <span th:if="${user.profilePicture == null}">Upload profile picture</span>
+                        </a>
 
+                    <div class="collapse" id="collapseProfilePicture">
+                        <br>
+                        <form th:action="@{/upload/profilepicture/}" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="formFile">Select image</label>
+                            <input class="form-control" name="file" type="file" id="formFile">
+                            </div>
+                                <input type="submit" value="Upload" class="btn btn-primary">
+                        </form>
+                    </div>
 
+                </div>
+                <div class="col-8">
+                    <h5 style="display: inline" th:text="'Username: '"></h5><h5 class="user-info" th:text="${user.username}" style="display: inline"></h5>
+                    <br><br>
+                    <h5 style="display: inline" th:text="'Email address: '"></h5><h5 class="user-info" th:text="${user.emailAddress}" style="display: inline"></h5>
+                    <br><br>
+                    <h5 style="display: inline" th:text="'Phone number: '"></h5><h5 class="user-info" th:text="${user.phoneNumber}" style="display: inline"></h5>
+                    <br><br>
+                    <a class="btn btn-primary" href="/user/edit/details">Edit details</a>
+                    <a class="btn btn-primary" href="/user/edit/password">Change password</a>
+                </div>
 
-
-
-        </div>
+    </div>
         <div class="col-3">
             <a class="btn btn-danger" th:if="${user.username == 'sysAdmin'}" href="/sysAdmin/users">View application users</a>
         </div>

@@ -1,6 +1,7 @@
 package com.softCare.Linc.service;
 
 import com.softCare.Linc.model.User;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
