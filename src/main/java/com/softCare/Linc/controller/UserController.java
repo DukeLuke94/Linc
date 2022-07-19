@@ -68,10 +68,6 @@ public class UserController {
                                       @Valid @ModelAttribute("userVM") UserVmGeneral userVmGeneral,
                                       BindingResult result,
                                       Model model) {
-        if (thereIsALoggedInUser(loggedInUser)) {
-            User user = userMapper.userVMToUserModel(userVmGeneral);
-            user.setUserId(loggedInUser.getUserId());
-        }
         if (emailAddressIsAlreadyTaken(userVmGeneral) && userVmGeneral.getEmailAddress().contains("@")) {
             model.addAttribute("errorMessage", EMAIL_ALREADY_IN_USE);
             model.addAttribute("inviteCode", inviteCode);
