@@ -194,7 +194,7 @@
                     <a class="btn btn-primary" th:if="${isAdmin}" data-toggle="collapse" href="#collapseNewUser" role="button" aria-expanded="false" aria-controls="collapseExample">
                         Add members
                     </a>
-                    <button class="btn btn-primary"
+                    <button th:if="${isAdmin}" class="btn btn-primary"
                             data-toggle="modal" data-target="#generateInviteCode">Generate invite-code</button>
                 </p>
                 <div class="collapse" id="collapseNewUser">
@@ -264,7 +264,7 @@
                 </div>
             </div>
 
-                <div th:unless="${AllCircleInviteCodes.isEmpty()}">
+                <div th:if="${isAdmin}" th:unless="${AllCircleInviteCodes.isEmpty()}">
                     <h5>Invite-codes:</h5>
                     <div class="table-responsive">
                         <table class="table table-striped">

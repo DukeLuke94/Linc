@@ -16,9 +16,6 @@
         <form class="p-4 p-md-5 border rounded-3 bg-light" th:action="@{/invitecode/join}" method="get">
           <div class="form-floating mb-3">
             <h5>Join LinC today:</h5>
-            <div th:if="${errorMessage}" class="alert alert-info" role="alert">
-              <span th:text="${errorMessage}">errorMessage</span>
-            </div>
             <div th:if="${succesMessage}" class="alert alert-success" role="alert">
               <span th:text="${succesMessage}">errorMessage</span>
             </div>
@@ -28,6 +25,9 @@
           <div class="form-floating mb-3">
             <label for="inviteCode">Invite-code (optional)</label>
             <input type="text" class="form-control" name="inviteCode" id="inviteCode" placeholder="Your invite-code">
+          </div>
+          <div th:if="${errorMessage}" class="alert alert-info" role="alert">
+            <span th:text="${errorMessage}">errorMessage</span>
           </div>
           <button class="w-100 btn btn-lg btn-primary" type="submit">Sign-up</button>
         </form>
