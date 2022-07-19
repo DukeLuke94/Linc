@@ -12,7 +12,7 @@ import java.util.Optional;
  * Project: CircleInviteCodeRepository
  *
  * @author Jan Willem vd Wal on 11-7-2022.
- * Beschrijving:
+ * Saves the CircleInviteCodes in the Database and describes custom added methods to find CircleInviteCodes
  */
 public interface CircleInviteCodeRepository extends JpaRepository<CircleInviteCode, Long> {
 

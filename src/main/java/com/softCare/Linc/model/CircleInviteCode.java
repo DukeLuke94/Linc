@@ -15,7 +15,7 @@ import java.time.LocalDate;
  * Project: CircleInviteCode
  *
  * @author Jan Willem vd Wal on 11-7-2022.
- * Beschrijving:
+ * Describes the attributes of a CircleInviteCode
  */
 
 @Entity @Getter @Setter @AllArgsConstructor @NoArgsConstructor @Proxy(lazy = false)

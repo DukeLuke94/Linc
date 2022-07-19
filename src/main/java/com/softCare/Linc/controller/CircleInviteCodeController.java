@@ -1,6 +1,5 @@
 package com.softCare.Linc.controller;
 
-import com.softCare.Linc.model.Circle;
 import com.softCare.Linc.model.CircleInviteCode;
 import com.softCare.Linc.service.CircleInviteCodeServiceInterface;
 import org.springframework.stereotype.Controller;
@@ -14,20 +13,21 @@ import java.time.LocalDate;
 
 /**
  * Project: CircleInviteCodeController
- *
  * @author Jan Willem vd Wal on 12-7-2022.
- * Beschrijving:
+ * Facilitate interactions around CircleInviteCodes
  */
 
 @Controller
 public class CircleInviteCodeController {
 
+    public final String NOT_EXIST_OR_IS_EXPIRED = "Invite-code does not exist or is expired";
     private final CircleInviteCodeServiceInterface circleInviteCodeServiceInterface;
     private final CircleController circleController;
 
     public CircleInviteCode currentInviteCode;
 
-    public CircleInviteCodeController(CircleInviteCodeServiceInterface circleInviteCodeServiceInterface, CircleController circleController) {
+    public CircleInviteCodeController(CircleInviteCodeServiceInterface circleInviteCodeServiceInterface,
+                                      CircleController circleController) {
         this.circleInviteCodeServiceInterface = circleInviteCodeServiceInterface;
         this.circleController = circleController;
     }
@@ -62,40 +62,29 @@ public class CircleInviteCodeController {
         return "redirect:/circle/" + referrer;
     }
 
-//    @PostMapping("/invitecode/renew")
-//    protected String renewCircleInviteCode(RedirectAttributes redirectAttributes) {
-////        boolean circleInviteCodeIsPresent =
-////                circleInviteCodeServiceInterface.findByCircleInviteCode(currentInviteCode.getInviteCode()).isEmpty();
-////        if (circleInviteCodeIsPresent) {
-////            circleInviteCodeServiceInterface.delete(currentInviteCode);
-////        }
-//        redirectAttributes.addAttribute("circleInviteCode", new CircleInviteCode(circleInviteCodeServiceInterface.generateCode()));
-//        String referrer = circleController.currentCircle.getCircleId().toString();
-//        return "redirect:/circle/" + referrer;
-//    }
-
     @GetMapping("/invitecode/join")
     protected String joinCircleWithInviteCode(@RequestParam(required = false, name = "inviteCode") String inviteCode,
                                               @RequestParam(required = false, name = "username") String username,
                                               RedirectAttributes redirectAttributes) {
-        boolean isInviteCodeConnectedToCircle =
-                circleInviteCodeServiceInterface.findByCircleInviteCode(inviteCode).isPresent();
         if (inviteCode.equals("")) {
             redirectAttributes.addAttribute("username", username);
             return "redirect:/user/new";
-        } else if (isInviteCodeConnectedToCircle) {
+        } else if (isCircleInviteCodeValidAndConnectedToCircle(inviteCode)) {
             redirectAttributes.addAttribute("inviteCode", inviteCode);
             redirectAttributes.addAttribute("username", username);
             return "redirect:/user/new";
         } else {
-            redirectAttributes.addFlashAttribute("errorMessage", "Invite-code does not exist or is expired");
+            redirectAttributes.addFlashAttribute("errorMessage", NOT_EXIST_OR_IS_EXPIRED);
             redirectAttributes.addAttribute("username", username);
             return "redirect:/";
         }
     }
 
-
-
-
-
+    private boolean isCircleInviteCodeValidAndConnectedToCircle(String inviteCode) {
+        CircleInviteCode circleInviteCode;
+        if (circleInviteCodeServiceInterface.findByCircleInviteCode(inviteCode).isPresent()) {
+            circleInviteCode = circleInviteCodeServiceInterface.findByCircleInviteCode(inviteCode).get();
+            return circleInviteCode.getDate().isAfter(LocalDate.now()) && circleInviteCode.getUserId() == null;
+        } return false;
+    }
 }

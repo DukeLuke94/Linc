@@ -82,14 +82,12 @@ public class UserController {
             model.addAttribute("inviteCode", inviteCode);
             return "userForm";
         } else if (!result.hasErrors()) {
-            User newUser = userMapper.userVMToUserModel(userVmGeneral);
-            newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
-            userInterface.save(newUser);
+            User newUser = getNewUserFromUserVMAndSaveNewUser(userVmGeneral);
             boolean isInviteCodeConnectedToCircle =
                     circleInviteCodeServiceInterface.findByCircleInviteCode(inviteCode).isPresent();
             if (isInviteCodeConnectedToCircle) {
-                Circle circleToAddNewUserTo = circleInviteCodeServiceInterface.findByCircleInviteCode(inviteCode).get().getCircle();
-                circleMemberServiceInterface.save(new CircleMember(newUser, circleToAddNewUserTo,false,false));
+                setUserIdOnUsedCircleInviteCode(inviteCode, newUser);
+                addNewUserToCircleOfInviteCode(inviteCode, newUser);
             }
             return "redirect:/dashboard";
         }
@@ -97,6 +95,24 @@ public class UserController {
             model.addAttribute("inviteCode", inviteCode);
         }
         return "userForm";
+    }
+
+    private User getNewUserFromUserVMAndSaveNewUser(UserVmGeneral userVmGeneral) {
+        User newUser = userMapper.userVMToUserModel(userVmGeneral);
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        userInterface.save(newUser);
+        return newUser;
+    }
+
+    private void setUserIdOnUsedCircleInviteCode(String inviteCode, User newUser) {
+        CircleInviteCode circleInviteCode = circleInviteCodeServiceInterface.findByCircleInviteCode(inviteCode).get();
+        circleInviteCode.setUserId(newUser.getUserId());
+        circleInviteCodeServiceInterface.save(circleInviteCode);
+    }
+
+    private void addNewUserToCircleOfInviteCode(String inviteCode, User newUser) {
+        Circle circleToAddNewUserTo = circleInviteCodeServiceInterface.findByCircleInviteCode(inviteCode).get().getCircle();
+        circleMemberServiceInterface.save(new CircleMember(newUser, circleToAddNewUserTo,false,false));
     }
 
     @GetMapping({"/user/edit"})

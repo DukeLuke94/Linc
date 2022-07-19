@@ -41,7 +41,6 @@ public class DashboardController {
         model.addAttribute("currentUser", user.getUsername());
         model.addAttribute("notificationList",taskServiceInterface.dueDateNotificationsPerCircle(circleMemberServiceInterface.findAllCirclesWhereMemberOf(user)).get());
         model.addAttribute("taskNotificationList",taskServiceInterface.dueDateNotificationsPerTask( taskServiceInterface.findAllTasksPerUser(user)).get());
-        System.out.println(category);
         return "dashboard";
     }
 

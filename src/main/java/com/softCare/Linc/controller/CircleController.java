@@ -1,7 +1,6 @@
 package com.softCare.Linc.controller;
 
 import com.softCare.Linc.model.Circle;
-import com.softCare.Linc.model.CircleInviteCode;
 import com.softCare.Linc.model.CircleMember;
 import com.softCare.Linc.model.User;
 import com.softCare.Linc.service.*;
@@ -56,8 +55,6 @@ public class CircleController {
                 model.addAttribute("userPermissions", circleMemberInterface.findCircleMembers(circle.get()).get());
                 model.addAttribute("circleInviteCode", circleInviteCodeServiceInterface.getCircleInviteCode(currentCircle));
                 model.addAttribute("AllCircleInviteCodes", circleInviteCodeServiceInterface.getAllCircleInviteCodes(currentCircle).get());
-//                model.addAttribute("validCircleInviteCodes", circleInviteCodeServiceInterface.getAllValidCircleInviteCodes(currentCircle).get());
-//                model.addAttribute("expiredCircleInviteCodes", circleInviteCodeServiceInterface.getAllExpiredCircleInviteCodes(currentCircle).get());
                 model.addAttribute("notificationList",taskServiceInterface.dueDateNotificationsPerTask(taskServiceInterface.findAllTasksToDoInCircle(currentCircle).get()).get());
                 return "circleDetail";
             }
