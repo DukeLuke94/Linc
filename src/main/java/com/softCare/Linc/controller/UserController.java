@@ -172,12 +172,6 @@ public class UserController {
         return user;
     }
 
-    @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
-    public String currentUserName(Authentication authentication, Model model) {
-        model.addAttribute("user",userInterface.loadUserByUsername(authentication.getName()));
-        return "userProfile";
-    }
-
     private boolean thereIsALoggedInUser(User loggedInUser) {
         return !(loggedInUser == null);
     }

@@ -30,7 +30,6 @@ public class ProfilePictureController {
 
     @PostMapping("/upload/profilepicture/")
     public String uploadProfilePicture(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal User loggedInUser) throws IOException {
-        System.out.println(file);
         loggedInUser.setProfilePicture(file.getBytes());
         lincUserDetailServiceInterface.save(loggedInUser);
         return "redirect:/user/profile";
