@@ -2,8 +2,8 @@ package com.softCare.Linc.service;
 
 import com.softCare.Linc.model.Circle;
 import com.softCare.Linc.model.CircleInviteCode;
-import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -25,6 +25,8 @@ public interface CircleInviteCodeServiceInterface {
     Optional<CircleInviteCode> findByCircleInviteCode(String circleInviteCode);
 
     CircleInviteCode getCircleInviteCode(Circle circle);
+
+    Optional<List<CircleInviteCode>> getAllCircleInviteCodes(Circle circle);
 
     String generateCode();
 }
