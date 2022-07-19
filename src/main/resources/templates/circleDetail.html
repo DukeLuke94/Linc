@@ -31,6 +31,7 @@
                 <div class="tab-pane fade show active" id="v-pills-tasks" role="tabpanel" aria-labelledby="v-pills-tasks-tab">
 
             <!--            TASK CONTENT START-->
+                    <p th:if="${tasksToDo.size <= 0}" class="">There are no tasks in this circle yet</p>
                     <div class="card w-100 card-tasks" th:each="task : ${tasksToDo}">
 <!--                                            Task title & description-->
                         <div class="row">
@@ -285,8 +286,7 @@
                                     th:text="${#temporals.format(circleInviteCode.date, 'dd MMMM yyyy',
                                                 new java.util.Locale('en', 'EN'))}">
                                 </td>
-                                <td th:unless="${circleInviteCode.isExpired() or
-                                            circleInviteCode.userId != null}" class="col-md-2">
+                                <td class="col-md-2">
                                     <form th:action="@{/invitecode/delete}" method="post"
                                           th:object="${circleInviteCode}">
                                         <input type="hidden" name="circleInviteCodeToDelete"

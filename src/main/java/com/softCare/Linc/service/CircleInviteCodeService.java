@@ -11,7 +11,7 @@ import java.util.*;
 /**
  * Project: CircleInviteCodeService
  * @author Jan Willem vd Wal on 11-7-2022.
- * Beschrijving:
+ * Shows the functionality of the methods of CircleInviteCodeServiceInterface
  */
 @Service
 public class CircleInviteCodeService implements CircleInviteCodeServiceInterface {

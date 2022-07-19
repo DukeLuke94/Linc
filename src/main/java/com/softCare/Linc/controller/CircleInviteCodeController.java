@@ -1,6 +1,5 @@
 package com.softCare.Linc.controller;
 
-import com.softCare.Linc.model.Circle;
 import com.softCare.Linc.model.CircleInviteCode;
 import com.softCare.Linc.service.CircleInviteCodeServiceInterface;
 import org.springframework.stereotype.Controller;
@@ -14,9 +13,8 @@ import java.time.LocalDate;
 
 /**
  * Project: CircleInviteCodeController
- *
  * @author Jan Willem vd Wal on 12-7-2022.
- * Beschrijving:
+ * Facilitate interactions around CircleInviteCodes
  */
 
 @Controller
@@ -86,7 +84,7 @@ public class CircleInviteCodeController {
         CircleInviteCode circleInviteCode;
         if (circleInviteCodeServiceInterface.findByCircleInviteCode(inviteCode).isPresent()) {
             circleInviteCode = circleInviteCodeServiceInterface.findByCircleInviteCode(inviteCode).get();
-            return circleInviteCode.getDate().isAfter(LocalDate.now());
+            return circleInviteCode.getDate().isAfter(LocalDate.now()) && circleInviteCode.getUserId() == null;
         } return false;
     }
 }

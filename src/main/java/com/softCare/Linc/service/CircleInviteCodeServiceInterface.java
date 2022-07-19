@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * Project: CircleInviteCodeServiceInterface
  * @author Jan Willem vd Wal on 11-7-2022.
- * Beschrijving:
+ * (Custom) methods to use in controllers to let the repository save, get, update and delete CircleInviteCodes
  */
 
 public interface CircleInviteCodeServiceInterface {
