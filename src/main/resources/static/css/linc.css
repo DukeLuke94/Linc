@@ -90,6 +90,14 @@ a {
     height:18rem;
 }
 
+.member-picture{
+    min-height: 125px;
+    max-height: 125px;
+    width: 100%;
+    vertical-align: middle;
+
+}
+
 .list-group {
     max-width: 460px;
 }

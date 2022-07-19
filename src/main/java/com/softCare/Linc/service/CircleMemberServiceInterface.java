@@ -20,7 +20,7 @@ public interface CircleMemberServiceInterface {
 
     List<Circle> findAllCirclesWhereMemberOf(User user);
 
-    Object findAllMembers(Circle circle);
+    List<User> findAllMembers(Circle circle);
 
     void deleteByUserIdAndCircleId(Long userId, Long circleId);
 

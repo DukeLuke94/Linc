@@ -47,6 +47,9 @@ public class User implements UserDetails {
     @Lob @Column(name = "pic", length = 2000)
     private byte[] profilePicture;
 
+    @Transient
+    private String profilePictureString;
+
     @OneToMany(mappedBy = "user",  cascade = ALL,fetch = FetchType.EAGER)
     private List<CircleMember> circleMembers;
 

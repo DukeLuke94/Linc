@@ -11,6 +11,7 @@ import com.softCare.Linc.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,7 +78,12 @@ public class CircleMemberService implements CircleMemberServiceInterface {
         List<User> userList = new ArrayList<>();
         if (circleMemberList.isPresent()){
             for (CircleMember circleMember : circleMemberList.get()) {
-                userList.add(userRepository.findById(circleMember.getUser().getUserId()).get());
+                User user = userRepository.findById(circleMember.getUser().getUserId()).get();
+                if (user.getProfilePicture()!=null){
+                    user.setProfilePictureString(Base64.getEncoder().encodeToString(user.getProfilePicture()));
+                }
+
+                userList.add(user);
             }
         }
         return userList;

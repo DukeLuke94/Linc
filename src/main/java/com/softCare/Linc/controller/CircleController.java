@@ -12,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -43,10 +45,11 @@ public class CircleController {
             if (circleMemberInterface.isMember(user, circle.get())) {
                 boolean isAdmin = circleMemberInterface.isAdmin(user,circle.get());
                 currentCircle = circle.get();
+                List<User> users = circleMemberInterface.findAllMembers(circle.get());
                 model.addAttribute("circle", circle.get());
                 model.addAttribute("tasksToDo", taskServiceInterface.findAllShortTasksToDoInCircle(currentCircle).get());
                 model.addAttribute("doneTasks", taskServiceInterface.findAllDoneTasksInCircle(currentCircle));
-                model.addAttribute("users",circleMemberInterface.findAllMembers(circle.get()));
+                model.addAttribute("users",users);
                 model.addAttribute("currentUser",user.getUsername());
                 model.addAttribute("isAdmin",isAdmin);
                 model.addAttribute("newMemberUser", new User());
