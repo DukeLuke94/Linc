@@ -1,3 +1,5 @@
+-- noinspection SqlNoDataSourceInspectionForFile
+
 DROP SCHEMA IF EXISTS Linc;
 CREATE SCHEMA Linc;
 USE Linc;

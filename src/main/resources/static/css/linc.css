@@ -83,6 +83,7 @@ a {
 }
 
 .profile-picture {
+    max-width: 100%;
     float: left;
     object-fit: cover;
     width:18rem;
