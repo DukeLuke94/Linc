@@ -1,13 +1,10 @@
 package com.softCare.Linc.service;
 
 import com.softCare.Linc.Repository.TaskRepository;
-import com.softCare.Linc.model.Circle;
-import com.softCare.Linc.model.Notification;
-import com.softCare.Linc.model.Task;
-import com.softCare.Linc.model.User;
+import com.softCare.Linc.model.*;
+import com.softCare.Linc.model.DTO.ShortTask;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -48,7 +45,6 @@ public class TaskService implements TaskServiceInterface {
     public Optional<List<Task>> findByCircle(Circle circle){
         return taskRepository.findByCircle(circle);
     }
-
     public Optional<List<Task>> findAllTasksToDoInCircle(Circle circle){
         Optional<List<Task>> allTasks = taskRepository.findByCircle(circle);
         List<Task> tasksToDo = new ArrayList<>();
@@ -61,6 +57,20 @@ public class TaskService implements TaskServiceInterface {
 
         }
         return Optional.of(tasksToDo.stream().sorted((o1, o2) ->o1.getDueDate().compareTo(o2.getDueDate())).collect(Collectors.toList()));
+    }
+
+    public Optional<List<ShortTask>> findAllShortTasksToDoInCircle(Circle circle){
+        Optional<List<Task>> allTasks = taskRepository.findByCircle(circle);
+        List<Task> tasksToDo = new ArrayList<>();
+        if (allTasks.isPresent()){
+            for (Task allTask : allTasks.get()) {
+                if (!allTask.isTaskDone()){
+                    tasksToDo.add(allTask);
+                }
+            }
+
+        }
+        return Optional.of(taskMapper.taskToShortTask((tasksToDo.stream().sorted((o1, o2) ->o1.getDueDate().compareTo(o2.getDueDate())).collect(Collectors.toList()))));
     }
 
     public Object findAllTasksToDoAndToClaimInCircle(Circle circle) {
@@ -116,6 +126,17 @@ public class TaskService implements TaskServiceInterface {
         return tasksPerUser.stream().sorted((o1, o2) ->o1.getDueDate().compareTo(o2.getDueDate())).collect(Collectors.toList());
     }
 
+    @Override
+    public List<Task> findAllTasksPerUserByCategory(User user, String category) {
+        List<Task> allTasksPerUser = findAllTasksPerUser(user);
+        List<Task> filteredByCategory = new ArrayList<>();
+        for (Task task : allTasksPerUser) {
+            if (task.getCategory().equals(category)){
+                filteredByCategory.add(task);
+            }
+        }
+        return filteredByCategory;
+    }
 
 
     @Override

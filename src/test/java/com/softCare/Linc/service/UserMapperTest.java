@@ -1,8 +1,8 @@
 package com.softCare.Linc.service;
 
 import com.softCare.Linc.model.User;
-import com.softCare.Linc.model.UserVmEditPassword;
-import com.softCare.Linc.model.UserVmGeneral;
+import com.softCare.Linc.model.DTO.UserVmEditPassword;
+import com.softCare.Linc.model.DTO.UserVmGeneral;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

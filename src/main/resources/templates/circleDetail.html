@@ -273,11 +273,10 @@
 <!--            SETTINGS CONTENT START-->
             <div>
                 <button type="button" class="btn delete" data-toggle="modal" data-target="#myModal">Delete circle</button>
-                <button th:if="${circleInviteCode.getCircle() == null}" class="btn btn-primary"
+                <button class="btn btn-primary"
                         data-toggle="modal" data-target="#generateInviteCode">Generate invite-code</button>
             </div>
-
-            <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -301,7 +300,7 @@
                 </div>
             </div>
 
-            <div class="modal" id="generateInviteCode" tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
+            <div class="modal fade" id="generateInviteCode" tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -329,17 +328,97 @@
                 </div>
             </div>
 
-            <div th:if="${circleInviteCode.getCircle() != null}">
-                <form method="post" th:object="${circleInviteCode}">
-                    <h5 th:text="*{inviteCode}"></h5>
-                    <p th:text="'Valid untill: ' + ${#temporals.format(circleInviteCode.date, 'dd MMMM yyyy', new java.util.Locale('en', 'EN'))}"></p>
-                    <input type="submit" class="btn delete" th:formaction="@{/invitecode/delete}" value="Revoke invite-code">
-                </form>
-            </div>
+            <div th:unless="${AllCircleInviteCodes.isEmpty()}" class="row">
+                <div class="w-100">
+                    <h5>Invite-codes:</h5>
+                        <div class="table-responsive col-md-auto">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="col-md-7">Invite-code</th>
+                                        <th class="col-md-3">Valid until</th>
+                                        <th class="col-md-2">Delete</th>
+                                    </tr>
+                                </thead>
+                                    <tbody>
+                                        <tr th:each="circleInviteCode : ${AllCircleInviteCodes}">
+                                            <td class="col-md-7" th:text="${circleInviteCode.inviteCode}"
+                                                th:style="${circleInviteCode.userId != null or
+                                                circleInviteCode.isExpired() ? 'color:crimson': 'color:#0dd940'}">
+                                            </td>
+                                            <td class="col-md-3"
+                                                th:text="${#temporals.format(circleInviteCode.date, 'dd MMMM yyyy',
+                                                new java.util.Locale('en', 'EN'))}">
+                                            </td>
+                                            <td th:unless="${circleInviteCode.isExpired() or
+                                            circleInviteCode.userId != null}" class="col-md-2">
+                                                <form th:action="@{/invitecode/delete}" method="post"
+                                                      th:object="${circleInviteCode}">
+                                                <input type="hidden" name="circleInviteCodeToDelete"
+                                                       class="form-control" th:value="${circleInviteCode.id}">
+                                                <input id="remove-member" type="image"
+                                                       src="/static/images/removeMember.svg" alt="Submit">
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                            </table>
+                        </div>
+                </div>
+<!--                <div class="col-8">-->
+<!--                    <form th:action="@{/invitecode/revoke}" method="post" th:object="${circleInviteCode}">-->
+<!--                        <h5 th:text="${validCircleInviteCode.inviteCode}"></h5>-->
+<!--                        <p th:text="'Valid untill: ' + ${#temporals.format(validCircleInviteCode.date, 'dd MMMM yyyy', new java.util.Locale('en', 'EN'))}"></p>-->
+<!--                        <input type="hidden" name="validCircleInviteCode" class="form-control" th:value="${validCircleInviteCode.id}">-->
+<!--                        <input type="submit" class="btn delete" value="Revoke invite-code">-->
+<!--                    </form>-->
+<!--                </div>-->
+
+
+<!--                <div th:unless="${expiredCircleInviteCodes.isEmpty()}" class="w-50">-->
+<!--                    <h5>Expired invite-codes:</h5>-->
+<!--                        <div class="table-responsive col-md-auto">-->
+<!--                            <table class="table table-striped">-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th class="col-md-8">Invite-code</th>-->
+<!--                                <th class="col-md-4">Date revoked</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <tr th:each="expiredCircleInviteCode : ${expiredCircleInviteCodes}">-->
+<!--                                <td class="col-md-8" th:text="${expiredCircleInviteCode.inviteCode}"></td>-->
+<!--                                <td class="col-md-4" th:text="${#temporals.format(expiredCircleInviteCode.date, 'dd MMMM yyyy', new java.util.Locale('en', 'EN'))}"></td>-->
+<!--                            </tr>-->
+<!--                            </tbody>-->
+<!--                            </table>-->
+<!--                        </div>-->
+<!--                </div>-->
+
+
+<!--            <div class="accordion" id="accordionInviteCodes">-->
+<!--                <div th:each="validCircleInviteCode : ${validCircleInviteCodes}" class="accordion-item">-->
+<!--                    <h2 class="accordion-header" th:id="'heading'+${validCircleInviteCode.getId()}">-->
+<!--                        <button class="accordion-button" type="button" data-bs-toggle="collapse" th:attr="data-bs-target='#'+${validCircleInviteCode.getId()}, aria-controls=${validCircleInviteCode.getId()}" aria-expanded="true">-->
+<!--                            Invite-code:-->
+<!--                        </button>-->
+<!--                    </h2>-->
+<!--                    <div th:id="${validCircleInviteCode.getId()}" class="accordion-collapse collapse show" th:attr="aria-labelledby='heading'+${validCircleInviteCode.getId()}" data-bs-parent="#accordionInviteCodes">-->
+<!--                        <div class="accordion-body">-->
+<!--                            <form method="post" th:object="${validCircleInviteCode}">-->
+<!--                                <h5 th:text="*{inviteCode}"></h5>-->
+<!--                                <p th:text="'Valid untill: ' + ${#temporals.format(validCircleInviteCode.date, 'dd MMMM yyyy', new java.util.Locale('en', 'EN'))}"></p>-->
+<!--                                <input type="submit" class="btn delete" th:formaction="@{/invitecode/delete}" value="Revoke invite-code">-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 <!--            SETTINGS CONTENT END-->
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
     </div>
 </div>
 

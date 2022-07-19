@@ -6,11 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.validator.constraints.UniqueElements;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 /**
  * Project: CircleInviteCode
@@ -19,7 +18,7 @@ import java.util.List;
  * Beschrijving:
  */
 
-@Entity @Getter @Setter @AllArgsConstructor @NoArgsConstructor
+@Entity @Getter @Setter @AllArgsConstructor @NoArgsConstructor @Proxy(lazy = false)
 public class CircleInviteCode {
 
     @Id @Column(name = "id", nullable = false)
@@ -27,8 +26,11 @@ public class CircleInviteCode {
     private Long id;
 
     private LocalDate date;
-    @Column(unique=true)
     private String inviteCode;
+
+    private Long userId;
+
+    private boolean isExpired;
 
     @OneToOne
     @OnDelete(action = OnDeleteAction.CASCADE)

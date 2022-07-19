@@ -1,5 +1,6 @@
 package com.softCare.Linc.controller;
 
+import com.softCare.Linc.model.Circle;
 import com.softCare.Linc.model.CircleInviteCode;
 import com.softCare.Linc.service.CircleInviteCodeServiceInterface;
 import org.springframework.stereotype.Controller;
@@ -54,23 +55,24 @@ public class CircleInviteCodeController {
     }
 
     @PostMapping("/invitecode/delete")
-    protected String deleteCircleInviteCode() {
-        circleInviteCodeServiceInterface.delete(currentInviteCode);
+    protected String deleteCircleInviteCode(@ModelAttribute("circleInviteCodeToDelete") Long circleInviteCodeId) {
+        CircleInviteCode circleInviteCode = circleInviteCodeServiceInterface.findById(circleInviteCodeId).get();
+        circleInviteCodeServiceInterface.delete(circleInviteCode);
         String referrer = circleController.currentCircle.getCircleId().toString();
         return "redirect:/circle/" + referrer;
     }
 
-    @PostMapping("/invitecode/renew")
-    protected String renewCircleInviteCode(RedirectAttributes redirectAttributes) {
-//        boolean circleInviteCodeIsPresent =
-//                circleInviteCodeServiceInterface.findByCircleInviteCode(currentInviteCode.getInviteCode()).isEmpty();
-//        if (circleInviteCodeIsPresent) {
-//            circleInviteCodeServiceInterface.delete(currentInviteCode);
-//        }
-        redirectAttributes.addAttribute("circleInviteCode", new CircleInviteCode(circleInviteCodeServiceInterface.generateCode()));
-        String referrer = circleController.currentCircle.getCircleId().toString();
-        return "redirect:/circle/" + referrer;
-    }
+//    @PostMapping("/invitecode/renew")
+//    protected String renewCircleInviteCode(RedirectAttributes redirectAttributes) {
+////        boolean circleInviteCodeIsPresent =
+////                circleInviteCodeServiceInterface.findByCircleInviteCode(currentInviteCode.getInviteCode()).isEmpty();
+////        if (circleInviteCodeIsPresent) {
+////            circleInviteCodeServiceInterface.delete(currentInviteCode);
+////        }
+//        redirectAttributes.addAttribute("circleInviteCode", new CircleInviteCode(circleInviteCodeServiceInterface.generateCode()));
+//        String referrer = circleController.currentCircle.getCircleId().toString();
+//        return "redirect:/circle/" + referrer;
+//    }
 
     @GetMapping("/invitecode/join")
     protected String joinCircleWithInviteCode(@RequestParam(required = false, name = "inviteCode") String inviteCode,

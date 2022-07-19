@@ -1,12 +1,9 @@
 package com.softCare.Linc.service;
 
-import com.softCare.Linc.model.Circle;
-import com.softCare.Linc.model.Notification;
-import com.softCare.Linc.model.Task;
-import com.softCare.Linc.model.User;
+import com.softCare.Linc.model.*;
+import com.softCare.Linc.model.DTO.ShortTask;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -18,6 +15,7 @@ public interface TaskServiceInterface {
 
     void delete(Task task);
 
+    Optional<List<ShortTask>> findAllShortTasksToDoInCircle(Circle circle);
     Optional<List<Task>> findAllTasksToDoInCircle(Circle circle);
 
     Object findAllTasksToDoAndToClaimInCircle(Circle circle);
@@ -27,6 +25,8 @@ public interface TaskServiceInterface {
     Object findAllClaimedTasksForUser(User user);
 
     List<Task> findAllTasksPerUser(User user);
+
+    List<Task> findAllTasksPerUserByCategory(User user, String category);
 
     Optional<Set<Notification>> dueDateNotificationsPerCircle(List<Circle> circleList);
 
