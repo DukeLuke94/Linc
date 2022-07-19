@@ -52,13 +52,13 @@
         <div class="col-6">
             <div class="row">
                 <div class="col-8">
-                    <p class="mt-1">All available task in your circles</p>
+                    <p class="">All available task in your circles</p>
                 </div>
                 <div class="col-4">
                     <div class="form-group form-inline float-right">
                         <label for="categoryFilter"></label>
                         <form method="get" th:action="@{/dashboard}" id="categoryFilterForm" >
-                            <select class="form-control mt-1" id="categoryFilter" name="categoryFilter" th:placeholder="'Please select'" onChange="this.form.submit()">
+                            <select class="form-control" id="categoryFilter" name="categoryFilter" th:placeholder="'Please select'" onChange="this.form.submit()">
                                 <option disabled selected value="">Filter by category</option>
                                 <option th:value="'Outdoor'" name="categoryFilter">Outdoor & Garden</option>
                                 <option th:value="'Indoor'" name="categoryFilter">Indoor chores</option>
