@@ -294,8 +294,9 @@
                                                 circleInviteCode.isExpired() ? 'color:crimson': 'color:#0dd940'}">
                                 </td>
                                 <td class="col-md-3"
-                                    th:text="${#temporals.format(circleInviteCode.date, 'dd MMMM yyyy',
-                                                new java.util.Locale('en', 'EN'))}">
+                                    th:text="${circleInviteCode.userId} ? 'Used' :
+                                    ${#temporals.format(circleInviteCode.date, 'dd MMMM yyyy',
+                                    new java.util.Locale('en', 'EN'))}">
                                 </td>
                                 <td class="col-md-2">
                                     <form th:action="@{/invitecode/delete}" method="post"
