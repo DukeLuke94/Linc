@@ -31,102 +31,103 @@
                 <div class="tab-pane fade show active" id="v-pills-tasks" role="tabpanel" aria-labelledby="v-pills-tasks-tab">
 
             <!--            TASK CONTENT START-->
-                                        <div class="card w-100 card-tasks" th:each="task : ${tasksToDo}">
+                    <div class="card w-100 card-tasks" th:each="task : ${tasksToDo}">
 <!--                                            Task title & description-->
-                                            <div class="row">
-                                                <div  th:attr="id=${task.category} + 'Label'">
-                                                    <span th:if="${task.category != null}"><img th:attr="src=${'/static/images/categoryImages/' + task.category +'.svg'}"  class="mb-1 float-right" alt="category" id="categoryIcon"></span>
-                                                </div>
+                        <div class="row">
+                            <div  th:attr="id=${task.category} + 'Label'">
+                                <span th:if="${task.category != null}"><img th:attr="src=${'/static/images/categoryImages/' + task.category +'.svg'}"  class="mb-1 float-right" alt="category" id="categoryIcon"></span>
+                            </div>
 
-                                                <div class="col-11">
-                                                    <div class="card-body" >
-                                                <div class="row">
-                                                        <!--                                                 Done button if claimed & owned-->
-                                                    <div class="col-1">
-                                                            <form th:action="@{/task/done}" method="post" th:object="${task}">
-                                                        <span>
-                                                            <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
-                                                        </span>
-                                                                <div>
-                                                                    <label>
-                                                                        <input type="image" width="40" height="40" id="doneButton" alt="done"
-                                                                               src="/static/images/icons/square.svg" class="mt-1"
-                                                                               onmouseleave="this.src='/static/images/icons/square.svg';"
-                                                                               onmouseover="this.src='/static/images/icons/check-square.svg';">
-                                                                    </label>
-                                                                </div>
-                                                            </form>
-                                                    </div>
+                            <div class="col-11">
+                                <div class="card-body" >
+                            <div class="row">
+                                    <!--                                                 Done button if claimed & owned-->
+                                <div class="col-1">
+                                        <form th:action="@{/task/done}" method="post" th:object="${task}">
+                                    <span>
+                                        <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
+                                    </span>
+                                            <div>
+                                                <label>
+                                                    <input type="image" width="40" height="40" id="doneButton" alt="done"
+                                                           src="/static/images/icons/square.svg" class="mt-1"
+                                                           onmouseleave="this.src='/static/images/icons/square.svg';"
+                                                           onmouseover="this.src='/static/images/icons/check-square.svg';">
+                                                </label>
+                                            </div>
+                                        </form>
+                                </div>
 <!--                                                    Title & description-->
-                                                    <div class="col-6">
-                                                        <h5 class="card-title" style="display: inline; transform: rotate(0)"><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" class="stretched-link"></a></h5>
-                                                        <p class="card-text" th:text="${task.taskDescription}"></p>
+                                <div class="col-6">
+                                    <h5 class="card-title" style="display: inline; transform: rotate(0)"><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" th:text="${task.taskName}"></a><a th:href="@{/task/{taskId}(taskId=${task.taskId})}" class="stretched-link"></a></h5>
+                                    <p class="card-text" th:text="${task.taskDescription}"></p>
 
-                                                    </div>
+                                </div>
 
 <!--                                                    Due date & time -->
-                                                    <div class="col-3">
-                                                        <span th:if="${task.duration > 0}" class="text-left" style="display:inline;">
-                                                            <img th:if="${task.duration < 59}" src="/static/images/clock-history.svg" th:text="' '+${task.duration}+'  minutes'" class="" alt="duration">
-                                                            <img th:if="${(task.duration < 120) && (task.duration > 59)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(1 - (task.duration/60))}+'+ hour'" class="" alt="duration">
-                                                            <img th:if="${(task.duration < 180) && (task.duration > 119)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(2 - (task.duration/60))}+'+ hours'" class="" alt="duration">
-                                                            <img th:if="${(task.duration < 240) && (task.duration > 179)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(3 - (task.duration/60))}+'+ hours'" class="" alt="duration">
-                                                            <img th:if="${(task.duration < 300) && (task.duration > 239)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(4 - (task.duration/60))}+'+ hours'" class="" alt="duration">
-                                                         <br>
-                                                        </span>
-                                                        <!--                                                Displays due date, if available-->
-                                                        <span th:if="${task.dueDate != null}" class="text-left" style="display:inline;">
-                                                            <img src="/static/images/calendar-check.svg" th:text="' ' + ${#temporals.format(task.dueDate, 'dd MMMM yyyy', new java.util.Locale('en', 'EN'))}" class="" alt="calender">
-                                                            <span th:each="notification : ${notificationList}">
-                                                                <span th:if="${task.taskName == notification.task.taskName}" class="badge badge-danger">!</span>
-                                                            </span>
-                                                        </span>
-                                                        <!--                                                Displays claimants name if claimed-->
-                                                    </div>
-                                                    <!--                                                    Category & button-->
+                                <div class="col-3">
+                                    <span th:if="${task.duration > 0}" class="text-left" style="display:inline;">
+                                        <img th:if="${task.duration < 59}" src="/static/images/clock-history.svg" th:text="' '+${task.duration}+'  minutes'" class="" alt="duration">
+                                        <img th:if="${(task.duration < 120) && (task.duration > 59)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(1 - (task.duration/60))}+'+ hour'" class="" alt="duration">
+                                        <img th:if="${(task.duration < 180) && (task.duration > 119)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(2 - (task.duration/60))}+'+ hours'" class="" alt="duration">
+                                        <img th:if="${(task.duration < 240) && (task.duration > 179)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(3 - (task.duration/60))}+'+ hours'" class="" alt="duration">
+                                        <img th:if="${(task.duration < 300) && (task.duration > 239)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(4 - (task.duration/60))}+'+ hours'" class="" alt="duration">
+                                     <br>
+                                    </span>
+                                    <!--                                                Displays due date, if available-->
+                                    <span th:if="${task.dueDate != null}" class="text-left" style="display:inline;">
+                                        <img src="/static/images/calendar-check.svg" th:text="' ' + ${#temporals.format(task.dueDate, 'dd MMMM yyyy', new java.util.Locale('en', 'EN'))}" class="" alt="calender">
+                                        <span th:each="notification : ${notificationList}">
+                                            <span th:if="${task.taskName == notification.task.taskName}" class="badge badge-danger">!</span>
+                                        </span>
+                                    </span>
+                                    <!--                                                Displays claimants name if claimed-->
+                                </div>
+                                <!--                                                    Category & button-->
 
-                                                        <span th:if="${task.claimedUserName != null}">
-                                                                <span th:if="${task.claimedUserName != currentUser}" class="mt-2" th:text="'Assigned to: '+${task.claimedUserName}"></span>
-                                                                 <!--       Unclaim button if claimed & owned-->
-                                                    <span th:if="${(task.claimedUserName == currentUser) && !(task.isTaskDone())}" class="">
-                                                        <form th:action="@{/task/detail/unclaimCD}" method="post" class="" >
-                                                            <div class="text-right float-right" style="display:inline;">
-                                                                <label>
-                                                                    <button type="submit" class="btn btn-outline-primary mt-2">Unnassign</button>
-                                                                </label>
-                                                            </div>
-                                                            <span>
-                                                                <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
-                                                            </span>
-                                                        </form>
-                                                    </span>
-
-                                                            </span>
-                                                            </span>
-<!--                                                        Claim button -->
-                                                        <span th:if="${task.user == null}" class="">
-                                                            <form th:action="@{/task/claim}" method="post" class="" >
-                                                                <div class="text-right float-right" style="display:inline;">
-                                                                    <label>
-                                                                        <button type="submit" class="btn btn-outline-primary mt-2">Assign to me</button>
-                                                                    </label>
-                                                                </div>
-                                                                <span>
-                                                                <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
-                                                            </span>
-                                                            </form>
-                                                        </span>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            </div>
+                                    <span th:if="${task.claimedUserName != null}">
+                                            <span th:if="${task.claimedUserName != currentUser}" class="mt-2" th:text="'Assigned to: '+${task.claimedUserName}"></span>
+                                             <!--       Unclaim button if claimed & owned-->
+                                <span th:if="${(task.claimedUserName == currentUser) && !(task.isTaskDone())}" class="">
+                                    <form th:action="@{/task/detail/unclaimCD}" method="post" class="" >
+                                        <div class="text-right float-right" style="display:inline;">
+                                            <label>
+                                                <button type="submit" class="btn btn-outline-primary mt-2">Unnassign</button>
+                                            </label>
                                         </div>
+                                        <span>
+                                            <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
+                                        </span>
+                                    </form>
+                                </span>
+
+                                        </span>
+                                        </span>
+<!--                                                        Claim button -->
+                                    <span th:if="${task.user == null}" class="">
+                                        <form th:action="@{/task/claim}" method="post" class="" >
+                                            <div class="text-right float-right" style="display:inline;">
+                                                <label>
+                                                    <button type="submit" class="btn btn-outline-primary mt-2">Assign to me</button>
+                                                </label>
+                                            </div>
+                                            <span>
+                                            <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
+                                        </span>
+                                        </form>
+                                    </span>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
             <a class="btn btn-primary float-right"  href="/task/new">New task</a>
             </div>
 <!--            TASK CONTENT END-->
-        <div class="tab-pane fade col-4" id="v-pills-users" role="tabpanel" aria-labelledby="v-pills-users-tab">
+        <div class="tab-pane fade col-12" id="v-pills-users" role="tabpanel" aria-labelledby="v-pills-users-tab">
             <!--        USER CONTENT START-->
-            <div class="card w-100" th:each="user: ${users}" th:unless="${user.username == 'sysAdmin'}">
+
+            <div class="card w-100 col-md-3" th:each="user: ${users}" th:unless="${user.username == 'sysAdmin'}">
                 <div class="card-body">
                     <h5 class="card-title"  th:text="${user.username}" style="display: inline" ></h5>
                         <span th:each="userpermission: ${userPermissions}">
@@ -187,6 +188,30 @@
                 </div>
             </div>
 
+<!--            New member content, if admin-->
+                <div class="form-group">
+                <p>
+                    <a class="btn btn-primary" th:if="${isAdmin}" data-toggle="collapse" href="#collapseNewUser" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Add members
+                    </a>
+                    <button class="btn btn-primary"
+                            data-toggle="modal" data-target="#generateInviteCode">Generate invite-code</button>
+                </p>
+                <div class="collapse" id="collapseNewUser">
+                        <form method="post" th:action="@{/member/new}" th:object="${newMemberUser}" >
+                            <label for="emailAddress">Email address</label>
+                            <input name ="emailAddress" id="emailAddress" type="email" th:required="required" class="form-control col-md-4"
+                                   th:field="*{emailAddress}" placeholder="Email address">
+                            <br>
+                            <p class="text-danger" th:if="${unknownEmail == true}">No such user
+
+
+                            </p>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </form>
+                </div>
+                </div>
+
             <div th:if="${isAdmin}" class="modal" th:each="user: ${users}" th:attr="id=${'modalRemoveMember' + user.userId}"
                  tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -212,27 +237,69 @@
                     </div>
                 </div>
             </div>
-<!--            New member content, if admin-->
-            <div class="">
-            <p>
-                <a class="btn btn-primary" th:if="${isAdmin}" data-toggle="collapse" href="#collapseNewUser" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    Add members
-                </a>
-            </p>
-            <div class="collapse" id="collapseNewUser">
-                    <form method="post" th:action="@{/member/new}" th:object="${newMemberUser}" >
-                        <label for="emailAddress">Email address</label>
-                        <input name ="emailAddress" id="emailAddress" type="email" th:required="required" class="form-control"
-                               th:field="*{emailAddress}" placeholder="Email address">
-                        <br>
-                        <p class="text-danger" th:if="${unknownEmail == true}">No such user
 
+            <div class="modal fade" id="generateInviteCode" tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmationTitle">Generate invite-code</h5>
+                        </div>
+                        <div class="modal-body">
+                            <form th:action="@{/invitecode/new}" method="post" th:object="${circleInviteCode}">
+                                <div class="form-group">
+                                    <label>Invite-code: </label>
+                                    <h5 th:text="*{inviteCode}"></h5>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            <form th:action="@{/invitecode/new}" method="post" th:object="${circleInviteCode}">
+                                <input type="hidden" name="inviteCode" id="inviteCode"
+                                       class="form-control" th:field="*{inviteCode}">
+                                <input type="submit" class="btn btn-primary" value="Save">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                        </p>
-                        <button type="submit" class="btn btn-primary">Add</button>
-                    </form>
-            </div>
-            </div>
+                <div th:unless="${AllCircleInviteCodes.isEmpty()}">
+                    <h5>Invite-codes:</h5>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th class="col-md-7">Invite-code</th>
+                                <th class="col-md-3">Valid until</th>
+                                <th class="col-md-2">Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="circleInviteCode : ${AllCircleInviteCodes}">
+                                <td class="col-md-7" th:text="${circleInviteCode.inviteCode}"
+                                    th:style="${circleInviteCode.userId != null or
+                                                circleInviteCode.isExpired() ? 'color:crimson': 'color:#0dd940'}">
+                                </td>
+                                <td class="col-md-3"
+                                    th:text="${#temporals.format(circleInviteCode.date, 'dd MMMM yyyy',
+                                                new java.util.Locale('en', 'EN'))}">
+                                </td>
+                                <td th:unless="${circleInviteCode.isExpired() or
+                                            circleInviteCode.userId != null}" class="col-md-2">
+                                    <form th:action="@{/invitecode/delete}" method="post"
+                                          th:object="${circleInviteCode}">
+                                        <input type="hidden" name="circleInviteCodeToDelete"
+                                               class="form-control" th:value="${circleInviteCode.id}">
+                                        <input id="remove-member" type="image"
+                                               src="/static/images/removeMember.svg" alt="Submit">
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             <!--        USER CONTENT END-->
         </div>
 
@@ -273,8 +340,6 @@
 <!--            SETTINGS CONTENT START-->
             <div>
                 <button type="button" class="btn delete" data-toggle="modal" data-target="#myModal">Delete circle</button>
-                <button class="btn btn-primary"
-                        data-toggle="modal" data-target="#generateInviteCode">Generate invite-code</button>
             </div>
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -299,72 +364,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="modal fade" id="generateInviteCode" tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="confirmationTitle">Generate invite-code</h5>
-                        </div>
-                        <div class="modal-body">
-                            <form th:action="@{/invitecode/new}" method="post" th:object="${circleInviteCode}">
-                                <div class="form-group">
-                                    <label>Invite-code: </label>
-                                    <h5 th:text="*{inviteCode}"></h5>
-                                    <button type="submit" class="btn btn-primary" th:formaction="@{/invitecode/renew}">
-                                        <img id="refresh" src="/static/images/arrow-repeat.svg" alt="Refresh"></button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                            <form th:action="@{/invitecode/new}" method="post" th:object="${circleInviteCode}">
-                                <input type="hidden" name="inviteCode" id="inviteCode"
-                                       class="form-control" th:field="*{inviteCode}">
-                                <input type="submit" class="btn btn-primary" value="Save">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div th:unless="${AllCircleInviteCodes.isEmpty()}" class="row">
-                <div class="w-100">
-                    <h5>Invite-codes:</h5>
-                        <div class="table-responsive col-md-auto">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th class="col-md-7">Invite-code</th>
-                                        <th class="col-md-3">Valid until</th>
-                                        <th class="col-md-2">Delete</th>
-                                    </tr>
-                                </thead>
-                                    <tbody>
-                                        <tr th:each="circleInviteCode : ${AllCircleInviteCodes}">
-                                            <td class="col-md-7" th:text="${circleInviteCode.inviteCode}"
-                                                th:style="${circleInviteCode.userId != null or
-                                                circleInviteCode.isExpired() ? 'color:crimson': 'color:#0dd940'}">
-                                            </td>
-                                            <td class="col-md-3"
-                                                th:text="${#temporals.format(circleInviteCode.date, 'dd MMMM yyyy',
-                                                new java.util.Locale('en', 'EN'))}">
-                                            </td>
-                                            <td th:unless="${circleInviteCode.isExpired() or
-                                            circleInviteCode.userId != null}" class="col-md-2">
-                                                <form th:action="@{/invitecode/delete}" method="post"
-                                                      th:object="${circleInviteCode}">
-                                                <input type="hidden" name="circleInviteCodeToDelete"
-                                                       class="form-control" th:value="${circleInviteCode.id}">
-                                                <input id="remove-member" type="image"
-                                                       src="/static/images/removeMember.svg" alt="Submit">
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                            </table>
-                        </div>
-                </div>
 <!--                <div class="col-8">-->
 <!--                    <form th:action="@{/invitecode/revoke}" method="post" th:object="${circleInviteCode}">-->
 <!--                        <h5 th:text="${validCircleInviteCode.inviteCode}"></h5>-->
@@ -420,7 +419,6 @@
             </div>
         </div>
     </div>
-</div>
 
 
 <div th:replace="fragments/general :: footer"></div>

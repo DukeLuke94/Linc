@@ -88,7 +88,7 @@ public class CircleInviteCodeController {
             redirectAttributes.addAttribute("username", username);
             return "redirect:/user/new";
         } else {
-            redirectAttributes.addFlashAttribute("errorMessage", "Invite-code is not valid");
+            redirectAttributes.addFlashAttribute("errorMessage", "Invite-code does not exist or is expired");
             redirectAttributes.addAttribute("username", username);
             return "redirect:/";
         }

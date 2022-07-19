@@ -74,10 +74,12 @@ public class UserController {
         }
         if (emailAddressIsAlreadyTaken(userVmGeneral) && userVmGeneral.getEmailAddress().contains("@")) {
             model.addAttribute("errorMessage", EMAIL_ALREADY_IN_USE);
+            model.addAttribute("inviteCode", inviteCode);
             return "userForm";
         }
         if (newPasswordsDoNotMatch(userVmGeneral)) {
             model.addAttribute("errorMessage", PASSWORD_REPEAT_NO_MATCH);
+            model.addAttribute("inviteCode", inviteCode);
             return "userForm";
         } else if (!result.hasErrors()) {
             User newUser = userMapper.userVMToUserModel(userVmGeneral);
@@ -90,6 +92,9 @@ public class UserController {
                 circleMemberServiceInterface.save(new CircleMember(newUser, circleToAddNewUserTo,false,false));
             }
             return "redirect:/dashboard";
+        }
+        if (inviteCode.contains("-")) {
+            model.addAttribute("inviteCode", inviteCode);
         }
         return "userForm";
     }
