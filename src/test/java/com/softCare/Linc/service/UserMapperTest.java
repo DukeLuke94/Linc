@@ -1,5 +1,6 @@
 package com.softCare.Linc.service;
 
+import com.softCare.Linc.model.DTO.UserVMEdit;
 import com.softCare.Linc.model.User;
 import com.softCare.Linc.model.DTO.UserVmEditPassword;
 import com.softCare.Linc.model.DTO.UserVmGeneral;
@@ -142,5 +143,70 @@ class UserMapperTest {
         assertNull(userModel4.getAssignedTasks());
         assertNull(userModel4.getCircleMembers());
         assertNotNull(userModel4.getAuthorities());
+    }
+
+
+    //nog runnen
+    @Test
+    @DisplayName("userEditDetailsViewModelToUserModel")
+    void userEditDetailsViewModelToUserModel() {
+        //arrange:
+        UserVMEdit userVMEdit1 = new UserVMEdit("userVMEdit1", "test@test.nl", "0612345678");
+        UserVMEdit userVMEdit2 = new UserVMEdit("userVMEdit2", "test@test.nl", "0612345678");
+
+        //activate:
+        User userModel1 = userMapper.userVMEditDetailsToUserModel(userVMEdit1);
+        User userModel2 = userMapper.userVMEditDetailsToUserModel(userVMEdit2);
+
+        //assert:
+        assertInstanceOf(User.class, userModel1);
+        assertInstanceOf(User.class, userModel2);
+
+        assertNull(userModel1.getCurrentPassword());
+        assertNull(userModel1.getPassword());
+        assertNull(userModel1.getPasswordRepeat());
+        assertNull(userModel1.getAssignedTasks());
+        assertNull(userModel1.getCircleMembers());
+        assertNotNull(userModel1.getUsername());
+        assertNotNull(userModel1.getEmailAddress());
+        assertNotNull(userModel1.getPhoneNumber());
+        assertNotNull(userModel1.getAuthorities());
+
+        assertNull(userModel2.getCurrentPassword());
+        assertNull(userModel2.getPassword());
+        assertNull(userModel2.getPasswordRepeat());
+        assertNull(userModel2.getAssignedTasks());
+        assertNull(userModel2.getCircleMembers());
+        assertNotNull(userModel2.getUsername());
+        assertNotNull(userModel2.getEmailAddress());
+        assertNotNull(userModel2.getPhoneNumber());
+        assertNotNull(userModel2.getAuthorities());
+    }
+
+    //WIP
+    @Test
+    @DisplayName("userModelToEditDetailsViewModel")
+    void userModelToEditDetailsViewModel() {
+        //arrange:
+        User user1 = new User("User1", "test123","a@a.nl", "0909090909");
+        User user2 = new User("User2", "123test","b@b.nl", "9090909090");
+
+        //activate:
+        UserVmEditPassword userVmEditPassword1 = userMapper.userToViewModelEditPassword(user1);
+        UserVmEditPassword userVmEditPassword2 = userMapper.userToViewModelEditPassword(user2);
+
+        //assert:
+        assertInstanceOf(UserVmEditPassword.class, userVmEditPassword1);
+        assertInstanceOf(UserVmEditPassword.class, userVmEditPassword2);
+
+        assertNotNull(userVmEditPassword1.getUsername());
+        assertNull(userVmEditPassword1.getCurrentPassword());
+        assertNull(userVmEditPassword1.getPassword());
+        assertNull(userVmEditPassword1.getPasswordRepeat());
+
+        assertNotNull(userVmEditPassword2.getUsername());
+        assertNull(userVmEditPassword2.getCurrentPassword());
+        assertNull(userVmEditPassword2.getPassword());
+        assertNull(userVmEditPassword2.getPasswordRepeat());
     }
 }
