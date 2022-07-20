@@ -112,10 +112,10 @@ public class UserController {
     }
 
     @GetMapping({"/user/edit"})
-    protected String editUser(Authentication authentication, Model model) {
+    protected String editUser(Authentication authentication, Model model, @AuthenticationPrincipal User loggedInUser) {
         User user = (User) userInterface.loadUserByUsername(authentication.getName());
         UserVmGeneral userVmGeneral = userMapper.userToViewModel(user);
-        model.addAttribute("userVM", userVmGeneral);
+        model.addAttribute("userVM", loggedInUser);
         return "userForm";
     }
 
@@ -156,6 +156,24 @@ public class UserController {
 
     private boolean allFieldsAreBlank(UserVmEditPassword userVmEditPassword) {
         return userVmEditPassword.getCurrentPassword().isBlank() && userVmEditPassword.getPassword().isBlank() && userVmEditPassword.getPasswordRepeat().isBlank();
+    }
+
+    @GetMapping({"/user/edit/details"})
+    protected String editUserDetails(@AuthenticationPrincipal User loggedInUser, Model model) {
+        model.addAttribute("user", loggedInUser);
+        return "editUserDetails";
+    }
+
+    @PostMapping({"/user/edit/"})
+    protected String editUserDetails(@ModelAttribute("user") User user, BindingResult result, @AuthenticationPrincipal User loggedInUser) {
+        if (!result.hasErrors()) {
+            user.setUserId(loggedInUser.getUserId());
+            user.setPassword(loggedInUser.getPassword());
+            user.setAssignedTasks(loggedInUser.getAssignedTasks());
+            user.setProfilePicture(loggedInUser.getProfilePicture());
+            userInterface.save(user);
+        }
+        return "redirect:/user/profile";
     }
 
 

@@ -83,19 +83,16 @@ a {
 }
 
 .profile-picture {
-    max-width: 100%;
+    width: 100%;
+    min-height: 300px;
+    max-height: 300px;
     float: left;
     object-fit: cover;
-    width:18rem;
-    height:18rem;
+    position: center;
 }
 
-.member-picture{
-    min-height: 125px;
-    max-height: 125px;
-    width: 100%;
-    vertical-align: middle;
-
+.user-info {
+    color: #808080;
 }
 
 .list-group {
@@ -461,3 +458,5 @@ button:hover::after, button:focus::after {
     filter:  contrast(15%);
 
 }
+
+
