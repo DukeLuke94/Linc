@@ -17,8 +17,8 @@ import java.util.List;
 public class TaskMapper {
 
 
-    public static final int MAX_LENGTH_NAME = 40;
-    public static final int MAX_LENGT_DESCRIPTION = 50;
+    public static final int MAX_LENGTH_NAME = 45;
+    public static final int MAX_LENGT_DESCRIPTION = 55;
 
     public Task taskToViewModel(Task task){
         Task viewmodel = new Task();
