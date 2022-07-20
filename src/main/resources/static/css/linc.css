@@ -311,6 +311,10 @@ button:hover::after, button:focus::after {
     text-align: right;
 }
 
+.card-text-error {
+    margin: 50px;
+}
+
 .card-tasks{
     border-radius: 4px;
     background: #fff;

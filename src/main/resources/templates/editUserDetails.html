@@ -23,23 +23,41 @@
 
         <!--            EDIT USER CONTENT START-->
         <div class="col-3">
-            <form method="post" th:action="@{/user/edit/}" th:object="${user}">
+            <div th:if="${errorMessage}" class="alert alert-info" role="alert">
+                <span th:text="${errorMessage}">errorMessage</span>
+            </div>
+            <form method="post" th:action="@{/user/edit/details}" th:object="${userVM}">
                 <div class="form-group">
                     <label for="username">Username: </label>
                     <input name="taskName" id="username" type="text" class="form-control"
                            th:field="*{username}" th:required="required" placeholder="Username">
+                    <ul class="text-danger" th:each="error: ${#fields.errors('username')}">
+                        <li th:each="message : ${error.split(',')}">
+                            <p class="error-register" th:text="${message}"></p>
+                        </li>
+                    </ul>
                 </div>
 
                 <div class="form-group">
                     <label for="emailAddress">Email address: </label>
-                    <textarea name="emailAddress" id="emailAddress" type ="text" class="form-control"  th:required="required"
-                              th:field="*{emailAddress}" placeholder="Email Address"></textarea>
+                    <input name="emailAddress" id="emailAddress" type ="email" class="form-control"  th:required="required"
+                              th:field="*{emailAddress}" placeholder="Email Address">
+                    <ul class="text-danger" th:each="error: ${#fields.errors('emailAddress')}">
+                        <li th:each="message : ${error.split(',')}">
+                            <p class="error-register" th:text="${message}"></p>
+                        </li>
+                    </ul>
                 </div>
 
                 <div class="form-group">
                     <label for="phoneNumber">Phone number: </label>
                     <input name="phoneNumber" id="phoneNumber" type="text" class="form-control"
                            th:field="*{phoneNumber}">
+                    <ul class="text-danger" th:each="error: ${#fields.errors('phoneNumber')}">
+                        <li th:each="message : ${error.split(',')}">
+                            <p class="error-register" th:text="${message}"></p>
+                        </li>
+                    </ul>
                 </div>
                 <input type="submit" class="btn btn-primary" value="Save">
             </form>

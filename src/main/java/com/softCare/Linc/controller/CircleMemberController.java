@@ -70,7 +70,11 @@ public class CircleMemberController {
         Optional<User> user = userInterface.findByUserId(circleMemberId);
         if (user.isPresent()) {
             Optional<CircleMember> circleMember = circleMemberServiceInterface.findByUserIdAndCircleId(circleMemberId, circleController.currentCircle.getCircleId());
-            circleMember.ifPresent(member -> member.setAdmin(true));
+            if (circleMember.get().isAdmin()) {
+                circleMember.ifPresent(member -> member.setAdmin(false));
+            } else {
+                circleMember.ifPresent(member -> member.setAdmin(true));
+            }
             circleMemberServiceInterface.save(circleMember.get());
         }
         return "redirect:/circle/" + circleController.currentCircle.getCircleId();
@@ -81,7 +85,11 @@ public class CircleMemberController {
         Optional<User> user = userInterface.findByUserId(circleMemberId);
         if (user.isPresent()) {
             Optional<CircleMember> circleMember = circleMemberServiceInterface.findByUserIdAndCircleId(circleMemberId, circleController.currentCircle.getCircleId());
-            circleMember.ifPresent(member -> member.setClient(true));
+            if (circleMember.get().isClient()) {
+                circleMember.ifPresent(member -> member.setClient(false));
+            } else {
+                circleMember.ifPresent(member -> member.setClient(true));
+            }
             circleMemberServiceInterface.save(circleMember.get());
         }
         return "redirect:/circle/" + circleController.currentCircle.getCircleId();
