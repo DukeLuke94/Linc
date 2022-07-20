@@ -8,12 +8,19 @@ import com.softCare.Linc.service.CircleMemberServiceInterface;
 import com.softCare.Linc.service.CircleServiceInterface;
 import com.softCare.Linc.service.LincUserDetailServiceInterface;
 import com.softCare.Linc.service.TaskServiceInterface;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.standard.inline.StandardInlineMode;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -81,22 +88,23 @@ public class Seeder {
         circleServiceInterface.save(woongroep);
         circleServiceInterface.save(studentenGroep);
 
-        User diederik = new User("Diederik", passwordEncoder.encode("diederik"),"diederik@diederik.nl", "0099009900");
-        User hendrik = new User("Hendrik", passwordEncoder.encode("hendrik"),"hendrik@hendrik.nl", "0099009900");
-        User geertruida = new User("Geertruida", passwordEncoder.encode("geertruida"),"geertruida@geertruida.nl", "0099009900");
-        User jantina = new User("Jantina", passwordEncoder.encode("jantina"),"jantina@jantina.nl", "0099009900");
-        User baas = new User("M.Veen", passwordEncoder.encode("mveen"),"mveen@mveen.nl", "0099009900");
-        User tess = new User("Tesss", passwordEncoder.encode("tess"),"tess@tess.nl", "0653976031");
+        User diederik = new User("Diederik", passwordEncoder.encode("diederik"), "diederik@diederik.nl", "0099009900");
+        User hendrik = new User("Hendrik", passwordEncoder.encode("hendrik"), "hendrik@hendrik.nl", "0099009900");
+        User geertruida = new User("Geertruida", passwordEncoder.encode("geertruida"), "geertruida@geertruida.nl", "0099009900");
+        User jantina = new User("Jantina", passwordEncoder.encode("jantina"), "jantina@jantina.nl", "0099009900");
+        User baas = new User("M.Veen", passwordEncoder.encode("mveen"), "mveen@mveen.nl", "0099009900");
+        User tess = new User("Tesss", passwordEncoder.encode("tess"), "tess@tess.nl", "0653976031");
         // studenten groep
-        User Mark = new User("Mark", passwordEncoder.encode("mark"), "mark@mark.nl","0664852145");
-        User Timo = new User("Timo",passwordEncoder.encode("timo"),"timo@timo.nl","0658963214");
-        User Madelein = new User("Madelein", passwordEncoder.encode("madelein"), "madelein@madelein.nl","0647859631");
-        User Roos = new User("Roos", passwordEncoder.encode("roos"), "roos@roos.nl","0652149325");
-        User Henry = new User("Henry", passwordEncoder.encode("henry"), "henry@henry.nl","0621459874");
-        User Thomas = new User("Thomas", passwordEncoder.encode("thomas"), "thomas@thomas.nl","0635841256");
-        User Froukje = new User("Froukje", passwordEncoder.encode("froukje"), "froukje@froukje.nl","062345420");
-        User Betty = new User("Betty", passwordEncoder.encode("betty"), "betty@betty.nl","066548515");
-        User Berend = new User("Berend", passwordEncoder.encode("berend"), "berend@berend.nl","0365453564");
+        User Mark = new User("Mark", passwordEncoder.encode("mark"), "mark@mark.nl", "0664852145");
+        User Timo = new User("Timo", passwordEncoder.encode("timo"), "timo@timo.nl", "0658963214");
+        User Madelein = new User("Madelein", passwordEncoder.encode("madelein"), "madelein@madelein.nl", "0647859631");
+        User Roos = new User("Roos", passwordEncoder.encode("roos"), "roos@roos.nl", "0652149325");
+        User Henry = new User("Henry", passwordEncoder.encode("henry"), "henry@henry.nl", "0621459874");
+        User Thomas = new User("Thomas", passwordEncoder.encode("thomas"), "thomas@thomas.nl", "0635841256");
+        User Froukje = new User("Froukje", passwordEncoder.encode("froukje"), "froukje@froukje.nl", "062345420");
+        User Betty = new User("Betty", passwordEncoder.encode("betty"), "betty@betty.nl", "066548515");
+        User Berend = new User("Berend", passwordEncoder.encode("berend"), "berend@berend.nl", "0365453564");
+
 
         lincUserDetailServiceInterface.save(Mark);
         lincUserDetailServiceInterface.save(Timo);
@@ -109,15 +117,15 @@ public class Seeder {
         lincUserDetailServiceInterface.save(Berend);
         lincUserDetailServiceInterface.save(tess);
 
-        CircleMember circleMemberMark = new CircleMember(Mark,studentenGroep,false,false);
-        CircleMember circleMemberTimo = new CircleMember(Timo,studentenGroep,false,true);
-        CircleMember circleMemberMadelein = new CircleMember(Madelein,studentenGroep,false,false);
-        CircleMember circleMemberRoos= new CircleMember(Roos,studentenGroep,false,false);
-        CircleMember circleMemberHenry = new CircleMember(Henry,studentenGroep,false,false);
-        CircleMember circleMemberThomas = new CircleMember(Thomas,studentenGroep,false,false);
-        CircleMember circleMemberFroukje = new CircleMember(Froukje,studentenGroep,false,false);
-        CircleMember circleMemberBetty = new CircleMember(Betty,studentenGroep,true,false);
-        CircleMember circleMemberBerend = new CircleMember(Berend,studentenGroep,true,false);
+        CircleMember circleMemberMark = new CircleMember(Mark, studentenGroep, false, false);
+        CircleMember circleMemberTimo = new CircleMember(Timo, studentenGroep, false, true);
+        CircleMember circleMemberMadelein = new CircleMember(Madelein, studentenGroep, false, false);
+        CircleMember circleMemberRoos = new CircleMember(Roos, studentenGroep, false, false);
+        CircleMember circleMemberHenry = new CircleMember(Henry, studentenGroep, false, false);
+        CircleMember circleMemberThomas = new CircleMember(Thomas, studentenGroep, false, false);
+        CircleMember circleMemberFroukje = new CircleMember(Froukje, studentenGroep, false, false);
+        CircleMember circleMemberBetty = new CircleMember(Betty, studentenGroep, true, false);
+        CircleMember circleMemberBerend = new CircleMember(Berend, studentenGroep, true, false);
 
         circleMemberServiceInterface.save(circleMemberMark);
         circleMemberServiceInterface.save(circleMemberTimo);
@@ -137,13 +145,12 @@ public class Seeder {
         lincUserDetailServiceInterface.save(baas);
 
 
-
-        CircleMember circleMemberDiederik = new CircleMember(diederik,oomDiederik,true,true);
-        CircleMember circleMemberHendrik = new CircleMember(hendrik,oomDiederik,false,false);
-        CircleMember circleMemberGeertruida = new CircleMember(geertruida,tanteGeertruida,true,true);
-        CircleMember circleMemberJantina = new CircleMember(jantina,omaJantina,true,false);
-        CircleMember circleMemberBaas = new CircleMember(baas,woongroep,true,true);
-        CircleMember circleMemberTess = new CircleMember(tess,omaJantina,false,true);
+        CircleMember circleMemberDiederik = new CircleMember(diederik, oomDiederik, true, true);
+        CircleMember circleMemberHendrik = new CircleMember(hendrik, oomDiederik, false, false);
+        CircleMember circleMemberGeertruida = new CircleMember(geertruida, tanteGeertruida, true, true);
+        CircleMember circleMemberJantina = new CircleMember(jantina, omaJantina, true, false);
+        CircleMember circleMemberBaas = new CircleMember(baas, woongroep, true, true);
+        CircleMember circleMemberTess = new CircleMember(tess, omaJantina, false, true);
 
         circleMemberServiceInterface.save(circleMemberDiederik);
         circleMemberServiceInterface.save(circleMemberHendrik);
@@ -170,24 +177,19 @@ public class Seeder {
         String games = "Company";
 
 
-        Task task = new Task("Hulp bij zolder opruimen","Oude foto albums wel bewaren graag!",
-                    false,date1, circleServiceInterface.findByCircleName("Oom Diederik's Circle"),
-                    "Oom Diederik",hendrik,hendrik.getUsername(),90,diederik,indoor);
+        Task task = new Task("Hulp bij zolder opruimen", "Oude foto albums wel bewaren graag!",
+                false, date1, circleServiceInterface.findByCircleName("Oom Diederik's Circle"),
+                "Oom Diederik", hendrik, hendrik.getUsername(), 90, diederik, indoor);
         taskServiceInterface.save(task);
         Circle studentenCircle = circleServiceInterface.findByCircleName("Thuiszorg Studenten");
 
-        taskServiceInterface.save(new Task("Boodschappen doen","Boter kaas en eieren",false,date10,studentenCircle,"Thuiszorg Studenten",Berend, Madelein.getUsername(),30,Berend,trips));
-        taskServiceInterface.save(new Task("Naar de apotheek","Ze hebben gisteren gebeld, het recept is aangevuld",false,date1,studentenCircle,"Thuiszorg Studenten",null, null,15,Timo,trips));
-        taskServiceInterface.save(new Task("Muffins bakken","Betty wil graag iets bakken, ingredienten zijn al in huis",false,date3,studentenCircle,"Thuiszorg Studenten",null, null,75,Timo,indoor));
-        taskServiceInterface.save(new Task("Conifeer snoeien","De buren begonnen weer te klagen over over te weinig zon",false,date10,studentenCircle,"Thuiszorg Studenten",null, null,120,Timo,outdoor));
-        taskServiceInterface.save(new Task("Berend moet naar de kapper","Zelf nog even een afspraak maken",false,date6,studentenCircle,"Thuiszorg Studenten",Madelein, Madelein.getUsername(), 30,Timo,trips));
-        taskServiceInterface.save(new Task("Gezamelijk Formule 1 kijken","Go Max!",false,date7,studentenCircle,"Thuiszorg Studenten",Thomas, Thomas.getUsername(),150,Timo,games));
-        taskServiceInterface.save(new Task("Ramen lappen","-",false,date8,studentenCircle,"Thuiszorg Studenten",null, null,15,Timo,indoor));
-
-
-
-
-
+        taskServiceInterface.save(new Task("Boodschappen doen", "Boter kaas en eieren", false, date10, studentenCircle, "Thuiszorg Studenten", Berend, Madelein.getUsername(), 30, Berend, trips));
+        taskServiceInterface.save(new Task("Naar de apotheek", "Ze hebben gisteren gebeld, het recept is aangevuld", false, date1, studentenCircle, "Thuiszorg Studenten", null, null, 15, Timo, trips));
+        taskServiceInterface.save(new Task("Muffins bakken", "Betty wil graag iets bakken, ingredienten zijn al in huis", false, date3, studentenCircle, "Thuiszorg Studenten", null, null, 75, Timo, indoor));
+        taskServiceInterface.save(new Task("Conifeer snoeien", "De buren begonnen weer te klagen over over te weinig zon", false, date10, studentenCircle, "Thuiszorg Studenten", null, null, 120, Timo, outdoor));
+        taskServiceInterface.save(new Task("Berend moet naar de kapper", "Zelf nog even een afspraak maken", false, date6, studentenCircle, "Thuiszorg Studenten", Madelein, Madelein.getUsername(), 30, Timo, trips));
+        taskServiceInterface.save(new Task("Gezamelijk Formule 1 kijken", "Go Max!", false, date7, studentenCircle, "Thuiszorg Studenten", Thomas, Thomas.getUsername(), 150, Timo, games));
+        taskServiceInterface.save(new Task("Ramen lappen", "-", false, date8, studentenCircle, "Thuiszorg Studenten", null, null, 15, Timo, indoor));
 
 
         taskServiceInterface.save(new Task(
@@ -196,105 +198,158 @@ public class Seeder {
                 false,
                 circleServiceInterface.findByCircleName("Oom Diederik's Circle"),
                 "Oom Diederik",
-                date8,30,diederik,trips));
+                date8, 30, diederik, trips));
         taskServiceInterface.save(new Task(
                 "Gras maaien",
                 "Niet te kort AUB",
                 false,
                 circleServiceInterface.findByCircleName("Oom Diederik's Circle"),
                 "Oom Diederik",
-                date6,72,hendrik,outdoor));
+                date6, 72, hendrik, outdoor));
         taskServiceInterface.save(new Task(
                 "Naar de kapper",
                 "Komende woensdagmiddag",
                 false,
                 circleServiceInterface.findByCircleName("Oom Diederik's Circle"),
                 "Oom Diederik",
-                date5,120,diederik,trips));
+                date5, 120, diederik, trips));
         taskServiceInterface.save(new Task(
                 "Ramen wassen",
                 "-",
                 false,
                 circleServiceInterface.findByCircleName("Tante Geertruida's Circle"),
                 "Tante Geertruida",
-                date4,45,geertruida,indoor));
+                date4, 45, geertruida, indoor));
         taskServiceInterface.save(new Task(
                 "Auto APK",
                 "Komende donderdagochtend 8 uur",
                 false,
                 circleServiceInterface.findByCircleName("Tante Geertruida's Circle"),
                 "Tante Geertruida",
-                date1,120,geertruida,trips));
+                date1, 120, geertruida, trips));
         taskServiceInterface.save(new Task(
                 "Schuur opruimen",
                 "-",
                 false,
                 circleServiceInterface.findByCircleName("Tante Geertruida's Circle"),
                 "Tante Geertruida",
-                date6,180,geertruida,outdoor));
+                date6, 180, geertruida, outdoor));
         taskServiceInterface.save(new Task(
                 "Grijze container bij de weg zetten",
                 "Komende maandagochtend voor 8 uur",
                 false,
                 circleServiceInterface.findByCircleName("Zorgboerderij 't Vliegende Schaapje"),
                 "Zorgboerderij 't Haantje",
-                date10,2,baas,indoor));
+                date10, 2, baas, indoor));
         taskServiceInterface.save(new Task(
                 "Schutting repareren",
                 "-",
                 false,
                 circleServiceInterface.findByCircleName("Zorgboerderij 't Vliegende Schaapje"),
                 "Zorgboerderij 't Haantje",
-                date8,540,baas,outdoor));
+                date8, 540, baas, outdoor));
         taskServiceInterface.save(new Task(
                 "Rummikub spelen",
                 "Idealiter in het weekend",
                 false,
                 circleServiceInterface.findByCircleName("Zorgboerderij 't Vliegende Schaapje"),
                 "Zorgboerderij 't Haantje",
-                date3,90,baas,games));
+                date3, 90, baas, games));
         taskServiceInterface.save(new Task(
                 "Medicijnen ophalen bij de apotheek",
                 "Dinsdagmiddag",
                 false,
                 circleServiceInterface.findByCircleName("Oma Jantina's Circle"),
                 "Oma Jantina",
-                date2,15,jantina,trips));
+                date2, 15, jantina, trips));
         taskServiceInterface.save(new Task(
                 "Gras maaien",
                 "Achter en voor huis",
                 false,
                 circleServiceInterface.findByCircleName("Oma Jantina's Circle"),
                 "Oma Jantina",
-                date3,25,jantina,outdoor));
+                date3, 25, jantina, outdoor));
         taskServiceInterface.save(new Task(
                 "TV repareren",
                 "Zenders zitten niet meer op de goede plek",
                 false,
                 circleServiceInterface.findByCircleName("Oma Jantina's Circle"),
                 "Oma Jantina",
-                date7,15,jantina,indoor));
+                date7, 15, jantina, indoor));
         taskServiceInterface.save(new Task(
                 "Boodschappen doen",
                 "Havermout, melk, boter",
                 false,
                 circleServiceInterface.findByCircleName("Woongroep Middenmeer"),
                 "Woongroep Middenmeer",
-                date5,45,baas,trips));
+                date5, 45, baas, trips));
         taskServiceInterface.save(new Task(
                 "Vissen voeren",
                 "2 theelepels",
                 false,
                 circleServiceInterface.findByCircleName("Woongroep Middenmeer"),
                 "Woongroep Middenmeer",
-                date5,2,baas,indoor));
+                date5, 2, baas, indoor));
         taskServiceInterface.save(new Task(
                 "Visvoer bestellen",
                 "Voor komend weekend in huis graag",
                 false,
                 circleServiceInterface.findByCircleName("Woongroep Middenmeer"),
                 "Woongroep Middenmeer",
-                date7,5,baas,indoor));
+                date7, 5, baas, indoor));
+
+
+        // profile images
+
+        File BerendFile = new File("src/main/resources/static/static/images/UserImages/Berend.png");
+        byte[] BerendPic = new byte[0];
+        try {
+            BerendPic = FileUtils.readFileToByteArray(BerendFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Berend.setProfilePicture(BerendPic);
+        lincUserDetailServiceInterface.save(Berend);
+
+        File HenryFile = new File("src/main/resources/static/static/images/UserImages/Henry.png");
+        byte[] HenryPic = new byte[0];
+        try {
+            HenryPic = FileUtils.readFileToByteArray(HenryFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Henry.setProfilePicture(HenryPic);
+        lincUserDetailServiceInterface.save(Henry);
+
+        File RoosFile = new File("src/main/resources/static/static/images/UserImages/Roos.png");
+        byte[] RoosPic = new byte[0];
+        try {
+            RoosPic = FileUtils.readFileToByteArray(RoosFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Roos.setProfilePicture(RoosPic);
+        lincUserDetailServiceInterface.save(Roos);
+
+        File MarkFile = new File("src/main/resources/static/static/images/UserImages/Mark.png");
+        byte[] MarkPic = new byte[0];
+        try {
+            MarkPic = FileUtils.readFileToByteArray(MarkFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Mark.setProfilePicture(MarkPic);
+        lincUserDetailServiceInterface.save(Mark);
+
+        File MadeleinFile = new File("src/main/resources/static/static/images/UserImages/Madelein.png");
+        byte[] MadeleinPic = new byte[0];
+        try {
+            MadeleinPic = FileUtils.readFileToByteArray(MadeleinFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Madelein.setProfilePicture(MadeleinPic);
+        lincUserDetailServiceInterface.save(Madelein);
     }
 
 }

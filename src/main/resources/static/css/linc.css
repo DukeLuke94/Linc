@@ -463,4 +463,12 @@ button:hover::after, button:focus::after {
 
 }
 
+.member-picture{
+    min-height: 125px;
+    max-height: 125px;
+    width: 100%;
+    vertical-align: middle;
+
+}
+
 
