@@ -1,6 +1,7 @@
 package com.softCare.Linc.controller;
 
 import com.softCare.Linc.model.*;
+import com.softCare.Linc.model.DTO.UserVMEdit;
 import com.softCare.Linc.model.DTO.UserVmEditPassword;
 import com.softCare.Linc.model.DTO.UserVmGeneral;
 import com.softCare.Linc.service.CircleInviteCodeServiceInterface;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.util.Base64;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -111,12 +113,45 @@ public class UserController {
         circleMemberServiceInterface.save(new CircleMember(newUser, circleToAddNewUserTo,false,false));
     }
 
-    @GetMapping({"/user/edit"})
+    @GetMapping({"/user/edit/details"})
     protected String editUser(Authentication authentication, Model model, @AuthenticationPrincipal User loggedInUser) {
         User user = (User) userInterface.loadUserByUsername(authentication.getName());
-        UserVmGeneral userVmGeneral = userMapper.userToViewModel(user);
-        model.addAttribute("userVM", loggedInUser);
-        return "userForm";
+        UserVMEdit userVMEdit = userMapper.userEditToViewModel(user);
+        model.addAttribute("userVM", userVMEdit);
+        return "editUserDetails";
+    }
+
+    @PostMapping({"/user/edit/details"})
+    protected String editUserDetails(@Valid @ModelAttribute("userVM") UserVMEdit userVMEdit,
+                                     BindingResult result,
+                                     Model model,
+                                     @AuthenticationPrincipal User loggedInUser,
+                                     RedirectAttributes redirectAttributes) {
+        boolean wantsToUpdateEmail = !Objects.equals(userVMEdit.getEmailAddress(), loggedInUser.getEmailAddress());
+        boolean validEmail = userVMEdit.getEmailAddress().contains("@");
+        boolean emailAvailable = !emailAddressIsAlreadyTakenEditUserDetails(userVMEdit);
+        if (wantsToUpdateEmail && validEmail && !emailAvailable) {
+            model.addAttribute("errorMessage", EMAIL_ALREADY_IN_USE);
+            return "editUserDetails";
+        }
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errorMessage", result.getAllErrors());
+            return "editUserDetails";
+        } else {
+            loggedInUser.setUsername(userVMEdit.getUsername());
+            loggedInUser.setEmailAddress(userVMEdit.getEmailAddress());
+            loggedInUser.setPhoneNumber(userVMEdit.getPhoneNumber());
+
+            User user = setEditedUser(userVMEdit, loggedInUser);
+            userInterface.save(user);
+            userInterface.save(loggedInUser);
+        }
+        return "redirect:/user/profile";
+    }
+
+    private boolean emailAddressIsAlreadyTakenEditUserDetails(UserVMEdit UserVMEdit) {
+        Optional<User> user = userInterface.findByEmail(UserVMEdit.getEmailAddress());
+        return user.isPresent();
     }
 
     @GetMapping({"/user/edit/password"})
@@ -158,26 +193,6 @@ public class UserController {
         return userVmEditPassword.getCurrentPassword().isBlank() && userVmEditPassword.getPassword().isBlank() && userVmEditPassword.getPasswordRepeat().isBlank();
     }
 
-    @GetMapping({"/user/edit/details"})
-    protected String editUserDetails(@AuthenticationPrincipal User loggedInUser, Model model) {
-        model.addAttribute("user", loggedInUser);
-        return "editUserDetails";
-    }
-
-    @PostMapping({"/user/edit/"})
-    protected String editUserDetails(@ModelAttribute("user") User user, BindingResult result, @AuthenticationPrincipal User loggedInUser) {
-        if (!result.hasErrors()) {
-            user.setUserId(loggedInUser.getUserId());
-            user.setPassword(loggedInUser.getPassword());
-            user.setAssignedTasks(loggedInUser.getAssignedTasks());
-            user.setProfilePicture(loggedInUser.getProfilePicture());
-            userInterface.save(user);
-        }
-        return "redirect:/user/profile";
-    }
-
-
-
     @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
     public String currentUserName(@AuthenticationPrincipal User loggedInUser, Authentication authentication, Model model) {
         model.addAttribute("user", userInterface.loadUserByUsername(authentication.getName()));
@@ -203,12 +218,21 @@ public class UserController {
         user.setEmailAddress(loggedInUser.getEmailAddress());
         user.setPhoneNumber(loggedInUser.getPhoneNumber());
         user.setAssignedTasks(loggedInUser.getAssignedTasks());
+        user.setProfilePicture(loggedInUser.getProfilePicture());
         user.setPassword(passwordEncoder.encode(userVmEditPassword.getPassword()));
         return user;
     }
 
-    private boolean thereIsALoggedInUser(User loggedInUser) {
-        return !(loggedInUser == null);
+    private User setEditedUser(UserVMEdit userVMEdit, User loggedInUser) {
+        User user = userMapper.userVMEditDetailsToUserModel(userVMEdit);
+        user.setUserId(loggedInUser.getUserId());
+        user.setUsername(loggedInUser.getUsername());
+        user.setEmailAddress(loggedInUser.getEmailAddress());
+        user.setPhoneNumber(loggedInUser.getPhoneNumber());
+        user.setAssignedTasks(loggedInUser.getAssignedTasks());
+        user.setProfilePicture(loggedInUser.getProfilePicture());
+        user.setPassword(loggedInUser.getPassword());
+        return user;
     }
 
     private boolean emailAddressIsAlreadyTaken(UserVmGeneral userVmGeneral) {

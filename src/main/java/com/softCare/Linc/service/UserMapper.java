@@ -1,5 +1,6 @@
 package com.softCare.Linc.service;
 
+import com.softCare.Linc.model.DTO.UserVMEdit;
 import com.softCare.Linc.model.User;
 import com.softCare.Linc.model.DTO.UserVmEditPassword;
 import com.softCare.Linc.model.DTO.UserVmGeneral;
@@ -20,6 +21,22 @@ public class UserMapper {
         userVmGeneral.setEmailAddress(user.getEmailAddress());
         userVmGeneral.setPhoneNumber(user.getPhoneNumber());
         return userVmGeneral;
+    }
+
+    public UserVMEdit userEditToViewModel(User user) {
+        UserVMEdit userVMEdit = new UserVMEdit();
+        userVMEdit.setUsername(user.getUsername());
+        userVMEdit.setEmailAddress(user.getEmailAddress());
+        userVMEdit.setPhoneNumber(user.getPhoneNumber());
+        return userVMEdit;
+    }
+
+    public User userVMEditDetailsToUserModel(UserVMEdit userVMEdit) {
+        User user = new User();
+        user.setUsername(userVMEdit.getUsername());
+        user.setEmailAddress(userVMEdit.getEmailAddress());
+        user.setPhoneNumber(userVMEdit.getPhoneNumber());
+        return user;
     }
 
     public User userVMToUserModel(UserVmGeneral userVmGeneral) {
@@ -45,4 +62,6 @@ public class UserMapper {
         user.setPasswordRepeat(userVmEditPassword.getPasswordRepeat());
         return user;
     }
+
+
 }
