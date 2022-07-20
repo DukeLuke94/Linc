@@ -50,13 +50,10 @@
                     <br><br>
                     <a class="btn btn-primary" href="/user/edit/details">Edit details</a>
                     <a class="btn btn-primary" href="/user/edit/password">Change password</a>
+                    <br>
+                    <a class="btn btn-danger mt-4" th:if="${user.username == 'sysAdmin'}" href="/sysAdmin/users">View application users</a>
                 </div>
 
-    </div>
-        <div class="col-3">
-            <a class="btn btn-danger" th:if="${user.username == 'sysAdmin'}" href="/sysAdmin/users">View application users</a>
-        </div>
-    </div>
 </div>
 <div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>

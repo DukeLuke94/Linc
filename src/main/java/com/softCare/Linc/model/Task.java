@@ -39,6 +39,7 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "user_user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     @ManyToOne
