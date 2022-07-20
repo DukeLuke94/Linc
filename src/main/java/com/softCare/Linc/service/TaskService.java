@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class TaskService implements TaskServiceInterface {
 
 
+    public static final int DAYS_LEFT_NOTIFICATION = 3;
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
     private final CircleMemberServiceInterface circleMemberServiceInterface;
@@ -155,7 +156,7 @@ public class TaskService implements TaskServiceInterface {
 
                 // if task is soon due, and not done yet, add nrNotifications
                 long daysLeft = ChronoUnit.DAYS.between(today,dueDate);
-                if ((daysLeft<3) && !task.isTaskDone()){
+                if ((daysLeft< DAYS_LEFT_NOTIFICATION) && !task.isTaskDone()){
                     nrNotifications++;
                 }
             }
@@ -174,10 +175,10 @@ public class TaskService implements TaskServiceInterface {
         for (Task task : taskList) {
             LocalDate dueDate = task.getDueDate();
             LocalDate today = LocalDate.now();
-            Long daysLeft = ChronoUnit.DAYS.between(today,dueDate);
+            long daysLeft = ChronoUnit.DAYS.between(today,dueDate);
 
             //if task is almost due, add it to the list
-            if (daysLeft<3 && !task.isTaskDone()){
+            if (daysLeft< DAYS_LEFT_NOTIFICATION && !task.isTaskDone()){
                 Notification notification = new Notification(task,1);
                 notificationSet.add(notification);
             }
