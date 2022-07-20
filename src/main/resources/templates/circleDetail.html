@@ -165,7 +165,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" th:text="${user.username}+'`s permissions'"></h5>
+                                            <h5 class="modal-title" th:text="'permissions of ' + ${user.username}"></h5>
                                         </div>
                                         <div class="modal-body">
                                             <div class="row ml-2">
@@ -175,14 +175,13 @@
                                                                checked type="hidden" th:name="circleMemberId" th:value="${userpermission.user.getUserId()}">
                                                     <h5>Admin <input th:if="${!userpermission.isAdmin()}" type="image" src="/static/images/toggleoff.png" style="height: 2rem; vertical-align: middle;" alt="Submit">
                                                         <input th:if="${userpermission.isAdmin()}" type="image" src="/static/images/toggleon.png" style="height: 2rem; vertical-align: middle;" alt="Submit"></h5>
-                                                    <p th:text="${userpermission.user.getUserId()}"></p>
                                                 </form>
                                                 <br>
                                                 <form th:action="@{/assignRole/client}" method="post" style="float:left;">
                                                     <input class="list-group-item-check pe-none text-left ml-2"
                                                            checked type="hidden" th:name="circleMemberId" th:value="${userpermission.user.getUserId()}">
-                                                    Client <input th:if="${!userpermission.isClient()}" type="image" src="/static/images/toggleoff.png" style="height: 2rem; vertical-align: middle;" alt="Submit">
-                                                        <input th:if="${userpermission.isClient()}" type="image" src="/static/images/toggleon.png" style="height: 2rem; vertical-align: middle;" alt="Submit">
+                                                    <h5>Client <input th:if="${!userpermission.isClient()}" type="image" src="/static/images/toggleoff.png" style="height: 2rem; vertical-align: middle;" alt="Submit">
+                                                        <input th:if="${userpermission.isClient()}" type="image" src="/static/images/toggleon.png" style="height: 2rem; vertical-align: middle;" alt="Submit"></h5>
                                                 </form>
                                             </div>
                                             <div class="modal-footer">
