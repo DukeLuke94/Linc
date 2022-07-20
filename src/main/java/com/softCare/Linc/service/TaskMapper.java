@@ -16,6 +16,10 @@ import java.util.List;
 @Service
 public class TaskMapper {
 
+
+    public static final int MAX_LENGTH_NAME = 40;
+    public static final int MAX_LENGT_DESCRIPTION = 50;
+
     public Task taskToViewModel(Task task){
         Task viewmodel = new Task();
         viewmodel.setTaskId(task.getTaskId());
@@ -41,14 +45,14 @@ public class TaskMapper {
             ShortTask shortTask = new ShortTask();
             shortTask.setTaskId(task.getTaskId());
 
-            String shortName = task.getTaskName().substring(0, Math.min(task.getTaskName().length(), 40));
-            if (shortName.length() == 40){
+            String shortName = task.getTaskName().substring(0, Math.min(task.getTaskName().length(), MAX_LENGTH_NAME-3));
+            if (shortName.length() == MAX_LENGTH_NAME-3){
                 shortName = shortName + "...";
             }
             shortTask.setTaskName(shortName);
 
-            String shortDescription = task.getTaskDescription().substring(0, Math.min(task.getTaskDescription().length(), 50));
-            if (shortDescription.length() == 50){
+            String shortDescription = task.getTaskDescription().substring(0, Math.min(task.getTaskDescription().length(), MAX_LENGT_DESCRIPTION-3));
+            if (shortDescription.length() == MAX_LENGT_DESCRIPTION-3){
                 shortDescription = shortDescription + "...";
             }
 
