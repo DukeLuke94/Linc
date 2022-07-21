@@ -41,7 +41,7 @@ public class User implements UserDetails {
     private List<Task> assignedTasks;
     @NotNull
     private String emailAddress;
-
+    @NotNull
     private String phoneNumber;
 
     @Lob @Column(name = "pic", length = 2000)
