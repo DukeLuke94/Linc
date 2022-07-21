@@ -45,7 +45,7 @@ public class CircleInviteCodeController {
         currentInviteCode = circleInviteCode;
         circleInviteCodeServiceInterface.save(circleInviteCode);
         String referrer = circleController.currentCircle.getCircleId().toString();
-        return "redirect:/circle/" + referrer;
+        return "redirect:/circle/" + referrer + "#v-pills-invite";
     }
 
     private void setCircleInviteCode(CircleInviteCode circleInviteCode) {
@@ -59,7 +59,7 @@ public class CircleInviteCodeController {
         CircleInviteCode circleInviteCode = circleInviteCodeServiceInterface.findById(circleInviteCodeId).get();
         circleInviteCodeServiceInterface.delete(circleInviteCode);
         String referrer = circleController.currentCircle.getCircleId().toString();
-        return "redirect:/circle/" + referrer;
+        return "redirect:/circle/" + referrer + "#v-pills-invite";
     }
 
     @GetMapping("/invitecode/join")
