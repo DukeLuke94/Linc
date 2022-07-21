@@ -21,6 +21,7 @@
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <a class="nav-link " id="v-pills-tasks-tab" data-toggle="pill" href="#v-pills-tasks" role="tab" aria-controls="v-pills-tasks" aria-selected="true">Tasks</a>
                 <a class="nav-link" id="v-pills-users-tab" data-toggle="pill" href="#v-pills-users" role="tab" aria-controls="v-pills-users" aria-selected="false">Members</a>
+                <a th:if="${isAdmin}" class="nav-link" id="v-pills-invite-tab" data-toggle="pill" href="#v-pills-invite" role="tab" aria-controls="v-pills-invite" aria-selected="false">Invite members</a>
                 <a class="nav-link" id="v-pills-history-tab" data-toggle="pill" href="#v-pills-history" role="tab" aria-controls="v-pills-history" aria-selected="false">Task history</a>
                 <a th:if="${isAdmin}" class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
             </div>
@@ -126,9 +127,6 @@
         <div class="tab-pane fade col-12" id="v-pills-users" role="tabpanel" aria-labelledby="v-pills-users-tab">
             <!--        USER CONTENT START-->
 
-
-
-
             <div class="row">
                 <div class="col-sm-4" th:each="user : ${users}" th:unless="${user.username == 'sysAdmin'}">
                     <div class="card w-100 card-tasks">
@@ -209,26 +207,21 @@
 
 <!--            New member content, if admin-->
                 <div class="form-group">
-                <p>
-                    <a class="btn btn-primary" th:if="${isAdmin}" data-toggle="collapse" href="#collapseNewUser" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <a class="btn btn-primary" th:if="${isAdmin}" data-toggle="collapse" href="#collapseNewUser"
+                          role="button" aria-expanded="false" aria-controls="collapseExample">
                         Add members
                     </a>
-                    <button th:if="${isAdmin}" class="btn btn-primary"
-                            data-toggle="modal" data-target="#generateInviteCode">Generate invite-code</button>
-                </p>
-                <div class="collapse" id="collapseNewUser">
+
+                    <div class="collapse" id="collapseNewUser">
                         <form method="post" th:action="@{/member/new}" th:object="${newMemberUser}" >
                             <label for="emailAddress">Email address</label>
                             <input name ="emailAddress" id="emailAddress" type="email" th:required="required" class="form-control col-md-4"
                                    th:field="*{emailAddress}" placeholder="Email address">
                             <br>
-                            <p class="text-danger" th:if="${unknownEmail == true}">No such user
-
-
-                            </p>
+                            <p class="text-danger" th:if="${unknownEmail == true}">No such user</p>
                             <button type="submit" class="btn btn-primary">Add</button>
                         </form>
-                </div>
+                    </div>
                 </div>
 
             <div th:if="${isAdmin}" class="modal fade" th:each="user: ${users}" th:attr="id=${'modalRemoveMember' + user.userId}"
@@ -256,71 +249,57 @@
                     </div>
                 </div>
             </div>
-
-            <div class="modal fade" id="generateInviteCode" tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="confirmationTitle">Generate invite-code</h5>
-                        </div>
-                        <div class="modal-body">
-                            <form th:action="@{/invitecode/new}" method="post" th:object="${circleInviteCode}">
-                                <div class="form-group">
-                                    <label>Invite-code: </label>
-                                    <h5 th:text="*{inviteCode}"></h5>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                            <form th:action="@{/invitecode/new}" method="post" th:object="${circleInviteCode}">
-                                <input type="hidden" name="inviteCode" id="inviteCode"
-                                       class="form-control" th:field="*{inviteCode}">
-                                <input id="save-invitecode" type="submit" class="btn btn-primary" value="Save">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-                <div th:if="${isAdmin}" th:unless="${AllCircleInviteCodes.isEmpty()}">
-                    <h5>Invite-codes:</h5>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th class="col-md-7">Invite-code</th>
-                                <th class="col-md-3">Valid until</th>
-                                <th class="col-md-2">Delete</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="circleInviteCode : ${AllCircleInviteCodes}">
-                                <td class="col-md-7" th:text="${circleInviteCode.inviteCode}"
-                                    th:style="${circleInviteCode.userId != null or
-                                                circleInviteCode.isExpired() ? 'color:crimson': 'color:#0dd940'}">
-                                </td>
-                                <td class="col-md-3"
-                                    th:text="${circleInviteCode.userId} ? 'Used' :
-                                    ${#temporals.format(circleInviteCode.date, 'dd MMMM yyyy',
-                                    new java.util.Locale('en', 'EN'))}">
-                                </td>
-                                <td class="col-md-2">
-                                    <form th:action="@{/invitecode/delete}" method="post"
-                                          th:object="${circleInviteCode}">
-                                        <input type="hidden" name="circleInviteCodeToDelete"
-                                               class="form-control" th:value="${circleInviteCode.id}">
-                                        <input id="remove-member" type="image"
-                                               src="/static/images/removeMember.svg" alt="Submit">
-                                    </form>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
             <!--        USER CONTENT END-->
         </div>
+
+        <div class="tab-pane fade" id="v-pills-invite" role="tabpanel" aria-labelledby="v-pills-invite-tab">
+            <div class="form-group">
+                <form th:action="@{/invitecode/new}" method="post" th:object="${circleInviteCode}" style="display: inline">
+                    <input type="hidden" name="inviteCode" id="inviteCode"
+                           class="form-control" th:field="*{inviteCode}">
+                    <button type="submit" th:if="${isAdmin}"
+                            class="btn btn-primary">Generate invite-code</button>
+                </form>
+            </div>
+
+            <div th:if="${isAdmin}" th:unless="${AllCircleInviteCodes.isEmpty()}">
+                <h5>Invite-codes:</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th class="col-md-7">Invite-code</th>
+                            <th class="col-md-3">Valid until</th>
+                            <th class="col-md-2">Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="circleInviteCode : ${AllCircleInviteCodes}">
+                            <td class="col-md-7" th:text="${circleInviteCode.inviteCode}"
+                                th:style="${circleInviteCode.userId != null or
+                                            circleInviteCode.isExpired() ? 'color:crimson': 'color:#0dd940'}">
+                            </td>
+                            <td class="col-md-3"
+                                th:text="${circleInviteCode.userId} ? 'Used' :
+                                ${#temporals.format(circleInviteCode.date, 'dd MMMM yyyy',
+                                new java.util.Locale('en', 'EN'))}">
+                            </td>
+                            <td class="col-md-2">
+                                <form th:action="@{/invitecode/delete}" method="post"
+                                      th:object="${circleInviteCode}">
+                                    <input type="hidden" name="circleInviteCodeToDelete"
+                                           class="form-control" th:value="${circleInviteCode.id}">
+                                    <input id="remove-member" type="image"
+                                           src="/static/images/removeMember.svg" alt="Submit">
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
 
         <div class="tab-pane fade" id="v-pills-history" role="tabpanel" aria-labelledby="v-pills-history-tab">
 
