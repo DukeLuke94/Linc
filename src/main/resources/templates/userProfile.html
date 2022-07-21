@@ -23,11 +23,11 @@
                     <img class="profile-picture rounded" th:if="${user.profilePicture == null}" src="/static/images/blank-profile-picture.png">
                     <img class="profile-picture rounded" th:if="${user.profilePicture != null}" th:src="@{'data:image/jpeg;base64,'+ ${profilePicture}}">
 
-                        <a class="btn btn-primary mt-4" data-toggle="collapse" href="#collapseProfilePicture" role="button"
-                           aria-expanded="false" aria-controls="collapseExample">
+                        <button class="btn btn-primary block-button" data-toggle="collapse" href="#collapseProfilePicture" role="button"
+                           aria-expanded="false" aria-controls="collapseExample" >
                             <span th:if="${user.profilePicture != null}">Change profile picture</span>
                             <span th:if="${user.profilePicture == null}">Upload profile picture</span>
-                        </a>
+                        </button>
 
                     <div class="collapse" id="collapseProfilePicture">
                         <br>
@@ -42,18 +42,29 @@
 
                 </div>
                 <div class="col-8">
+                    <div class="user-tags">
                     <h5 style="display: inline" th:text="'Username: '"></h5><h5 class="user-info" th:text="${user.username}" style="display: inline"></h5>
-                    <br><br>
+                    <br>
+                    </div>
+                    <div class="user-tags">
                     <h5 style="display: inline" th:text="'Email address: '"></h5><h5 class="user-info" th:text="${user.emailAddress}" style="display: inline"></h5>
-                    <br><br>
+                        <br>
+                    </div>
+                    <div class="user-tags">
                     <h5 style="display: inline" th:text="'Phone number: '"></h5><h5 class="user-info" th:text="${user.phoneNumber}" style="display: inline"></h5>
-                    <br><br>
+                        <br>
+                    </div>
+                    <div class="user-tags">
                     <a class="btn btn-primary" href="/user/edit/details">Edit details</a>
+                    <br>
+                    </div>
+                    <div class="user-tags">
                     <a class="btn btn-primary" href="/user/edit/password">Change password</a>
                     <br>
-                    <a class="btn btn-danger mt-4" th:if="${user.username == 'sysAdmin'}" href="/sysAdmin/users">View application users</a>
+                    </div>
+                    <a class="btn btn-danger mt-1" th:if="${user.username == 'sysAdmin'}" href="/sysAdmin/users">View application users</a>
                 </div>
-
+        </div>
 </div>
 <div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>
