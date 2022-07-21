@@ -117,8 +117,8 @@ public class Seeder {
         lincUserDetailServiceInterface.save(Berend);
         lincUserDetailServiceInterface.save(tess);
 
-        CircleMember circleMemberMark = new CircleMember(Mark, studentenGroep, false, false);
-        CircleMember circleMemberTimo = new CircleMember(Timo, studentenGroep, false, true);
+        CircleMember circleMemberMark = new CircleMember(Mark, studentenGroep, false, true);
+        CircleMember circleMemberTimo = new CircleMember(Timo, studentenGroep, false, false);
         CircleMember circleMemberMadelein = new CircleMember(Madelein, studentenGroep, false, false);
         CircleMember circleMemberRoos = new CircleMember(Roos, studentenGroep, false, false);
         CircleMember circleMemberHenry = new CircleMember(Henry, studentenGroep, false, false);
@@ -186,10 +186,17 @@ public class Seeder {
         taskServiceInterface.save(new Task("Boodschappen doen", "Boter kaas en eieren", false, date10, studentenCircle, "Thuiszorg Studenten", Berend, Madelein.getUsername(), 30, Berend, trips));
         taskServiceInterface.save(new Task("Naar de apotheek", "Ze hebben gisteren gebeld, het recept is aangevuld", false, date1, studentenCircle, "Thuiszorg Studenten", null, null, 15, Timo, trips));
         taskServiceInterface.save(new Task("Muffins bakken", "Betty wil graag iets bakken, ingredienten zijn al in huis", false, date3, studentenCircle, "Thuiszorg Studenten", null, null, 75, Timo, indoor));
-        taskServiceInterface.save(new Task("Conifeer snoeien", "De buren begonnen weer te klagen over over te weinig zon", false, date10, studentenCircle, "Thuiszorg Studenten", null, null, 120, Timo, outdoor));
+        taskServiceInterface.save(new Task("Vogelhuisje ophangen", "Op een rustige plek, niet pal in de zon.", false, date10, studentenCircle, "Thuiszorg Studenten", null, null, 120, Timo, outdoor));
         taskServiceInterface.save(new Task("Berend moet naar de kapper", "Zelf nog even een afspraak maken", false, date6, studentenCircle, "Thuiszorg Studenten", Madelein, Madelein.getUsername(), 30, Timo, trips));
         taskServiceInterface.save(new Task("Gezamelijk Formule 1 kijken", "Go Max!", false, date7, studentenCircle, "Thuiszorg Studenten", Thomas, Thomas.getUsername(), 150, Timo, games));
-        taskServiceInterface.save(new Task("Ramen lappen", "-", false, date8, studentenCircle, "Thuiszorg Studenten", null, null, 15, Timo, indoor));
+        taskServiceInterface.save(new Task("Onkruid wieden", "Graag geen bestrijdingsmiddelen gebruiken", false, date8, studentenCircle, "Thuiszorg Studenten", null, null, 20, Timo, outdoor));
+        taskServiceInterface.save(new Task("Conifeer snoeien", "De buren begonnen weer te klagen over over te weinig zon", false, date4, studentenCircle, "Thuiszorg Studenten", null, null, 15, Timo, outdoor));
+        taskServiceInterface.save(new Task("Gras maaien", "-", false, date3, studentenCircle, "Thuiszorg Studenten", null, null, 15, Timo, outdoor));
+        taskServiceInterface.save(new Task("Betty helpen met DigiD aanvragen", "-", true, date8, studentenCircle, "Thuiszorg Studenten", Roos, Roos.getUsername(), 45, Timo, indoor));
+        taskServiceInterface.save(new Task("Kopje thee drinken", "-", true, date8, studentenCircle, "Thuiszorg Studenten", Henry, Henry.getUsername(), 15, Timo, games));
+        taskServiceInterface.save(new Task("Ramen lappen", "Van binnen én buiten graag", false, date7, studentenCircle, "Thuiszorg Studenten", null, null, 65, Timo, indoor));
+        taskServiceInterface.save(new Task("Rummikub spelen", "Berend wel laten winnen!", false, date2, studentenCircle, "Thuiszorg Studenten", null, null, 45, Timo, games));
+        taskServiceInterface.save(new Task("Uitje dierentuin", "", true, date2, studentenCircle, "Thuiszorg Studenten", Thomas, Thomas.getUsername(), 240, Timo, trips));
 
 
         taskServiceInterface.save(new Task(
