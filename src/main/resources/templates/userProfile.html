@@ -34,7 +34,7 @@
                         <form th:action="@{/upload/profilepicture/}" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="formFile">Select image</label>
-                            <input class="form-control" name="file" type="file" id="formFile">
+                            <input class="form-control" name="file" type="file" id="formFile" accept="image">
                             </div>
                                 <input type="submit" value="Upload" class="btn btn-primary">
                         </form>

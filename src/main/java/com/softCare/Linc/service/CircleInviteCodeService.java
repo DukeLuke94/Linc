@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Project: CircleInviteCodeService
@@ -58,67 +59,20 @@ public class CircleInviteCodeService implements CircleInviteCodeServiceInterface
         List<CircleInviteCode> allInviteCodesList = new ArrayList<>();
         if (allInviteCodes.isPresent()){
             for (CircleInviteCode circleInviteCode : allInviteCodes.get()) {
-                if (circleInviteCode.getDate().isBefore(LocalDate.now())) {
+                if (circleInviteCode.getDate().isBefore(LocalDate.now()) || circleInviteCode.getUserId() != null) {
                     circleInviteCode.setExpired(true);
+                    allInviteCodesList.add(circleInviteCode);
+                } else {
+                    circleInviteCode.setExpired(false);
+                    allInviteCodesList.add(circleInviteCode);
                 }
-                allInviteCodesList.add(circleInviteCode);
             }
         }
-        return Optional.of(allInviteCodesList);
+        return Optional.of(allInviteCodesList.stream().sorted(Comparator.comparing(CircleInviteCode::isExpired)).collect(Collectors.toList()));
     }
-
-//    @Override
-//    public Optional<List<CircleInviteCode>> getAllValidCircleInviteCodes(Circle circle) {
-//        Optional<List<CircleInviteCode>> allInviteCodes = circleInviteCodeRepository.findByCircle(circle);
-//        List<CircleInviteCode> validInviteCodes = new ArrayList<>();
-//        if (allInviteCodes.isPresent()){
-//            for (CircleInviteCode circleInviteCode : allInviteCodes.get()) {
-//                if (!circleInviteCode.isExpired()) {
-//                    validInviteCodes.add(circleInviteCode);
-//                }
-//            }
-//        }
-//        return Optional.of(validInviteCodes);
-//    }
-
-//    && circleInviteCode.getUserId() <= 0
-
-//    @Override
-//    public Optional<List<CircleInviteCode>> getAllExpiredCircleInviteCodes(Circle circle) {
-//        Optional<List<CircleInviteCode>> allInviteCodes = circleInviteCodeRepository.findByCircle(circle);
-//        List<CircleInviteCode> expiredInviteCodes = new ArrayList<>();
-//        if (allInviteCodes.isPresent()){
-//            for (CircleInviteCode circleInviteCode : allInviteCodes.get()) {
-//                if (circleInviteCode.isExpired()) {
-//                    expiredInviteCodes.add(circleInviteCode);
-//                }
-//            }
-//        }
-//        return Optional.of(expiredInviteCodes);
-//    }
-
-//    || circleInviteCode.getUserId() > 0
 
     @Override
     public String generateCode() {
         return UUID.randomUUID().toString();
-//        Random random = new Random();
-//        List<String> colors = List.of(
-//                "Yellow", "Green", "Blue", "Violet", "Red", "Orange", "White", "Black", "White");
-//        List<String> animals = List.of(
-//                "Lynx", "Possum", "Panda", "Eagle", "Rooster", "Lamb", "Buck", "Alpaca", "Chicken", "Toad",
-//                "Owl", "Dingo", "Giraffe", "Deer", "Zebra", "Cat", "Hamster", "Gazelle", "Turtle", "Kangaroo", "Bee",
-//                "Mouse", "Fox", "Sheep");
-//        String result;
-//        StringBuilder stringBuilder = new StringBuilder();
-//
-//        int randomIndexColors = random.nextInt(colors.size());
-//        int randomIndexAnimals = random.nextInt(animals.size());
-//        int randomNumber = (int) (Math.random() * 100);
-//        result = String.valueOf(stringBuilder
-//                .append(colors.get(randomIndexColors))
-//                .append(animals.get(randomIndexAnimals))
-//                .append(randomNumber));
-//        return result;
     }
 }

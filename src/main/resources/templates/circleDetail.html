@@ -94,7 +94,7 @@
                                             <span th:if="${task.claimedUserName != currentUser}" class="mt-2" th:text="'Assigned to: '+${task.claimedUserName}"></span>
                                              <!--       Unclaim button if claimed & owned-->
                                             <span th:if="${(task.claimedUserName == currentUser) && !(task.isTaskDone())}" class="">
-                                                <form th:action="@{/task/detail/unclaimCD}" method="post" class="" >
+                                                <form th:action="@{/task/unclaimCD}" method="post" class="" >
                                                     <div class="text-right float-right" style="display:inline;">
                                                         <label>
                                                             <button type="submit" class="btn btn-outline-primary mt-2">Unnassign</button>

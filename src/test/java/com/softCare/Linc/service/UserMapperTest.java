@@ -146,7 +146,6 @@ class UserMapperTest {
     }
 
 
-    //nog runnen
     @Test
     @DisplayName("userEditDetailsViewModelToUserModel")
     void userEditDetailsViewModelToUserModel() {
@@ -183,7 +182,6 @@ class UserMapperTest {
         assertNotNull(userModel2.getAuthorities());
     }
 
-    //WIP
     @Test
     @DisplayName("userModelToEditDetailsViewModel")
     void userModelToEditDetailsViewModel() {
@@ -192,21 +190,20 @@ class UserMapperTest {
         User user2 = new User("User2", "123test","b@b.nl", "9090909090");
 
         //activate:
-        UserVmEditPassword userVmEditPassword1 = userMapper.userToViewModelEditPassword(user1);
-        UserVmEditPassword userVmEditPassword2 = userMapper.userToViewModelEditPassword(user2);
+        UserVMEdit userVMEdit1 = userMapper.userEditToViewModel(user1);
+        UserVMEdit userVMEdit2 = userMapper.userEditToViewModel(user2);
 
         //assert:
-        assertInstanceOf(UserVmEditPassword.class, userVmEditPassword1);
-        assertInstanceOf(UserVmEditPassword.class, userVmEditPassword2);
+        assertInstanceOf(UserVMEdit.class, userVMEdit1);
+        assertInstanceOf(UserVMEdit.class, userVMEdit2);
 
-        assertNotNull(userVmEditPassword1.getUsername());
-        assertNull(userVmEditPassword1.getCurrentPassword());
-        assertNull(userVmEditPassword1.getPassword());
-        assertNull(userVmEditPassword1.getPasswordRepeat());
+        assertNotNull(userVMEdit1.getUsername());
+        assertNotNull(userVMEdit1.getEmailAddress());
+        assertNotNull(userVMEdit1.getPhoneNumber());
 
-        assertNotNull(userVmEditPassword2.getUsername());
-        assertNull(userVmEditPassword2.getCurrentPassword());
-        assertNull(userVmEditPassword2.getPassword());
-        assertNull(userVmEditPassword2.getPasswordRepeat());
+        assertNotNull(userVMEdit2.getUsername());
+        assertNotNull(userVMEdit2.getEmailAddress());
+        assertNotNull(userVMEdit2.getPhoneNumber());
+
     }
 }
