@@ -19,7 +19,7 @@
     <div class="row">
         <div class="col-2">
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a class="nav-link active" id="v-pills-tasks-tab" data-toggle="pill" href="#v-pills-tasks" role="tab" aria-controls="v-pills-tasks" aria-selected="true">Tasks</a>
+                <a class="nav-link " id="v-pills-tasks-tab" data-toggle="pill" href="#v-pills-tasks" role="tab" aria-controls="v-pills-tasks" aria-selected="true">Tasks</a>
                 <a class="nav-link" id="v-pills-users-tab" data-toggle="pill" href="#v-pills-users" role="tab" aria-controls="v-pills-users" aria-selected="false">Members</a>
                 <a class="nav-link" id="v-pills-history-tab" data-toggle="pill" href="#v-pills-history" role="tab" aria-controls="v-pills-history" aria-selected="false">Task history</a>
                 <a th:if="${isAdmin}" class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
@@ -28,7 +28,7 @@
 
         <div class="col-8">
             <div class="tab-content" id="v-pills-tabContent">
-                <div class="tab-pane fade show active" id="v-pills-tasks" role="tabpanel" aria-labelledby="v-pills-tasks-tab">
+                <div class="tab-pane fade" id="v-pills-tasks" role="tabpanel" aria-labelledby="v-pills-tasks-tab">
 
             <!--            TASK CONTENT START-->
                     <p th:if="${tasksToDo.size <= 0}" class="">There are no tasks in this circle yet</p>
@@ -163,26 +163,34 @@
                             <div th:if="${isAdmin}" class="modal fade" th:each="userPermission: ${userPermissions}" th:attr="id=${'changeRoles' + userpermission.getCircleMemberId()}"
                                  tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
+
                                     <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" th:text="'permissions of ' + ${user.username}"></h5>
+                                        <div class="modal-header ml-2">
+                                            <h5 class="modal-title" th:text="'Changing permissions of: ' + ${user.username}"></h5>
                                         </div>
-                                        <div class="modal-body">
-                                            <div class="row ml-2">
+
+                                        <div class="modal-body ml-2">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <h5>Circle administrator</h5>
+                                                    <h5> Circle client</h5>
+                                                </div>
+
                                                 <span th:each="user : users"></span>
-                                                <form th:action="@{/assignRole/admin}" method="post" style="float:left;">
-                                                        <input class="list-group-item-check pe-none text-left"
-                                                               checked type="hidden" th:name="circleMemberId" th:value="${userpermission.user.getUserId()}">
-                                                    <h5>Admin <input th:if="${!userpermission.isAdmin()}" type="image" src="/static/images/toggleoff.png" style="height: 2rem; vertical-align: middle;" alt="Submit">
-                                                        <input th:if="${userpermission.isAdmin()}" type="image" src="/static/images/toggleon.png" style="height: 2rem; vertical-align: middle;" alt="Submit"></h5>
+                                            <div class="col-6">
+                                                <form th:action="@{/assignRole/admin}" method="post">
+                                                    <input class="list-group-item-check pe-none text-left" checked type="hidden" th:name="circleMemberId" th:value="${userpermission.user.getUserId()}">
+                                                    <input th:if="${!userpermission.isAdmin()}" type="image" src="/static/images/toggleoff.png" style="height: 2rem; vertical-align: middle;" alt="Submit">
+                                                    <input th:if="${userpermission.isAdmin()}" type="image" src="/static/images/toggleon.png" style="height: 2rem; vertical-align: middle;" alt="Submit">
                                                 </form>
-                                                <br>
-                                                <form th:action="@{/assignRole/client}" method="post" style="float:left;">
-                                                    <input class="list-group-item-check pe-none text-left ml-2"
-                                                           checked type="hidden" th:name="circleMemberId" th:value="${userpermission.user.getUserId()}">
-                                                    <h5>Client <input th:if="${!userpermission.isClient()}" type="image" src="/static/images/toggleoff.png" style="height: 2rem; vertical-align: middle;" alt="Submit">
-                                                        <input th:if="${userpermission.isClient()}" type="image" src="/static/images/toggleon.png" style="height: 2rem; vertical-align: middle;" alt="Submit"></h5>
+
+                                                <form th:action="@{/assignRole/client}" method="post">
+                                                    <input class="list-group-item-check pe-none text-left ml-2" checked type="hidden" th:name="circleMemberId" th:value="${userpermission.user.getUserId()}">
+                                                    <input th:if="${!userpermission.isClient()}" type="image" src="/static/images/toggleoff.png" style="height: 2rem; vertical-align: middle;" alt="Submit">
+                                                    <input th:if="${userpermission.isClient()}" type="image" src="/static/images/toggleon.png" style="height: 2rem; vertical-align: middle;" alt="Submit">
                                                 </form>
+                                                </div>
+
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>

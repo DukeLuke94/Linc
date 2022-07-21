@@ -39,7 +39,7 @@ public class CircleMemberController {
         Optional<User> toBeMember = userInterface.findByEmail(user.getEmailAddress());
         if (!userExists){
             model.addAttribute("unknownEmail",true);
-            return "redirect:/circle/" + circleController.currentCircle.getCircleId();
+            return "redirect:/circle/" + circleController.currentCircle.getCircleId() +"#v-pills-users";
         }
 
         boolean noMemberYet = circleMemberServiceInterface.findByUserIdAndCircleId(toBeMember.get().getUserId(), circleController.currentCircle.getCircleId()).isEmpty();
@@ -49,7 +49,7 @@ public class CircleMemberController {
             CircleMember circleMember = new CircleMember(member.get(),circleController.currentCircle,false,false  );
             circleMemberServiceInterface.save(circleMember);
         }
-        return "redirect:/circle/" + circleController.currentCircle.getCircleId();
+        return "redirect:/circle/" + circleController.currentCircle.getCircleId() +"#v-pills-users";
     }
 
     @PostMapping("/member/remove")
@@ -62,7 +62,7 @@ public class CircleMemberController {
                 circleMemberServiceInterface.delete(circleMember.get());
             }
         }
-        return "redirect:/circle/" + circleController.currentCircle.getCircleId();
+        return "redirect:/circle/" + circleController.currentCircle.getCircleId() +"#v-pills-users";
     }
 
     @PostMapping({"/assignRole/admin"})
@@ -77,7 +77,7 @@ public class CircleMemberController {
             }
             circleMemberServiceInterface.save(circleMember.get());
         }
-        return "redirect:/circle/" + circleController.currentCircle.getCircleId();
+        return "redirect:/circle/" + circleController.currentCircle.getCircleId() +"#v-pills-users";
     }
 
     @PostMapping({"/assignRole/client"})
@@ -92,7 +92,7 @@ public class CircleMemberController {
             }
             circleMemberServiceInterface.save(circleMember.get());
         }
-        return "redirect:/circle/" + circleController.currentCircle.getCircleId();
+        return "redirect:/circle/" + circleController.currentCircle.getCircleId() +"#v-pills-users";
     }
 
 }
