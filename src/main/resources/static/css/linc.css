@@ -92,11 +92,18 @@ a {
     float: left;
     object-fit: cover;
     position: center;
+    margin-bottom: 23px;
+}
+
+.user-tags {
+    margin-bottom: 21px;
 }
 
 .user-info {
     color: #808080;
 }
+
+
 
 .list-group {
     max-width: 460px;
@@ -136,6 +143,15 @@ a {
 
 .text {
     width: 250px;
+}
+
+.block-button {
+    display: block;
+    width: 100%;
+    border: none;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 200px
 }
 
 .btn-primary {
