@@ -160,7 +160,7 @@
                                 Caregiver
                             </div>
 
-                            <div th:if="${isAdmin}" class="modal fade" th:each="userpermission: ${userPermissions}" th:attr="id=${'changeRoles' + userpermission.getCircleMemberId()}"
+                            <div th:if="${isAdmin}" class="modal fade" th:each="userPermission: ${userPermissions}" th:attr="id=${'changeRoles' + userpermission.getCircleMemberId()}"
                                  tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -268,7 +268,7 @@
                             <form th:action="@{/invitecode/new}" method="post" th:object="${circleInviteCode}">
                                 <input type="hidden" name="inviteCode" id="inviteCode"
                                        class="form-control" th:field="*{inviteCode}">
-                                <input type="submit" class="btn btn-primary" value="Save">
+                                <input id="save-invitecode" type="submit" class="btn btn-primary" value="Save">
                             </form>
                         </div>
                     </div>
