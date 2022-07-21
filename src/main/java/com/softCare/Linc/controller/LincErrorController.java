@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 //            } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
 //                return "error500";
 //            }
-////        }
-////        return "customError";
+//        }
+//        return "customError";
 //    }
 //}
