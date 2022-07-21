@@ -144,12 +144,10 @@
                             <span th:if="${(user.userId == userpermission.user.getUserId())}">
 
                             <span th:if="${isAdmin}" style="display: inline" class="">
-                                <label class="text-right">
-                                    <input class="text-left ml-1" id="remove-member" type="image" src="/static/images/removeMember.svg" alt="Submit"
+                                    <input class="text-left ml-1 delete-button"  type="image" src="/static/images/removeMember.svg" alt="Submit"
                                            data-toggle="modal" th:attr="data-target=${'#modalRemoveMember' + user.userId}"/>
-                                    <input th:if="${isAdmin}" class="text-left ml-1" id="edit-task" type="image" src="/static/images/pencil.svg" alt="Submit"
+                                    <input th:if="${isAdmin}" class="text-left ml-1 edit-button" type="image" src="/static/images/pencil.svg" alt="Submit"
                                            data-toggle="modal" th:attr="data-target=${'#changeRoles' + userpermission.getCircleMemberId()}"/>
-                                </label>
                             </span>
                             <div  th:if="${userpermission.isAdmin() == true}">
                                 Admin
