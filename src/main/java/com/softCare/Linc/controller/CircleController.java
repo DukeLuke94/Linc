@@ -77,6 +77,7 @@ public class CircleController {
     protected String saveCircle(@ModelAttribute("circle") Circle circle, @RequestParam(value = "clientCheckbox", required = false) String clientCheckbox, BindingResult result, @AuthenticationPrincipal User user, RedirectAttributes redirectAttributes) {
         if (!result.hasErrors() && !circle.getCircleName().equals("")) {
             circleServiceInterface.save(circle);
+            String refferer = circle.getCircleId().toString();
 
             boolean isClient = clientCheckbox != null;
 
@@ -88,7 +89,7 @@ public class CircleController {
                 }
 
             circleMemberInterface.save(circleMember);
-            return "redirect:/dashboard";
+            return "redirect:/circle/" + refferer;
         }
         redirectAttributes.addFlashAttribute("errorMessage", CIRCLE_NAME_MUST_BE_FILLED_IN);
         return "redirect:/dashboard";

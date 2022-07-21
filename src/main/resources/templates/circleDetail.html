@@ -68,14 +68,17 @@
 
 <!--                                                    Due date & time -->
                                 <div class="col-3">
-                                    <span th:if="${task.duration > 0}" class="text-left" style="display:inline;">
-                                        <img th:if="${task.duration < 59}" src="/static/images/clock-history.svg" th:text="' '+${task.duration}+'  minutes'" class="" alt="duration">
-                                        <img th:if="${(task.duration < 120) && (task.duration > 59)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(1 - (task.duration/60))}+'+ hour'" class="" alt="duration">
-                                        <img th:if="${(task.duration < 180) && (task.duration > 119)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(2 - (task.duration/60))}+'+ hours'" class="" alt="duration">
-                                        <img th:if="${(task.duration < 240) && (task.duration > 179)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(3 - (task.duration/60))}+'+ hours'" class="" alt="duration">
-                                        <img th:if="${(task.duration < 300) && (task.duration > 239)}" src="/static/images/clock-history.svg" th:text="' '+${(task.duration/60)-(4 - (task.duration/60))}+'+ hours'" class="" alt="duration">
-                                     <br>
+                                    <span th:if="${task.duration > 0 && ((task.duration % 60) != 0)}" class="text-left" style="display:inline;">
+                                        <img th:if="${task.duration < 60}" src="/static/images/clock-history.svg" th:text="' '+${task.duration}+'  minutes'" class="" alt="duration">
+                                        <img th:if="${(task.duration < 119) && (task.duration > 59)}" src="/static/images/clock-history.svg" th:text="' '+${#numbers.formatDecimal((task.duration/60), 0, 0)}+' hour '+${task.duration % 60}+' minutes'" class="" alt="duration">
+                                        <img th:if="${task.duration > 119}" src="/static/images/clock-history.svg" th:text="' '+${#numbers.formatDecimal((task.duration/60), 0, 0)}+' hours '+${task.duration % 60}+' minutes'" class="" alt="duration">
+                                        <br>
                                     </span>
+                                    <span th:if="${task.duration > 0 && ((task.duration % 60) == 0)}" class="text-left" style="display:inline;">
+                                        <img src="/static/images/clock-history.svg" th:text="' '+${#numbers.formatDecimal((task.duration/60), 0, 0)}+' hour(s) '" class="" alt="duration">
+                                        <br>
+                                    </span>
+
                                     <!--                                                Displays due date, if available-->
                                     <span th:if="${task.dueDate != null}" class="text-left" style="display:inline;">
                                         <img src="/static/images/calendar-check.svg" th:text="' ' + ${#temporals.format(task.dueDate, 'dd MMMM yyyy', new java.util.Locale('en', 'EN'))}" class="" alt="calender">
