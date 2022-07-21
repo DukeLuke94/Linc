@@ -500,7 +500,10 @@ button:hover::after, button:focus::after {
     max-height: 125px;
     width: 100%;
     vertical-align: middle;
+}
 
+#card-task-detail {
+    margin-bottom: 0;
 }
 
 
