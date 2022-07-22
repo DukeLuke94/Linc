@@ -508,6 +508,15 @@ button:hover::after, button:focus::after {
     margin-bottom: 0;
 }
 
+.background{
+
+    background-image: url("/static/images/dancingright.jpg");
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: bottom left;
+
+}
+
 
 
 
