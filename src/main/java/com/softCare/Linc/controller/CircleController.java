@@ -47,8 +47,6 @@ public class CircleController {
                 model.addAttribute("circle", circle.get());
                 model.addAttribute("tasksToDo", taskServiceInterface.findAllShortTasksToDoInCircle(currentCircle).get());
                 model.addAttribute("doneTasks", taskServiceInterface.findAllDoneTasksInCircle(currentCircle));
-
-
                 model.addAttribute("users",circleMemberInterface.findAllMembers(circle.get()));
                 model.addAttribute("currentUser",user.getUsername());
                 model.addAttribute("isAdmin",isAdmin);
