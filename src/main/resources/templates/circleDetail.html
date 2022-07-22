@@ -134,11 +134,11 @@
                 <div class="col-sm-4" th:each="user : ${users}" th:unless="${user.username == 'sysAdmin'}">
                     <div class="card w-100 card-tasks">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-5">
                                 <img class="member-picture rounded m-1" th:if="${user.profilePictureString == null}" src="/static/images/blank-profile-picture.png" width="150" height="auto">
                                 <img class="member-picture rounded m-1" th:if="${user.profilePictureString != null}" th:src="@{'data:image/jpeg;base64,' + ${user.getProfilePictureString()}}" >
                             </div>
-                            <div class="col-6">
+                            <div class="col-7">
                                 <h5 class="card-title"  th:text="${user.username}" style="display: inline" ></h5>
                                 <span th:each="userpermission: ${userPermissions}">
                             <span th:if="${(user.userId == userpermission.user.getUserId())}">
