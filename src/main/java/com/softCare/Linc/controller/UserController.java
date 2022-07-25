@@ -27,6 +27,8 @@ import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
+    public final String YOU_VE_BEEN_LOGGED_OUT = "You've been logged out";
+    public final String LOGIN_TO_CONTINUE = "Registration successfull! Login to continue";
     public final String EDIT_SUCCESSFUL = "Password edit successful, please login with your new password";
     public final String EMAIL_ALREADY_IN_USE = "This Email-address is already in use";
     public final String CURRENT_PASSWORD_IS_NOT_CORRECT = "The current password is not correct";
@@ -55,6 +57,12 @@ public class UserController {
             return "login";
     }
 
+    @PostMapping("/logout")
+    protected String logout(RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("errorMessage", YOU_VE_BEEN_LOGGED_OUT);
+        return "login";
+    }
+
     @GetMapping({"/user/new"})
     protected String newUser(@RequestParam(required = false, name = "inviteCode") String inviteCode,
                              @RequestParam(required = false, name = "username") String username,
@@ -69,7 +77,8 @@ public class UserController {
                                       @AuthenticationPrincipal User loggedInUser,
                                       @Valid @ModelAttribute("userVM") UserVmGeneral userVmGeneral,
                                       BindingResult result,
-                                      Model model) {
+                                      Model model,
+                                      RedirectAttributes redirectAttributes) {
         if (emailAddressIsAlreadyTaken(userVmGeneral) && userVmGeneral.getEmailAddress().contains("@")) {
             model.addAttribute("errorMessage", EMAIL_ALREADY_IN_USE);
             model.addAttribute("inviteCode", inviteCode);
@@ -87,7 +96,8 @@ public class UserController {
                 setUserIdOnUsedCircleInviteCode(inviteCode, newUser);
                 addNewUserToCircleOfInviteCode(inviteCode, newUser);
             }
-            return "redirect:/dashboard";
+            redirectAttributes.addFlashAttribute("successMessage", LOGIN_TO_CONTINUE);
+            return "redirect:/login";
         }
         if (inviteCode.contains("-")) {
             model.addAttribute("inviteCode", inviteCode);
