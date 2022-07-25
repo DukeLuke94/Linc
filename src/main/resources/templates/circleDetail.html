@@ -140,65 +140,51 @@
                             </div>
                             <div class="col-7">
                                 <h5 class="card-title"  th:text="${user.username}" style="display: inline" ></h5>
-                                <span th:each="userpermission: ${userPermissions}">
-                            <span th:if="${(user.userId == userpermission.user.getUserId())}">
+                                <div th:each="userpermission: ${userPermissions}">
+                                <div th:if="${(user.userId == userpermission.user.getUserId())}">
 
-                            <span th:if="${isAdmin}" style="display: inline" class="">
-                                    <input class="text-left ml-1 delete-button"  type="image" src="/static/images/removeMember.svg" alt="Submit"
+                                    <span th:if="${isAdmin}" style="display: inline" class="">
+                                        <input class="text-left ml-1 delete-button"  type="image" src="/static/images/removeMember.svg" alt="Submit"
                                            data-toggle="modal" th:attr="data-target=${'#modalRemoveMember' + user.userId}"/>
-                                    <input th:if="${isAdmin}" class="text-left ml-1 edit-button" type="image" src="/static/images/pencil.svg" alt="Submit"
+                                        <input th:if="${isAdmin}" class="text-left ml-1 edit-button" type="image" src="/static/images/pencil.svg" alt="Submit"
                                            data-toggle="modal" th:attr="data-target=${'#changeRoles' + userpermission.getCircleMemberId()}"/>
-                            </span>
-                            <div  th:if="${userpermission.isAdmin() == true}">
-                                Admin
-                            </div>
-                            <div  th:if="${userpermission.isClient() == true}">
-                                Client
-                            </div>
-                            <div  th:if="${(userpermission.isAdmin() == false) and (userpermission.isClient() == false)}">
-                                Caregiver
+                                    </span>
+                                    <div  th:if="${userpermission.isAdmin() == true}">
+                                    Admin
+                                    </div>
+                                    <div  th:if="${userpermission.isClient() == true}">Client
+                                    </div>
+                                    <div  th:if="${(userpermission.isAdmin() == false) and (userpermission.isClient() == false)}">
+                                    Caregiver
+                                    </div>
+                                </div>
+                                </div>
                             </div>
 
-                            <div th:if="${isAdmin}" class="modal fade" th:each="userPermission: ${userPermissions}" th:attr="id=${'changeRoles' + userpermission.getCircleMemberId()}"
+                            <div th:if="${isAdmin}" class="modal fade" th:each="userpermission: ${userPermissions}" th:attr="id=${'changeRoles' + userpermission.getCircleMemberId()}"
                                  tabindex="-1" role="dialog" aria-labelledby="areYouSure?" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
-
                                     <div class="modal-content">
                                         <div class="modal-header ml-2">
                                             <h5 class="modal-title" th:text="'Changing permissions of: ' + ${user.username}"></h5>
                                         </div>
-
                                         <div class="modal-body ml-2">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <h5>Circle administrator</h5>
-                                                    <h5> Circle client</h5>
+                                            <form th:action="@{/changeRoles}" th:object="${userpermission}" method="post">
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" id="customSwitches"  th:checked="*{admin}" name="admin" value="admin">
+                                                    <label class="form-check-label" for="customSwitches">Circle administrator</label>
                                                 </div>
-
-                                                <span th:each="user : users"></span>
-                                            <div class="col-6">
-                                                <form th:action="@{/assignRole/admin}" method="post">
-                                                    <input class="list-group-item-check pe-none text-left" checked type="hidden" th:name="circleMemberId" th:value="${userpermission.user.getUserId()}">
-                                                    <input th:if="${!userpermission.isAdmin()}" type="image" src="/static/images/toggleoff.png" style="height: 2rem; vertical-align: middle;" alt="Submit">
-                                                    <input th:if="${userpermission.isAdmin()}" type="image" src="/static/images/toggleon.png" style="height: 2rem; vertical-align: middle;" alt="Submit">
-                                                </form>
-
-                                                <form th:action="@{/assignRole/client}" method="post">
-                                                    <input class="list-group-item-check pe-none text-left ml-2" checked type="hidden" th:name="circleMemberId" th:value="${userpermission.user.getUserId()}">
-                                                    <input th:if="${!userpermission.isClient()}" type="image" src="/static/images/toggleoff.png" style="height: 2rem; vertical-align: middle;" alt="Submit">
-                                                    <input th:if="${userpermission.isClient()}" type="image" src="/static/images/toggleon.png" style="height: 2rem; vertical-align: middle;" alt="Submit">
-                                                </form>
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" id="customSwitches1" th:checked="*{client}" name="client" value="client">
+                                                    <label class="form-check-label" for="customSwitches1">Circle client</label>
                                                 </div>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                                            </div>
+                                                <input type="hidden" checked th:value="*{circleMemberId}" name="circleMemberId" value="circleMemberId">
+                                                <br>
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </form>
                                         </div>
+                                    </div>
                                 </div>
-                            </div>
-                            </div>
-                            </span>
                             </div>
                         </div>
                     </div>
@@ -207,20 +193,20 @@
 
 
 <!--            New member content, if admin-->
-                <div class="form-group">
-                    <a class="btn btn-primary" th:if="${isAdmin}" data-toggle="collapse" href="#collapseNewUser"
+            <div class="form-group">
+                <a class="btn btn-primary" th:if="${isAdmin}" data-toggle="collapse" href="#collapseNewUser"
                           role="button" aria-expanded="false" aria-controls="collapseExample">
                         Add members
-                    </a>
+                </a>
 
-                    <div class="collapse" id="collapseNewUser">
-                        <form method="post" th:action="@{/member/new}" th:object="${newMemberUser}" >
-                            <label for="emailAddress">Email address</label>
-                            <input name ="emailAddress" id="emailAddress" type="email" th:required="required" class="form-control col-md-4"
+                <div class="collapse" id="collapseNewUser">
+                    <form method="post" th:action="@{/member/new}" th:object="${newMemberUser}" >
+                        <label for="emailAddress">Email address</label>
+                        <input name ="emailAddress" id="emailAddress" type="email" th:required="required" class="form-control col-md-4"
                                    th:field="*{emailAddress}" placeholder="Email address">
-                            <br>
-                            <p class="text-danger" th:if="${unknownEmail == true}">No such user</p>
-                            <button type="submit" class="btn btn-primary">Add</button>
+                        <br>
+                        <p class="text-danger" th:if="${unknownEmail == true}">No such user</p>
+                        <button type="submit" class="btn btn-primary">Add</button>
                         </form>
                     </div>
                 </div>

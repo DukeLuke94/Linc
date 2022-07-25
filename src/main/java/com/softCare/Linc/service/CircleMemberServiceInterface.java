@@ -29,4 +29,6 @@ public interface CircleMemberServiceInterface {
     void delete(CircleMember circleMember);
 
     Optional<List<CircleMember>> findCircleMembers(Circle circle);
+
+    Optional<CircleMember> findById(Long circleMemberId);
 }
