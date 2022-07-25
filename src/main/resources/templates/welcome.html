@@ -3,19 +3,19 @@
 <head th:replace="fragments/general :: baseHeader(~{:: title})">
   <title>Linc by SoftCare</title>
 </head>
-<body>
+<body class="background">
 <div th:replace="fragments/general :: header"></div>
 <div class="container">
   <div class="container col-xl-10 col-xxl-8 px-4 py-5">
     <div class="row align-items-center g-lg-5 py-5">
       <div class="col-lg-7 text-center text-lg-start">
-        <h1 class="display-4 fw-bold lh-1 mb-3">LinC is caring together</h1>
-        <p class="fs-4">Linc offers an intuitive and clean platform to ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo </p>
+        <h1 class="mb-lg-5" style="vertical-align: text-top">LINC is caring together</h1>
+        <p class="fs-4"></p>
       </div>
       <div class="col-md-10 mx-auto col-lg-5">
         <form class="p-4 p-md-5 border rounded-3 bg-light" th:action="@{/invitecode/join}" method="get">
           <div class="form-floating mb-3">
-            <h5>Join LinC today:</h5>
+            <h5 class="ml-5">Join LINC today:</h5>
             <div th:if="${succesMessage}" class="alert alert-success" role="alert">
               <span th:text="${succesMessage}">errorMessage</span>
             </div>
