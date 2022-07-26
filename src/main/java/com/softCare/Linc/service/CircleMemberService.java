@@ -78,7 +78,6 @@ public class CircleMemberService implements CircleMemberServiceInterface {
             Collections.sort(circleMemberList.get());
 
             for (CircleMember circleMember : circleMemberList.get()) {
-                System.out.println(circleMember.isAdmin());
                 User user = userRepository.findById(circleMember.getUser().getUserId()).get();
                 if (user.getProfilePicture()!=null){
                     user.setProfilePictureString(Base64.getEncoder().encodeToString(user.getProfilePicture()));
