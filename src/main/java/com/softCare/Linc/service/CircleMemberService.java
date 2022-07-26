@@ -111,4 +111,9 @@ public class CircleMemberService implements CircleMemberServiceInterface {
     public Optional<List<CircleMember>> findCircleMembers(Circle circle) {
         return circleMemberRepository.findByCircleCircleId(circle.getCircleId());
     }
+
+    @Override
+    public Optional<CircleMember> findById(Long circleMemberId) {
+        return circleMemberRepository.findByCircleMemberId(circleMemberId);
+    }
 }

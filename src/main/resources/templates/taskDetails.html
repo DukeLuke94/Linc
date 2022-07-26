@@ -19,201 +19,199 @@
     <div class="row">
         <div class="col-2"></div>
             <!--    TASK FORM CONTENT START-->
-        <div  th:attr="id=${task.category} + 'Label'">
-            <span th:if="${task.category != null}"><img th:attr="src=${'/static/images/categoryImages/' + task.category +'.svg'}"  class="mb-1 float-right" alt="category" id="categoryIcon"></span>
-        </div>
-        <div class="col-8 card w-100 card" id="card-task-detail">
-
-        <div class="card-body">
-            <div class="row">
-            <p class="display-4 ml-3" th:text="${task.taskName}" style="display: inline"></p>
-                <span class="form-inline">
-                    <label class="mx-1 ml-2" th:if="${isAdmin|| isAuthor}" >
-                        <input class="text-right mb-1" id="delete-task" type="image" height="20" width="20"
-                               src="/static/images/removeMember.svg" alt="delete" data-toggle="modal" data-target="#deleteTaskModal"/>
-                    </label>
-                </span>
-                <span class="form-inline">
-                    <label class="" th:if="${isAdmin || isAuthor}">
-                        <input class="text-right mb-1 align-items-center" id="edit-task" type="image" height="20" width="20"
-                               src="/static/images/pencil.svg" alt="edit" data-toggle="modal" data-target="#exampleModalCenterTitle"/>
-                    </label>
-                </span>
-
-                <div class="modal fade" id="deleteTaskModal" tabindex="-1" role="dialog" aria-labelledby="deleteTaskModal" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Are you sure</h5>
-                            </div>
-                            <div class="modal-body">
-                                <p>
-                                    You are about to delete Task <span th:block th:text="${task.taskName}"></span>
-                                    Deleting a Task can not be undone!
-                                </p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                                <form method="get" th:action="@{/task/delete}">
-                                    <input type="submit" value="Delete Task" class="btn delete">
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal fade" id="exampleModalCenterTitle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Editing task</h5>
-                            </div>
-                            <div class="modal-body">
-                                <form method="post" th:action="@{/task/edit}" th:object="${task}">
-                                    <div class="form-group">
-                                        <label for="taskName">Task name</label>
-                                        <input name="taskName" id="taskName" type="text" class="form-control"
-                                               th:field="*{taskName}" th:required="required" placeholder="Task name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="taskDescription">Task description</label>
-                                        <textarea name="taskDescription" id="taskDescription" type ="text" class="form-control"  th:required="required"
-                                                  th:field="*{taskDescription}" placeholder="Task description"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="dueDate">Due date</label>
-                                        <input name="dueDate" id="dueDate" type="date" class="form-control"
-                                               th:field="*{dueDate}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="duration">Duration in minutes</label>
-                                        <input name="duration" id="duration" type="number" class="form-control"
-                                               th:field="*{duration}">
-                                    </div>
-                                    <div class="form-group">
-                                        <input name="claimedUserName" id="claimedUserName" type="hidden" class="form-control"
-                                               th:field="*{claimedUserName}">
-                                        <input name="taskId" id="taskId" type="hidden" class="form-control"
-                                               th:field="*{taskId}">
-                                        <input name="taskDone" id="taskDone" type="hidden" class="form-control"
-                                               th:field="*{taskDone}">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="categorySelect">Category</label>
-                                        <select class="form-control" id="categorySelect" th:field="*{category}">
-                                            <option th:value="'Null'" disabled>Please select...</option>
-                                            <option th:value="'Outdoor'">Outdoor & Garden</option>
-                                            <option th:value="'Indoor'">Indoor chores</option>
-                                            <option th:value="'Transport'">Trips & transport</option>
-                                            <option th:value="'Company'">Keeping company</option>
-                                        </select>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary text-left float-left" data-dismiss="modal">Close</button>
-                                        <input type="submit" class="btn btn-primary text-right" value="Save">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div  th:attr="id=${task.category} + 'Label'">
+                <span th:if="${task.category != null}"><img th:attr="src=${'/static/images/categoryImages/' + task.category +'.svg'}"  class="mb-1 float-right" alt="category" id="categoryIcon"></span>
             </div>
-            <p th:text="${task.taskDescription}"></p>
-            <!--      Done button if claimed & owned-->
+            <div class="col-8 card w-100 card" id="card-task-detail">
 
-            <div class="">
-                <form th:action="@{/task/detail/done}" method="post" th:object="${task}">
-                    <span>
-                        <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
-                    </span>
-                    <div class="text-right float-right" style="display:inline;">
-                        <label>
-                            <button type="submit" class="btn btn-outline-primary mt-2 ml-2">Done</button>
-                        </label>
-                    </div>
-                </form>
-            </div>
-
-            <!--       Unclaim button if claimed & owned-->
-            <div th:if="${(task.claimedUserName == currentUser) && !(task.isTaskDone())}">
-                <form th:action="@{/task/detail/unclaim}" method="post" class="">
-                    <div class="text-right float-right" style="display:inline;">
-                        <label>
-                            <button type="submit" class="btn btn-outline-primary mt-2 ml-2">Unnassign</button>
-                        </label>
-                    </div>
-                    <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
-                </form>
-            </div>
-
-            <!--       Claim button if unclaimed-->
-            <div th:if="${task.claimedUserName == null}" class="">
-                <form th:action="@{/task/detail/claim}" method="post" class="" >
-                    <div class="text-right float-right" style="display:inline;">
-                        <label>
-                            <button type="submit" class="btn btn-outline-primary mt-2 ml-2">Assign to me</button>
-                        </label>
-                    </div>
+                <div class="card-body">
+                    <div class="row">
+                            <!--      Done button if claimed & owned-->
+                        <div>
+                            <form th:action="@{/task/detail/done}" method="post" th:object="${task}">
                         <span>
                             <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
-                         </span>
-                </form>
+                        </span>
+                                <div>
+                                    <label>
+                                        <input type="image" width="40" height="40" id="doneButton" alt="done"
+                                               src="/static/images/icons/square.svg" class="mt-1"
+                                               onmouseleave="this.src='/static/images/icons/square.svg';"
+                                               onmouseover="this.src='/static/images/icons/check-square.svg';">
+                                    </label>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-7">
+                            <p class="display-4" th:text="${task.taskName}" style="display: inline"></p>
+                                <span style="display: inline">
+                                    <label class="mx-1 ml-2" th:if="${isAdmin|| isAuthor}" >
+                                        <input class="text-right" id="delete-task" type="image" height="20" width="20"
+                                               src="/static/images/removeMember.svg" alt="delete" data-toggle="modal" data-target="#deleteTaskModal"/>
+                                    </label>
+                                </span>
+                                    <span style="display: inline">
+                                    <label class="" th:if="${isAdmin || isAuthor}">
+                                        <input class="text-right align-items-center" id="edit-task" type="image" height="20" width="20"
+                                               src="/static/images/pencil.svg" alt="edit" data-toggle="modal" data-target="#exampleModalCenterTitle"/>
+                                    </label>
+                                </span>
+
+                            <div class="modal fade" id="deleteTaskModal" tabindex="-1" role="dialog" aria-labelledby="deleteTaskModal" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Are you sure</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>
+                                                You are about to delete Task <span th:block th:text="${task.taskName}"></span>
+                                                Deleting a Task can not be undone!
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                            <form method="get" th:action="@{/task/delete}">
+                                                <input type="submit" value="Delete Task" class="btn delete">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="exampleModalCenterTitle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Editing task</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form method="post" th:action="@{/task/edit}" th:object="${task}">
+                                                <div class="form-group">
+                                                    <label for="taskName">Task name</label>
+                                                    <input name="taskName" id="taskName" type="text" class="form-control"
+                                                           th:field="*{taskName}" th:required="required" placeholder="Task name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="taskDescription">Task description</label>
+                                                    <textarea name="taskDescription" id="taskDescription" type ="text" class="form-control"  th:required="required"
+                                                              th:field="*{taskDescription}" placeholder="Task description"></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="dueDate">Due date</label>
+                                                    <input name="dueDate" id="dueDate" type="date" class="form-control"
+                                                           th:field="*{dueDate}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="duration">Duration in minutes</label>
+                                                    <input name="duration" id="duration" type="number" class="form-control"
+                                                           th:field="*{duration}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input name="claimedUserName" id="claimedUserName" type="hidden" class="form-control"
+                                                           th:field="*{claimedUserName}">
+                                                    <input name="taskId" id="taskId" type="hidden" class="form-control"
+                                                           th:field="*{taskId}">
+                                                    <input name="taskDone" id="taskDone" type="hidden" class="form-control"
+                                                           th:field="*{taskDone}">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="categorySelect">Category</label>
+                                                    <select class="form-control" id="categorySelect" th:field="*{category}">
+                                                        <option th:value="'Null'" disabled>Please select...</option>
+                                                        <option th:value="'Outdoor'">Outdoor & Garden</option>
+                                                        <option th:value="'Indoor'">Indoor chores</option>
+                                                        <option th:value="'Transport'">Trips & transport</option>
+                                                        <option th:value="'Company'">Keeping company</option>
+                                                    </select>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary text-left float-left" data-dismiss="modal">Close</button>
+                                                    <input type="submit" class="btn btn-primary text-right" value="Save">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p th:text="${task.taskDescription}" style="margin-bottom: 0;"></p>
+                        </div>
+
+
+
+                    <div class="col-2">
+                        <!--                                                Displays duration, if available-->
+                        <span th:if="${task.duration > 0 && ((task.duration % 60) != 0)}" class="text-left" style="display:inline;">
+                            <img th:if="${task.duration < 60}" src="/static/images/clock-history.svg" th:text="' '+${task.duration}+'  minutes'" class="" alt="duration">
+                            <img th:if="${(task.duration < 119) && (task.duration > 59)}" src="/static/images/clock-history.svg" th:text="' '+${#numbers.formatDecimal((task.duration/60), 0, 0)}+' hour '+${task.duration % 60}+' minutes'" class="" alt="duration">
+                            <img th:if="${task.duration > 119}" src="/static/images/clock-history.svg" th:text="' '+${#numbers.formatDecimal((task.duration/60), 0, 0)}+' hours '+${task.duration % 60}+' minutes'" class="" alt="duration">
+                            <br>
+                        </span>
+                        <span th:if="${task.duration > 0 && ((task.duration % 60) == 0)}" class="text-left" style="display:inline;">
+                            <img src="/static/images/clock-history.svg" th:text="' '+${#numbers.formatDecimal((task.duration/60), 0, 0)}+' hour(s) '" class="" alt="duration">
+                            <br>
+                        </span>
+                        <!--                                                Displays due date, if available-->
+                        <span th:if="${task.dueDate != null}" class="text-left" style="display:inline;">
+                            <img src="/static/images/calendar-check.svg" th:text="' ' + ${#temporals.format(task.dueDate, 'dd MMMM yyyy', new java.util.Locale('en', 'EN'))}" class="" alt="calender">
+                        </span>
+                    </div>
+
+                    <div class="col-2">
+                        <!--                                                Displays claimants name if claimed-->
+                        <span th:if="${task.claimedUserName != null}" class="text-right">
+                            <span th:if="${task.claimedUserName != currentUser}">
+                                <p th:text="'Claimed by: '+${task.claimedUserName}"></p>
+                            </span>
+                        </span>
+
+                        <!--       Unclaim button if claimed & owned-->
+                        <div th:if="${(task.claimedUserName == currentUser) && !(task.isTaskDone())}">
+                            <form th:action="@{/task/detail/unclaim}" method="post" class="">
+                                <div class="text-right float-right" style="display:inline;">
+                                    <label>
+                                        <button type="submit" class="btn btn-outline-primary mt-2 ml-2">Unnassign</button>
+                                    </label>
+                                </div>
+                                <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
+                            </form>
+                        </div>
+
+                        <!--       Claim button if unclaimed-->
+                        <div th:if="${task.claimedUserName == null}" class="">
+                            <form th:action="@{/task/detail/claim}" method="post" class="" >
+                                <div class="text-right float-right" style="display:inline;">
+                                    <label>
+                                        <button type="submit" class="btn btn-outline-primary mt-2 ml-2">Assign to me</button>
+                                    </label>
+                                </div>
+                                <span>
+                                    <input class="list-group-item-check pe-none"  checked type="hidden" th:name="taskId" th:value="${task.taskId}">
+                                 </span>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <!--                                                Displays duration, if available-->
-            <span th:if="${task.duration > 0 && ((task.duration % 60) != 0)}" class="text-left" style="display:inline;">
-                <img th:if="${task.duration < 60}" src="/static/images/clock-history.svg" th:text="' '+${task.duration}+'  minutes'" class="" alt="duration">
-                <img th:if="${(task.duration < 119) && (task.duration > 59)}" src="/static/images/clock-history.svg" th:text="' '+${#numbers.formatDecimal((task.duration/60), 0, 0)}+' hour '+${task.duration % 60}+' minutes'" class="" alt="duration">
-                <img th:if="${task.duration > 119}" src="/static/images/clock-history.svg" th:text="' '+${#numbers.formatDecimal((task.duration/60), 0, 0)}+' hours '+${task.duration % 60}+' minutes'" class="" alt="duration">
-                <br>
-            </span>
-            <span th:if="${task.duration > 0 && ((task.duration % 60) == 0)}" class="text-left" style="display:inline;">
-                <img src="/static/images/clock-history.svg" th:text="' '+${#numbers.formatDecimal((task.duration/60), 0, 0)}+' hour(s) '" class="" alt="duration">
-                <br>
-            </span>
-            <!--                                                Displays due date, if available-->
-            <span th:if="${task.dueDate != null}" class="text-left" style="display:inline;">
-                <img src="/static/images/calendar-check.svg" th:text="' ' + ${#temporals.format(task.dueDate, 'dd MMMM yyyy', new java.util.Locale('en', 'EN'))}" class="" alt="calender">
-            </span>
-            <!--                                                Displays claimants name if claimed-->
-            <span th:if="${task.claimedUserName != null}" class="text-right">
-                <span th:if="${task.claimedUserName != currentUser}" class="d-block small opacity-50 text-right" th:text="'Claimed by: '+${task.claimedUserName}">
-                </span>
-            </span>
-
-        </div>
-<!--            <div class="btn-group" role="group" aria-label="Basic example">-->
-<!--                <form action="/task/claim">-->
-<!--                    <input type="submit" class="btn claim" name="Claim" value="Claim">-->
-<!--                </form>-->
-
-<!--                <form action="/task/done">-->
-<!--                    <input type="submit" value="Done" class="btn done" >-->
-<!--                </form>-->
-
-<!--                <form th:action="@{/task/edit/{taskId}(taskId=${task.taskId})}">-->
-<!--                    <input type="submit" class="btn edit" value="Edit">-->
-<!--                </form>-->
-
-<!--                <form action="/task/delete">-->
-<!--                    <input type="submit" class="btn delete"  value="Delete">-->
-<!--                </form>-->
-<!--            </div>-->
-        </div>
-
-        <!--                            DELETE TASK BUTTON-->
-<!--        <span class="form-inline">-->
-<!--                                    <label class="mx-1 ml-2" th:if="${isAdmin|| isAuthor}" >-->
-<!--                                        <input class="text-right mb-1" id="delete-task" type="image" height="20" width="20"-->
-<!--                                               src="/static/images/removeMember.svg" alt="delete" data-toggle="modal" data-target="#deleteTaskModal"/>-->
-<!--                                    </label>-->
-<!--                                </span>-->
-        <!--                            DELETE TASK MODAL-->
-
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-9">
+        <a class="btn btn-primary float-right"
+           th:href="@{/circle/{circleId}(circleId=${task.getCircle().getCircleId()})}"
+           style="margin-right: 5.2rem; margin-top: 10px;">Return</a>
+    </div>
+</div>
+
+
+
+
+
+
 <div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>
 </body>

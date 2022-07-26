@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.Optional;
@@ -90,6 +91,20 @@ public class CircleMemberController {
             } else {
                 circleMember.ifPresent(member -> member.setClient(true));
             }
+            circleMemberServiceInterface.save(circleMember.get());
+        }
+        return "redirect:/circle/" + circleController.currentCircle.getCircleId() +"#v-pills-users";
+    }
+
+    @PostMapping({"/changeRoles"})
+    protected String changeRoles(@RequestParam(value = "circleMemberId")Long circleMemberId,
+                                 @RequestParam(value = "admin", required = false) String admin,
+                                 @RequestParam(value = "client", required = false) String client) {
+
+        Optional<CircleMember> circleMember = circleMemberServiceInterface.findById(circleMemberId);
+        if (circleMember.isPresent()){
+            circleMember.get().setAdmin(!(admin == null));
+            circleMember.get().setClient(!(client == null));
             circleMemberServiceInterface.save(circleMember.get());
         }
         return "redirect:/circle/" + circleController.currentCircle.getCircleId() +"#v-pills-users";

@@ -40,7 +40,7 @@
         <div class="row">
             <div class="col-2"></div>
             <div class="col-9">
-                <h1 class="display-4">My Dashboard</h1>
+                <h1 class="display-4" th:unless="${allCircles.size() == 0}">My Dashboard</h1>
             </div>
         </div>
     </div>
@@ -49,7 +49,38 @@
         <div class="col-2"></div>
 
 <!--        Filter & sort bar-->
-        <div class="col-6">
+        <div class="col-12" th:unless="${allCircles.size() != 0}">
+            <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <form class="p-4 p-md-5 border rounded-3 bg-light" th:action="@{/circle/new}" method="post" th:object="${circle}">
+                    <h5>Nothing to show here yet..</h5>
+                    <p>Create your own Circle or ask to be invited.</p>
+                    <br>
+<!--                    <div class="col-6">-->
+                    <div class="form-group">
+                        <label for="circleName">Circle name</label>
+                        <input name="circleName" id="circleName" type="text" class="form-control"
+                               th:field="*{circleName}" placeholder="Circle name">
+                    </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" name="clientCheckbox" value="clientCheckbox" checked>
+                                I am the client in this Circle
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-1">Create</button>
+
+<!--                    </div>-->
+
+                </form>
+
+            </div>
+            <div class="col-4"></div>
+            </div>
+
+        </div>
+        <div class="col-6" th:unless="${allCircles.size() == 0}">
             <div class="row">
                 <div class="col-8">
                     <p class="mt-1">All available task in your circles</p>
@@ -133,7 +164,7 @@
         </div>
         <!--        TASK CONTENT END-->
         <!--   CIRCLE CONTENT START -->
-        <div class="col-2">
+        <div class="col-2" th:unless="${allCircles.size() == 0}">
             <div class="card w-100">
                 <div class="card-body">
                     <h5 class="card-title">My Circles</h5>

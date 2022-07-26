@@ -27,6 +27,8 @@ import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
+    public final String YOU_VE_BEEN_LOGGED_OUT = "You've been logged out";
+    public final String LOGIN_TO_CONTINUE = "Registration successfull! Login to continue";
     public final String EDIT_SUCCESSFUL = "Password edit successful, please login with your new password";
     public final String EMAIL_ALREADY_IN_USE = "This Email-address is already in use";
     public final String CURRENT_PASSWORD_IS_NOT_CORRECT = "The current password is not correct";
@@ -55,6 +57,12 @@ public class UserController {
             return "login";
     }
 
+    @PostMapping("/logout")
+    protected String logout(RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("errorMessage", YOU_VE_BEEN_LOGGED_OUT);
+        return "login";
+    }
+
     @GetMapping({"/user/new"})
     protected String newUser(@RequestParam(required = false, name = "inviteCode") String inviteCode,
                              @RequestParam(required = false, name = "username") String username,
@@ -69,7 +77,8 @@ public class UserController {
                                       @AuthenticationPrincipal User loggedInUser,
                                       @Valid @ModelAttribute("userVM") UserVmGeneral userVmGeneral,
                                       BindingResult result,
-                                      Model model) {
+                                      Model model,
+                                      RedirectAttributes redirectAttributes) {
         if (emailAddressIsAlreadyTaken(userVmGeneral) && userVmGeneral.getEmailAddress().contains("@")) {
             model.addAttribute("errorMessage", EMAIL_ALREADY_IN_USE);
             model.addAttribute("inviteCode", inviteCode);
@@ -87,7 +96,8 @@ public class UserController {
                 setUserIdOnUsedCircleInviteCode(inviteCode, newUser);
                 addNewUserToCircleOfInviteCode(inviteCode, newUser);
             }
-            return "redirect:/dashboard";
+            redirectAttributes.addFlashAttribute("successMessage", LOGIN_TO_CONTINUE);
+            return "redirect:/login";
         }
         if (inviteCode.contains("-")) {
             model.addAttribute("inviteCode", inviteCode);
@@ -127,26 +137,35 @@ public class UserController {
                                      Model model,
                                      @AuthenticationPrincipal User loggedInUser,
                                      RedirectAttributes redirectAttributes) {
+
+        //Set booleans for check if email is already in use
         boolean wantsToUpdateEmail = !Objects.equals(userVMEdit.getEmailAddress(), loggedInUser.getEmailAddress());
         boolean validEmail = userVMEdit.getEmailAddress().contains("@");
         boolean emailAvailable = !emailAddressIsAlreadyTakenEditUserDetails(userVMEdit);
+
         if (wantsToUpdateEmail && validEmail && !emailAvailable) {
             model.addAttribute("errorMessage", EMAIL_ALREADY_IN_USE);
             return "editUserDetails";
         }
+        //Give feedback for other errors then email already in use
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("errorMessage", result.getAllErrors());
             return "editUserDetails";
         } else {
-            loggedInUser.setUsername(userVMEdit.getUsername());
-            loggedInUser.setEmailAddress(userVMEdit.getEmailAddress());
-            loggedInUser.setPhoneNumber(userVMEdit.getPhoneNumber());
-
+            //set attributes for logged in user so edited fields change also in view
+            setLoggedInUser(userVMEdit, loggedInUser);
             User user = setEditedUser(userVMEdit, loggedInUser);
+
             userInterface.save(user);
             userInterface.save(loggedInUser);
         }
         return "redirect:/user/profile";
+    }
+
+    private void setLoggedInUser(UserVMEdit userVMEdit, User loggedInUser) {
+        loggedInUser.setUsername(userVMEdit.getUsername());
+        loggedInUser.setEmailAddress(userVMEdit.getEmailAddress());
+        loggedInUser.setPhoneNumber(userVMEdit.getPhoneNumber());
     }
 
     private boolean emailAddressIsAlreadyTakenEditUserDetails(UserVMEdit UserVMEdit) {

@@ -60,7 +60,7 @@ public class Seeder {
 
     private void seedUsers() {
         // seed user "admin"
-        User admin = new User("sysAdmin",passwordEncoder.encode("admin"),"a@a.nl", "0909090909");
+        User admin = new User("sysAdmin",passwordEncoder.encode("admin"),"admin@linc.nl", "0613371337");
         lincUserDetailServiceInterface.save(admin);
 
         //seed permissions for the admin
@@ -74,10 +74,10 @@ public class Seeder {
 
     public void seedCircles() {
 
-        Circle oomDiederik = new Circle("Oom Diederik's Circle");
+        Circle oomDiederik = new Circle("Fam. Janssen");
         Circle tanteGeertruida = new Circle("Tante Geertruida's Circle");
         Circle zorgHaantje = new Circle("Zorgboerderij 't Vliegende Schaapje");
-        Circle omaJantina = new Circle("Oma Jantina's Circle");
+        Circle omaJantina = new Circle("Fam. Jonker");
         Circle woongroep = new Circle("Woongroep Middenmeer");
         Circle studentenGroep = new Circle("Thuiszorg Studenten");
 
@@ -146,14 +146,14 @@ public class Seeder {
 
 
         CircleMember circleMemberDiederik = new CircleMember(diederik, oomDiederik, true, true);
-        CircleMember circleMemberHendrik = new CircleMember(hendrik, oomDiederik, false, false);
+//        CircleMember circleMemberHendrik = new CircleMember(hendrik, oomDiederik, false, false);
         CircleMember circleMemberGeertruida = new CircleMember(geertruida, tanteGeertruida, true, true);
         CircleMember circleMemberJantina = new CircleMember(jantina, omaJantina, true, false);
         CircleMember circleMemberBaas = new CircleMember(baas, woongroep, true, true);
         CircleMember circleMemberTess = new CircleMember(tess, omaJantina, false, true);
 
         circleMemberServiceInterface.save(circleMemberDiederik);
-        circleMemberServiceInterface.save(circleMemberHendrik);
+//        circleMemberServiceInterface.save(circleMemberHendrik);
         circleMemberServiceInterface.save(circleMemberGeertruida);
         circleMemberServiceInterface.save(circleMemberJantina);
         circleMemberServiceInterface.save(circleMemberBaas);
@@ -178,8 +178,8 @@ public class Seeder {
 
 
         Task task = new Task("Hulp bij zolder opruimen", "Oude foto albums wel bewaren graag!",
-                false, date1, circleServiceInterface.findByCircleName("Oom Diederik's Circle"),
-                "Oom Diederik", hendrik, hendrik.getUsername(), 90, diederik, indoor);
+                false, date1, circleServiceInterface.findByCircleName("Fam. Janssen"),
+                "Fam. Janssen", hendrik, hendrik.getUsername(), 90, diederik, indoor);
         taskServiceInterface.save(task);
         Circle studentenCircle = circleServiceInterface.findByCircleName("Thuiszorg Studenten");
 
@@ -203,22 +203,22 @@ public class Seeder {
                 "Boodschappen doen",
                 "Havermout, melk, boter",
                 false,
-                circleServiceInterface.findByCircleName("Oom Diederik's Circle"),
-                "Oom Diederik",
+                circleServiceInterface.findByCircleName("Fam. Janssen"),
+                "Fam. Janssen",
                 date8, 30, diederik, trips));
         taskServiceInterface.save(new Task(
                 "Gras maaien",
                 "Niet te kort AUB",
                 false,
-                circleServiceInterface.findByCircleName("Oom Diederik's Circle"),
-                "Oom Diederik",
+                circleServiceInterface.findByCircleName("Fam. Janssen"),
+                "Fam. Janssen",
                 date6, 72, hendrik, outdoor));
         taskServiceInterface.save(new Task(
                 "Naar de kapper",
                 "Komende woensdagmiddag",
                 false,
-                circleServiceInterface.findByCircleName("Oom Diederik's Circle"),
-                "Oom Diederik",
+                circleServiceInterface.findByCircleName("Fam. Janssen"),
+                "Fam. Janssen",
                 date5, 120, diederik, trips));
         taskServiceInterface.save(new Task(
                 "Ramen wassen",
@@ -266,22 +266,22 @@ public class Seeder {
                 "Medicijnen ophalen bij de apotheek",
                 "Dinsdagmiddag",
                 false,
-                circleServiceInterface.findByCircleName("Oma Jantina's Circle"),
-                "Oma Jantina",
+                circleServiceInterface.findByCircleName("Fam. Jonker"),
+                "Fam. Jonker",
                 date2, 15, jantina, trips));
         taskServiceInterface.save(new Task(
                 "Gras maaien",
                 "Achter en voor huis",
                 false,
-                circleServiceInterface.findByCircleName("Oma Jantina's Circle"),
-                "Oma Jantina",
+                circleServiceInterface.findByCircleName("Fam. Jonker"),
+                "Fam. Jonker",
                 date3, 25, jantina, outdoor));
         taskServiceInterface.save(new Task(
                 "TV repareren",
-                "Zenders zitten niet meer op de goede plek",
+                "Zenders zitten niet meer op de goede plek. Jantina wil in ieder geval NPO 1, 2, en 3 weer zo snel mogelijk kijken.",
                 false,
-                circleServiceInterface.findByCircleName("Oma Jantina's Circle"),
-                "Oma Jantina",
+                circleServiceInterface.findByCircleName("Fam. Jonker"),
+                "Fam. Jonker",
                 date7, 15, jantina, indoor));
         taskServiceInterface.save(new Task(
                 "Boodschappen doen",
