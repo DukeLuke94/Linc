@@ -10,10 +10,7 @@ import com.softCare.Linc.model.Task;
 import com.softCare.Linc.model.User;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CircleMemberService implements CircleMemberServiceInterface {
@@ -75,8 +72,11 @@ public class CircleMemberService implements CircleMemberServiceInterface {
     @Override
     public List<User> findAllMembers(Circle circle) {
         Optional<List<CircleMember>> circleMemberList = circleMemberRepository.findByCircleCircleId(circle.getCircleId());
+
         List<User> userList = new ArrayList<>();
         if (circleMemberList.isPresent()){
+            Collections.sort(circleMemberList.get());
+
             for (CircleMember circleMember : circleMemberList.get()) {
                 User user = userRepository.findById(circleMember.getUser().getUserId()).get();
                 if (user.getProfilePicture()!=null){
@@ -86,6 +86,7 @@ public class CircleMemberService implements CircleMemberServiceInterface {
                 userList.add(user);
             }
         }
+
         return userList;
     }
 

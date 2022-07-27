@@ -28,11 +28,11 @@ import java.util.stream.Collectors;
 @Controller
 public class UserController {
     public final String YOU_VE_BEEN_LOGGED_OUT = "You've been logged out";
-    public final String LOGIN_TO_CONTINUE = "Registration successfull! Login to continue";
+    public final String LOGIN_TO_CONTINUE = "Registration successful! Login to continue";
     public final String EDIT_SUCCESSFUL = "Password edit successful, please login with your new password";
     public final String EMAIL_ALREADY_IN_USE = "This Email-address is already in use";
     public final String CURRENT_PASSWORD_IS_NOT_CORRECT = "The current password is not correct";
-    private final String PASSWORD_REPEAT_NO_MATCH = "The newly entered passwords are not an exact match or aren't given";
+    private final String PASSWORD_REPEAT_NO_MATCH = "The newly entered passwords are not an exact match";
 
     private final LincUserDetailServiceInterface userInterface;
     private final CircleMemberServiceInterface circleMemberServiceInterface;
@@ -260,7 +260,11 @@ public class UserController {
     }
 
     private boolean newPasswordsDoNotMatch(UserVmGeneral userVmGeneral) {
-        return !userVmGeneral.getPassword().equals(userVmGeneral.getPasswordRepeat());
+        return  !userVmGeneral.getPassword().equals(userVmGeneral.getPasswordRepeat()) &&
+                !userVmGeneral.getPassword().isBlank() &&
+                !userVmGeneral.getPasswordRepeat().isBlank() &&
+                userVmGeneral.getPassword().length() >= 6 &&
+                userVmGeneral.getPasswordRepeat().length() >= 6;
     }
 
     @GetMapping({"/sysAdmin/users"})
