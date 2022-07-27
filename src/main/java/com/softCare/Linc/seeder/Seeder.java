@@ -93,7 +93,7 @@ public class Seeder {
         User geertruida = new User("Geertruida", passwordEncoder.encode("geertruida"), "geertruida@geertruida.nl", "0099009900");
         User jantina = new User("Jantina", passwordEncoder.encode("jantina"), "jantina@jantina.nl", "0099009900");
         User baas = new User("M.Veen", passwordEncoder.encode("mveen"), "mveen@mveen.nl", "0099009900");
-        User tess = new User("Tesss", passwordEncoder.encode("tess"), "tess@tess.nl", "0653976031");
+        User tess = new User("Tesss", passwordEncoder.encode("tess"), "tess@ziggo.nl", "0653976031");
         // studenten groep
         User Mark = new User("Mark", passwordEncoder.encode("mark"), "mark@mark.nl", "0664852145");
         User Timo = new User("Timo", passwordEncoder.encode("timo"), "timo@timo.nl", "0658963214");
@@ -168,8 +168,9 @@ public class Seeder {
         LocalDate date6 = LocalDate.of(2022, 8, 27);
         LocalDate date7 = LocalDate.of(2022, 9, 2);
         LocalDate date8 = LocalDate.of(2022, 9, 14);
-        LocalDate date9 = LocalDate.of(2022, 9, 5);
+        LocalDate date9 = LocalDate.of(2022, 8, 3);
         LocalDate date10 = LocalDate.now().plusDays(2);
+        LocalDate date11 = LocalDate.of(2022, 8, 9);
 
         String outdoor = "Outdoor";
         String indoor = "Indoor";
@@ -264,11 +265,11 @@ public class Seeder {
                 date3, 90, baas, games));
         taskServiceInterface.save(new Task(
                 "Medicijnen ophalen bij de apotheek",
-                "Dinsdagmiddag",
+                "Herhaalmedicatie, ligt klaar na 10:00",
                 false,
                 circleServiceInterface.findByCircleName("Fam. Jonker"),
                 "Fam. Jonker",
-                date2, 15, jantina, trips));
+                date11, 60, jantina, trips));
         taskServiceInterface.save(new Task(
                 "Gras maaien",
                 "Achter en voor huis",
@@ -282,7 +283,7 @@ public class Seeder {
                 false,
                 circleServiceInterface.findByCircleName("Fam. Jonker"),
                 "Fam. Jonker",
-                date7, 15, jantina, indoor));
+                date9, 5, jantina, indoor));
         taskServiceInterface.save(new Task(
                 "Boodschappen doen",
                 "Havermout, melk, boter",
