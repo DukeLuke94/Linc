@@ -13,7 +13,7 @@ import javax.persistence.*;
  * Describes the relations between a user and a CircleMember
  */
 @Entity @Getter @Setter
-public class CircleMember {
+public class CircleMember implements Comparable<CircleMember> {
 
     @Id
     @GeneratedValue
@@ -49,5 +49,16 @@ public class CircleMember {
         this.circle = new Circle();
         this.isAdmin = false;
         this.isClient = false;
+    }
+
+
+    @Override
+    public int compareTo(CircleMember o) {
+        if (o.isAdmin){
+            return 1;
+        } else if (o.isClient){
+            return 0;
+        }
+        return -1;
     }
 }
