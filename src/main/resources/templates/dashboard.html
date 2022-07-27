@@ -106,8 +106,8 @@
             <div class="card w-100 card-tasks" th:each="task: ${tasksPerUser}">
                 <!--                                            Task title & description-->
                 <div class="row">
-                    <div  th:attr="id=${task.category} + 'Label'">
-                        <span th:if="${task.category != null}"><img th:attr="src=${'/static/images/categoryImages/' + task.category +'.svg'}"  class="mb-1 float-right" alt="category" id="categoryIcon"></span>
+                    <div  th:attr="id=${task.category} + 'Label'" class="CategoryLabel">
+                        <span th:if="${task.category != null}"><img th:attr="src=${'/static/images/categoryImages/' + task.category +'.svg'}"  class="" alt="category" id="categoryIcon"></span>
                     </div>
 
                     <div class="col-11">
@@ -138,18 +138,18 @@
                                 <!--                                                    Due date & time -->
                                 <div class="col-4">
                                     <span th:if="${task.duration > 0 && ((task.duration % 60) != 0)}" class="text-left" style="display:inline;">
-                                        <img th:if="${task.duration < 60}" src="/static/images/clock-history.svg" th:text="' '+${task.duration}+'  minutes'" class="" alt="duration">
-                                        <img th:if="${(task.duration < 119) && (task.duration > 59)}" src="/static/images/clock-history.svg" th:text="' '+${#numbers.formatDecimal((task.duration/60), 0, 0)}+' hour '+${task.duration % 60}+' minutes'" class="" alt="duration">
-                                        <img th:if="${task.duration > 119}" src="/static/images/clock-history.svg" th:text="' '+${#numbers.formatDecimal((task.duration/60), 0, 0)}+' hours '+${task.duration % 60}+' minutes'" class="" alt="duration">
+                                        <img th:if="${task.duration < 60}" src="/static/images/clock-history.svg" th:text="' '+${task.duration}+'  minutes'" class="mb-1" alt="duration">
+                                        <img th:if="${(task.duration < 119) && (task.duration > 59)}" src="/static/images/clock-history.svg" th:text="' '+${#numbers.formatDecimal((task.duration/60), 0, 0)}+' hour '+${task.duration % 60}+' minutes'" class="mb-1" alt="duration">
+                                        <img th:if="${task.duration > 119}" src="/static/images/clock-history.svg" th:text="' '+${#numbers.formatDecimal((task.duration/60), 0, 0)}+' hours '+${task.duration % 60}+' minutes'" class="mb-1" alt="duration">
                                         <br>
                                     </span>
                                     <span th:if="${task.duration > 0 && ((task.duration % 60) == 0)}" class="text-left" style="display:inline;">
-                                        <img src="/static/images/clock-history.svg" th:text="' '+${#numbers.formatDecimal((task.duration/60), 0, 0)}+' hour(s) '" class="" alt="duration">
+                                        <img src="/static/images/clock-history.svg" th:text="' '+${#numbers.formatDecimal((task.duration/60), 0, 0)}+' hour(s) '" class="mb-1" alt="duration">
                                         <br>
                                     </span>
                                     <!--                                                Displays due date, if available-->
                                     <span th:if="${task.dueDate != null}" class="text-left" style="display:inline;">
-                                        <img src="/static/images/calendar-check.svg" th:text="' ' + ${#temporals.format(task.dueDate, 'dd MMMM yyyy', new java.util.Locale('en', 'EN'))}" class="" alt="calender">
+                                        <img src="/static/images/calendar-check.svg" th:text="' ' + ${#temporals.format(task.dueDate, 'dd MMMM yyyy', new java.util.Locale('en', 'EN'))}" class="mb-1" alt="calender">
                                         <span th:each="notification : ${taskNotificationList}">
                                             <span th:if="${task.taskId == notification.task.taskId}" class="badge badge-danger">!</span></span>
                                     </span>
